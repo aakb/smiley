@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -23,9 +23,24 @@ var app = {
 
 		this.divLoginBody = $("#div_login_body").html();
 		this.divLoginHeader = $("#div_login_header").html();
+		this.divMainBody = $("#div_main_body").html();
+		
+		this.showLoginPage();
+		//this.showMainPage();
+    },
+	showLoginPage: function() {
 		$(".main").html(this.divLoginBody);
 		$(".header").html(this.divLoginHeader);
-    },
+	},
+	showMainPage: function() {
+		$(".header").html("");
+		$(".main").html(this.divMainBody);
+	},
+	
+	
+	
+	
+	//// CORDOVA
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
@@ -42,13 +57,6 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-//        var parentElement = document.getElementById(id);
-//        var listeningElement = parentElement.querySelector('.listening');
-//        var receivedElement = parentElement.querySelector('.received');
-
-//        listeningElement.setAttribute('style', 'display:none;');
-//        receivedElement.setAttribute('style', 'display:block;');
-
-//        console.log('Received Event: ' + id);
+        console.log('Received Event: ' + id);
     }
 };
