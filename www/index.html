@@ -64,22 +64,47 @@
 		</script>
 		<script id="div_login_header" type="text/html">
 			<h1>Velkommen til <span class="text_b7">b7</span></h1>			
-			Du skal udfylde felterne nedenfor for at konfigurere servicen. Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.
+			Du skal udfylde felterne nedenfor for at konfigurere servicen.<br/>
+			Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.
 		</script>
 		<script id="div_main_body" type="text/html">
-			<table class="table_smiley">
+			<table class="table_smiley" id="table_smiley1">
 				<tr>
-					<td><img class="img_smiley" src="img/smiley1.png"/></td>
-					<td><img class="img_smiley" src="img/smiley2.png"/></td>
-					<td><img class="img_smiley" src="img/smiley3.png"/></td>
-					<td><img class="img_smiley" src="img/smiley4.png"/></td>
-					<td><img class="img_smiley" src="img/smiley5.png"/></td>
+					<td><img id="smiley1" class="img_smiley" src="img/smiley1.png"/></td>
+					<td><img id="smiley2" class="img_smiley" src="img/smiley2.png"/></td>
+					<td><img id="smiley3" class="img_smiley" src="img/smiley3.png"/></td>
+					<td><img id="smiley4" class="img_smiley" src="img/smiley4.png"/></td>
+					<td><img id="smiley5" class="img_smiley" src="img/smiley5.png"/></td>
+				</tr>
+			</table>
+			<div class="div_content"><h1>Tilfreds med betjeningen?</h1></div>
+		</script>
+		<script id="div_what_body" type="text/html">
+			<table class="table_smiley" id="table_choice">
+				<tr>
+					<td><img id="smiley1" class="img_smiley" src="img/smiley1.png"/></td>
+					<td><img id="smiley2" class="img_smiley" src="img/smiley2.png"/></td>
+					<td><img id="smiley3" class="img_smiley" src="img/smiley3.png"/></td>
+					<td><img id="smiley4" class="img_smiley" src="img/smiley4.png"/></td>
+					<td><img id="smiley5" class="img_smiley" src="img/smiley5.png"/></td>
 				</tr>
 				<tr>
-					<td colspan="5"><h1>Tilfreds med betjeningen?</h1></td>
-				</td>
-			</table>
+					<td colspan="5"><div id="what_div"></div></td>
+				</tr>
+				<tr>
+					<td/>
+					<td><div id="choice1"><img class="img_choice" src="img/service.png"></div></td>
+					<td><div id="choice2"><img class="img_choice" src="img/betjening.png"></div></td>
+					<td><div id="choice3"><img class="img_choice" src="img/andet.png"></div></td>
+					<td/>
+				</tr>
+			</table>			
 		</script>
+		<script id="div_thanks_body" type="text/html">
+			<h1>Mange tak</h1>
+			<h2>Vi bruger dit besyv til at forbedre vores service.</h2>
+		</script>
+		
 		<div class="center">
 			<div id="header" class="header"></div>
 			<div id="main" class="main"></div>
