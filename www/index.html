@@ -28,18 +28,39 @@
     </head>
     <body>
 		<script id="div_login_body" type="text/html">
-			<div class="input_div">
-				
+			<div class="form_div">
+				<form>
+					<table>
+						<tr>
+							<td>Ansvarlig kontaktperson: </td>
+							<td><input type="text" name="kontaktperson"></td>
+						</tr>
+						<tr>
+							<td>Mailadresse:</td>
+							<td><input type="text" name="mail"></td>
+						</tr>
+						<tr>
+							<td>Gentag mailadresse:</td>
+							<td><input type="text" name="mail_repeat"></td>
+						</tr>
+						<tr>
+							<td>Magistratsafdeling:</td>
+							<td><input type="text" name="mag_afd"></td>
+						</tr>
+						<tr>
+							<td>Forvaltning:</td>
+							<td><input type="text" name="forvaltning"></td>
+						</tr>
+						<tr>
+							<td>Fysisk placering:</td>
+							<td><input type="text" name="placering"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"></div></td>
+						</tr>
+					</table>
+				</form>
 			</div>
-			<form>
-				Ansvarlig kontaktperson: <input type="text" name="kontaktperson"><br/>
-				Mailadresse: <input type="text" name="mail"><br/>
-				Gentag mailadresse: <input type="text" name="mail_repeat"><br/>
-				Magistratsafdeling: <input type="text" name="mag_afd"><br/>
-				Forvaltning: <input type="text" name="forvaltning"><br/>
-				Fysisk placering: <input type="text" name="placering"><br/>
-				<input type="submit" value="Bekræft">
-			</form>
 		</script>
 		<script id="div_login_header" type="text/html">
 			<h1>Velkommen til <span class="text_b7">b7</span></h1>			
