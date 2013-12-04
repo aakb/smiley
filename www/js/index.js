@@ -25,18 +25,21 @@ var app = {
 		this.divLoginHeader = $("#div_login_header").html();
 		this.divMainBody = $("#div_main_body").html();
 		
-		this.showLoginPage();
-		//this.showMainPage();
+		app.showLoginPage();
     },
 	showLoginPage: function() {
 		$(".main").html(this.divLoginBody);
 		$(".header").html(this.divLoginHeader);
+		
+		$("#form_login").submit(function( event ) {
+			app.showMainPage();
+			event.preventDefault();
+		});
 	},
 	showMainPage: function() {
 		$(".header").html("");
 		$(".main").html(this.divMainBody);
 	},
-	
 	
 	
 	
