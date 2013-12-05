@@ -62,7 +62,7 @@ var app = {
 
 			// fire off the request to /form.php
 			request = $.ajax({
-				url: this.serverlocation + "login_machine.php",
+				url: app.serverlocation + "login_machine.php",
 				type: "post",
 				data: serializedData
 			});
@@ -71,7 +71,7 @@ var app = {
 			request.done(function (response, textStatus, jqXHR){
 				// log a message to the console
 				alert("it worked");
-				console.log("Hooray, it worked!");
+				alert("Hooray, it worked!");
 				//app.showMainPage();
 			});
 
@@ -79,7 +79,7 @@ var app = {
 			request.fail(function (jqXHR, textStatus, errorThrown){
 				// log the error to the console
 
-				console.error(
+				alert(
 					"The following error occured: "+
 					textStatus, errorThrown
 				);
