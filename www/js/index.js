@@ -19,19 +19,53 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        this.bindEvents();
+        // Setup Cordova events
+		this.bindEvents();
 
+		// Setup app parameters
 		this.serverlocation = "http://localhost/";
 		
 		// Setup HTML pages to insert in header and body
+		this.divWelcomeHeader = $("#div_welcome_header").html();
 		this.divLoginBody = $("#div_login_body").html();
 		this.divLoginHeader = $("#div_login_header").html();
+		this.divRegisterBody = $("#div_register_body").html();
+		this.divRegisterHeader = $("#div_register_header").html();
 		this.divMainBody = $("#div_main_body").html();
 		this.divWhatBody = $("#div_what_body").html();
 		this.divThanksBody = $("#div_thanks_body").html();
 		
-		app.showLoginPage();
+		app.showWelcomePage();
     },
+	showWelcomePage: function() {
+		$(".main").html("");
+		$(".header").html(this.divWelcomeHeader);
+		
+		$("#login_button").on("click", function() {
+			app.showLoginPage();
+		});
+		$("#reg_button").on("click", function() {
+			app.showRegisterPage();
+		});
+	},
+	showRegisterPage: function() {
+		$(".main").html(this.divRegisterBody);
+		$(".header").html(this.divRegisterHeader);
+		
+		// Setup form login submit button
+		$("#form_register").submit(function(event) {
+			event.preventDefault();
+		
+			$.post(this.serverlocation + "register_machine.php",
+				{contact: "", mail: "", magafd: "", forvalt: "", placering: "", navn: "" },
+				function( data ) {
+					// save machine ID
+					
+					alert(data);
+				});
+			app.showMainPage();
+		});
+	},
 	showLoginPage: function() {
 		// Change HTML content
 		$(".main").html(this.divLoginBody);
@@ -92,22 +126,6 @@ var app = {
 				$inputs.prop("disabled", false);
 			});
 		});
-		
-		// Setup form login submit button
-		$("#form_register").submit(function(event) {
-			event.preventDefault();
-		
-			$.post(this.serverlocation + "register_machine.php",
-				{contact: "", mail: "", magafd: "", forvalt: "", placering: "", navn: "" },
-				function( data ) {
-					// save machine ID
-					
-					alert(data);
-				});
-			app.showMainPage();
-		});
-		
-		
 	},
 	showMainPage: function() {
 		// Change HTML content
@@ -166,7 +184,8 @@ var app = {
 		$(".header").html("");
 		$(".main").html(this.divThanksBody);
 		
-		$.get(this.serverlocation + "register_event.php?nSmiley=" + nSmiley + "&nChoice=" + nWhat, function( data ) {});
+		// TODO: replace with POST
+		//$.get(this.serverlocation + "register_event.php?nSmiley=" + nSmiley + "&nChoice=" + nWhat, function( data ) {});
 		setTimeout(function(){
 			app.showMainPage();
 		}, 3000);
