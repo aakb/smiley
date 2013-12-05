@@ -1,0 +1,17 @@
+To setup Cordova, see guide here: http://cordova.apache.org/docs/en/3.0.0/guide_cli_index.md.html
+
+TODO:
+1. finish designing pages
+	- other categories
+2. php scripts to register data
+	- rewrite to POST and prepared statements
+3. setup server
+4. deploy to ios devices
+	- get certificate and provisioning profile
+	- use with phonegap build
+5. generate statistics
+	- pie chart
+	- graphs
+6. setup cronjob 1/week
+	- send email with statistics
+	- commit to odaa
