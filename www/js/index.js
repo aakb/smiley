@@ -37,14 +37,77 @@ var app = {
 		$(".main").html(this.divLoginBody);
 		$(".header").html(this.divLoginHeader);
 		
-		// Setup form submit button
+		var request;
+		
+		// Setup form login submit button
 		$("#form_login").submit(function(event) {
+			// prevent default posting of form
 			event.preventDefault();
+
+			alert("login submit");
 			
-			// 
-			
+			// abort any pending request
+			if (request) {
+				request.abort();
+			}
+			// setup some local variables
+			var $form = $(this);
+			// let's select and cache all the fields
+			var $inputs = $form.find("input, select, button, textarea");
+			// serialize the data in the form
+			var serializedData = $form.serialize();
+
+			// let's disable the inputs for the duration of the ajax request
+			$inputs.prop("disabled", true);
+
+			// fire off the request to /form.php
+			request = $.ajax({
+				url: this.serverlocation + "login_machine.php",
+				type: "post",
+				data: serializedData
+			});
+
+			// callback handler that will be called on success
+			request.done(function (response, textStatus, jqXHR){
+				// log a message to the console
+				alert("it worked");
+				console.log("Hooray, it worked!");
+				//app.showMainPage();
+			});
+
+			// callback handler that will be called on failure
+			request.fail(function (jqXHR, textStatus, errorThrown){
+				// log the error to the console
+
+				console.error(
+					"The following error occured: "+
+					textStatus, errorThrown
+				);
+			});
+
+			// callback handler that will be called regardless
+			// if the request failed or succeeded
+			request.always(function () {
+				// reenable the inputs
+				$inputs.prop("disabled", false);
+			});
+		});
+		
+		// Setup form login submit button
+		$("#form_register").submit(function(event) {
+			event.preventDefault();
+		
+			$.post(this.serverlocation + "register_machine.php",
+				{contact: "", mail: "", magafd: "", forvalt: "", placering: "", navn: "" },
+				function( data ) {
+					// save machine ID
+					
+					alert(data);
+				});
 			app.showMainPage();
 		});
+		
+		
 	},
 	showMainPage: function() {
 		// Change HTML content
@@ -105,7 +168,7 @@ var app = {
 		
 		$.get(this.serverlocation + "register_event.php?nSmiley=" + nSmiley + "&nChoice=" + nWhat, function( data ) {});
 		setTimeout(function(){
-			window.location.reload();
+			app.showMainPage();
 		}, 3000);
 	},
 	
