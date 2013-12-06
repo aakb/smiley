@@ -51,14 +51,11 @@
 					<table>
 						<tr>
 							<td>ID</td>
-							<td><input type="text" name="uniqueid"/></td>
+							<td><input id="macid" type="text" name="macid"/></td>
 						</tr>
 						<tr>
-							<td>Mailadresse</td>
-							<td><input type="text" name="mail"/></td>
-						</tr>
-						<tr>
-							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"></div></td>
+							<input type="hidden" name="action" value="login"/>
+							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"/></div></td>
 						</tr>
 					</table>
 				</form>
@@ -74,7 +71,7 @@
 					<table>
 						<tr>
 							<td>Ansvarlig kontaktperson</td>
-							<td><input type="text" name="kontaktperson"/></td>
+							<td><input type="text" name="contact"/></td>
 						</tr>
 						<tr>
 							<td>Mailadresse</td>
@@ -86,21 +83,22 @@
 						</tr>
 						<tr>
 							<td>Magistratsafdeling</td>
-							<td><input type="text" name="mag_afd"/></td>
+							<td><input type="text" name="magafd"/></td>
 						</tr>
 						<tr>
 							<td>Forvaltning</td>
-							<td><input type="text" name="forvaltning"/></td>
+							<td><input type="text" name="forvalt"/></td>
 						</tr>
 						<tr>
 							<td>Fysisk placering</td>
-							<td><input type="text" name="placering"/></td>
+							<td><input type="text" name="place"/></td>
 						</tr>
 						<tr>
 							<td>Navn for enhed</td>
-							<td><input type="text" name=""/></td>
+							<td><input type="text" name="name"/></td>
 						</tr>						
 						<tr>
+							<input type="hidden" name="action" value="register"/>
 							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"></div></td>
 						</tr>
 					</table>

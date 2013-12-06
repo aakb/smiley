@@ -51,18 +51,42 @@ var app = {
 	showRegisterPage: function() {
 		$(".main").html(this.divRegisterBody);
 		$(".header").html(this.divRegisterHeader);
-		
-		// Setup form login submit button
+
+		// Setup form register submit button
+		var request;
 		$("#form_register").submit(function(event) {
 			event.preventDefault();
-		
-			$.post(this.serverlocation + "register_machine.php",
-				{contact: "", mail: "", magafd: "", forvalt: "", placering: "", navn: "" },
-				function( data ) {
-					// save machine ID
-					
-					alert(data);
-				});
+			
+			if (request) {	// abort any pending request
+				request.abort();
+			}
+
+			var serializedData = $(this).serialize();
+			var $inputs = $(this).find("input");
+			
+			$inputs.prop("disabled", true);         // disable inputs, during ajax request
+
+			// post data to server
+			request = $.ajax({
+				url: app.serverlocation + "smiley/",
+				type: "GET",
+				data: serializedData
+			})
+			.done(function (response, textStatus, jqXHR){
+				var resp = $.parseJSON(response);
+				if (resp.result == "ok") {
+					app.macid = resp.macid;
+					app.showMainPage();
+				} else {
+					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+				}
+			})
+			.fail(function (jqXHR, textStatus, errorThrown){
+				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
+			})
+			.always(function () {
+				$inputs.prop("disabled", false);
+			});
 			app.showMainPage();
 		});
 	},
@@ -71,58 +95,39 @@ var app = {
 		$(".main").html(this.divLoginBody);
 		$(".header").html(this.divLoginHeader);
 		
-		var request;
-		
 		// Setup form login submit button
+		var request;
 		$("#form_login").submit(function(event) {
-			// prevent default posting of form
 			event.preventDefault();
-
-			alert("login submit");
 			
-			// abort any pending request
-			if (request) {
+			if (request) {	// abort any pending request
 				request.abort();
 			}
-			// setup some local variables
-			var $form = $(this);
-			// let's select and cache all the fields
-			var $inputs = $form.find("input, select, button, textarea");
-			// serialize the data in the form
-			var serializedData = $form.serialize();
 
-			// let's disable the inputs for the duration of the ajax request
-			$inputs.prop("disabled", true);
+			var serializedData = $(this).serialize();
+			var $inputs = $(this).find("input");
+			
+			$inputs.prop("disabled", true);         // disable inputs, during ajax request
 
-			// fire off the request to /form.php
+			// post data to server
 			request = $.ajax({
-				url: app.serverlocation + "login_machine.php",
-				type: "post",
+				url: app.serverlocation + "smiley/",
+				type: "GET",
 				data: serializedData
-			});
-
-			// callback handler that will be called on success
-			request.done(function (response, textStatus, jqXHR){
-				// log a message to the console
-				alert("it worked");
-				alert("Hooray, it worked!");
-				//app.showMainPage();
-			});
-
-			// callback handler that will be called on failure
-			request.fail(function (jqXHR, textStatus, errorThrown){
-				// log the error to the console
-
-				alert(
-					"The following error occured: "+
-					textStatus, errorThrown
-				);
-			});
-
-			// callback handler that will be called regardless
-			// if the request failed or succeeded
-			request.always(function () {
-				// reenable the inputs
+			})
+			.done(function (response, textStatus, jqXHR){
+				var resp = $.parseJSON(response);
+				if (resp.result == "ok") {
+					app.macid = $("#macid").val();
+					app.showMainPage();
+				} else {
+					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+				}
+			})
+			.fail(function (jqXHR, textStatus, errorThrown){
+				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
+			})
+			.always(function () {
 				$inputs.prop("disabled", false);
 			});
 		});
@@ -183,9 +188,30 @@ var app = {
 	registerResult: function(nSmiley, nWhat) {
 		$(".header").html("");
 		$(".main").html(this.divThanksBody);
+
+		var d = new Date();
+		var datetime = d.getTime();
 		
-		// TODO: replace with POST
-		//$.get(this.serverlocation + "register_event.php?nSmiley=" + nSmiley + "&nChoice=" + nWhat, function( data ) {});
+		var serializedData = "action=result&macid=" + app.macid + "&smiley=" + nSmiley + "&what=" + nWhat + "&datetime=" + datetime;
+		
+		// post data to server
+		request = $.ajax({
+			url: app.serverlocation + "smiley/",
+			type: "GET",
+			data: serializedData
+		})
+		.done(function (response, textStatus, jqXHR){
+			var resp = $.parseJSON(response);
+			if (resp.result == "ok") {
+				
+			} else {
+				alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+			}
+		})
+		.fail(function (jqXHR, textStatus, errorThrown){
+			alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
+		});
+
 		setTimeout(function(){
 			app.showMainPage();
 		}, 3000);
