@@ -17,12 +17,14 @@
  * under the License.
  */
 var app = {
-    // Application Constructor
+	//////////////////////////////////////////
+	//// INITIALIZE
+	//////////////////////////////////////////
     initialize: function() {
         // Setup Cordova events
-		this.bindEvents();
+		//this.bindEvents();
 
-		// Setup app parameters
+		// Setup parameters
 		this.serverlocation = "http://localhost/";
 		
 		// Setup HTML pages to insert in header and body
@@ -36,19 +38,26 @@ var app = {
 		this.divThanksBody = $("#div_thanks_body").html();
 		
 		app.showWelcomePage();
-    },
+	},
+	
+	//////////////////////////////////////////
+	//// DISPLAY PAGE FUNCTIONS
+	//////////////////////////////////////////
+	
 	showWelcomePage: function() {
 		$(".main").html("");
 		$(".header").html(this.divWelcomeHeader);
 
 		// Display number of uncommitted entries on button
+		// Check if local storage is supported
 		var nr = 0;
 		if(typeof(Storage)!=="undefined") {
-			// GET FROM LOCALSTORAGE
 			var entries = JSON.parse(localStorage.getItem("entries"));
 			if (entries !== null) {
 				nr = entries.length;
 			} 
+		} else {
+			app.showAlert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt.");
 		}
 		$("#commit_button").html("Indsend (" + nr + ")");
 		
@@ -63,7 +72,6 @@ var app = {
 				// Display number of uncommitted entries on button
 				var nr = 0;
 				if(typeof(Storage)!=="undefined") {
-					// GET FROM LOCALSTORAGE
 					var entries = JSON.parse(localStorage.getItem("entries"));
 					if (entries !== null) {
 						nr = entries.length;
@@ -71,7 +79,6 @@ var app = {
 				}
 				$("#commit_button").html("Indsend (" + nr + ")");
 			});
-			app.showAlert("Done");
 		});		
 	},
 	showRegisterPage: function() {
@@ -79,29 +86,27 @@ var app = {
 		$(".header").html(this.divRegisterHeader);
 
 		// Setup form register submit button
-		var request;
 		$("#form_register").submit(function(event) {
 			event.preventDefault();
 			
-			if (request) {	// abort any pending request
-				request.abort();
-			}
+			var serializedData = $(this).serializeArray();
 
-			var serializedData = $(this).serialize();
+			// Disable inputs, during ajax request
 			var $inputs = $(this).find("input");
-			
-			$inputs.prop("disabled", true);         // disable inputs, during ajax request
+			$inputs.prop("disabled", true);
 
-			// post data to server
-			request = $.ajax({
+			// Post data to server
+			$.ajax({
 				url: app.serverlocation + "smiley/",
-				type: "GET",
-				data: serializedData
+				type: "POST",
+				data: serializedData,
+				dataType: "json"
 			})
 			.done(function (response, textStatus, jqXHR){
-				var resp = $.parseJSON(response);
+				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
 					app.macid = resp.macid;
+					app.showAlert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
 					app.showMainPage();
 				} else {
 					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
@@ -122,35 +127,34 @@ var app = {
 		$(".header").html(this.divLoginHeader);
 		
 		// Setup form login submit button
-		var request;
 		$("#form_login").submit(function(event) {
 			event.preventDefault();
-			
-			if (request) {	// abort any pending request
-				request.abort();
-			}
 
-			var serializedData = $(this).serialize();
+			// Get macid
+			var macid = $("#macid").val();
+			
+			// Disable inputs, during ajax request
 			var $inputs = $(this).find("input");
-			
-			$inputs.prop("disabled", true);         // disable inputs, during ajax request
+			$inputs.prop("disabled", true);         
 
-			// post data to server
-			request = $.ajax({
+			// Post data to server
+			$.ajax({
 				url: app.serverlocation + "smiley/",
-				type: "GET",
-				data: serializedData
+				type: "POST",
+				data: {action: "login", macid: macid},
+				dataType: "json"
 			})
 			.done(function (response, textStatus, jqXHR){
-				var resp = $.parseJSON(response);
+				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
-					app.macid = $("#macid").val();
+					app.macid = macid;
 					app.showMainPage();
 				} else {
 					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
 				}
 			})
 			.fail(function (jqXHR, textStatus, errorThrown){
+				alert(textStatus + " ----- " + errorThrown);
 				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
 			})
 			.always(function () {
@@ -218,27 +222,12 @@ var app = {
 		var d = new Date();
 		var datetime = d.getTime();
 		
-		// post data to server
-		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime);
-		/*$.ajax({
-			url: app.serverlocation + "smiley/",
-			type: "POST",
-			data: {action: "result", macid: app.macid, smiley: nSmiley, what: nWhat, datetime: datetime},
-			dataType: "json"
-		})
-		.done(function (response, textStatus, jqXHR){
-			var resp = $.parseJSON(response);
-			if (resp.result != "ok") {
-				app.saveEntryToLocalStorage(app.macid, nSmiley, nWhat, datetime);
-			}
-		})
-		.fail(function (jqXHR, textStatus, errorThrown){
-			app.saveEntryToLocalStorage(app.macid, nSmiley, nWhat, datetime);
-		});*/
-		
-		setTimeout(function(){
-			app.showMainPage();
-		}, 3000);
+		// Post data to server
+		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
+			setTimeout(function(){
+				app.showMainPage();
+			}, 3000);
+		});
 	},
 	
 	
@@ -247,7 +236,7 @@ var app = {
 	//////////////////////////////////////////
 	
 	// send a single result to the server
-	sendResultToServer: function(macid, smiley, what, datetime) {
+	sendResultToServer: function(macid, smiley, what, datetime, callback) {
 		$.ajax({
 			url: app.serverlocation + "smiley/",
 			type: "POST",
@@ -255,55 +244,61 @@ var app = {
 			dataType: "json"
 		})
 		.done(function (response, textStatus, jqXHR){
-			var resp = $.parseJSON(response);
+			var resp = JSON.parse(JSON.stringify(response));
 			if (resp.result != "ok") {
 				app.saveEntryToLocalStorage(macid, smiley, what, datetime);
 			}
+			callback();
 		})
 		.fail(function (jqXHR, textStatus, errorThrown){
 			app.saveEntryToLocalStorage(macid, smiley, what, datetime);
+			callback();
 		});
 	},
 	
 	// Commit the entries that have not been sent because of connectivity issues
 	commitEntriesFromLocalStorage: function(callback) {
-		// Get local storage entries
-		var entries = JSON.parse(localStorage.getItem("entries"));
-		// Backup results
-		localStorage.setItem("backup_entries", JSON.stringify(entries));
-		// Clear local storage entries
-		localStorage.setItem("entries", JSON.stringify([]));
-		
-		if (entries !== null) {
-			var index;
-			var ent;
-			for (index = 0; index < entries.length; index++) {
-				ent = entries[index];
-				
-				sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime);
+		if(typeof(Storage)!=="undefined") {
+			// Get local storage entries
+			var entries = JSON.parse(localStorage.getItem("entries"));
+			// Backup results
+			localStorage.setItem("backup_entries", JSON.stringify(entries));
+			// Clear local storage entries
+			localStorage.setItem("entries", JSON.stringify([]));
+			
+			if (entries !== null) {
+				var index;
+				var ent;
+				for (index = 0; index < entries.length; index++) {
+					ent = entries[index];
+					
+					sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime, null);
+				}
 			}
+			
+			callback();
 		}
-		
-		callback();
 	},
 	
 	// Save an entry to local storage
 	saveEntryToLocalStorage: function(macid, smiley, what, datetime) {
-		var ent = {
-			macid: macid,
-			smiley: smiley,
-			what: what,
-			datetime: datetime
-		}
-	
-		var entries = JSON.parse(localStorage.getItem("entries"));
-	
-		if (entries == null) {
-			entries = [];
-		} 
-		entries.push(ent);
+		if(typeof(Storage)!=="undefined") {
+			var ent = {
+				macid: macid,
+				smiley: smiley,
+				what: what,
+				datetime: datetime
+			}
+		
+			var entries = JSON.parse(localStorage.getItem("entries"));
+		
+			if (entries == null) {
+				entries = [];
+			} 
+			entries.push(ent);
 
-		localStorage.setItem("entries", JSON.stringify(entries));
+			localStorage.setItem("entries", JSON.stringify(entries));
+		}
 	},
 	
 	// Native alerts
@@ -313,10 +308,10 @@ var app = {
 		} else {
 			alert(title ? (title + ": " + message) : message);
 		}
-	},
+	}
 	
 	
-	
+	/*
 	//////////////////////////////////////////
 	//// CORDOVA
 	//////////////////////////////////////////
@@ -337,5 +332,5 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         console.log('Received Event: ' + id);
-    }
+    }*/
 };
