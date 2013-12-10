@@ -1,29 +1,8 @@
-﻿/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
+﻿var app = {
 	//////////////////////////////////////////
 	//// INITIALIZE
 	//////////////////////////////////////////
-    initialize: function() {
-        // Setup Cordova events
-		//this.bindEvents();
-
+    init: function() {
 		// Setup parameters
 		this.serverlocation = "http://localhost/";
 		
@@ -57,7 +36,7 @@ var app = {
 				nr = entries.length;
 			} 
 		} else {
-			app.showAlert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt.");
+			alert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt.");
 		}
 		$("#commit_button").html("Indsend (" + nr + ")");
 		
@@ -106,7 +85,7 @@ var app = {
 				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
 					app.macid = resp.macid;
-					app.showAlert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
+					alert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
 					app.showMainPage();
 				} else {
 					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
@@ -214,6 +193,12 @@ var app = {
 			else
 				$(this).addClass("img_smiley_hide");
 		});
+
+		// Timeout hack: see if #what_div exists...
+		setTimeout(function(){
+			if ($("#what_div").length > 0)
+				app.showMainPage();
+		}, 10000);		
 	},
 	registerResult: function(nSmiley, nWhat) {
 		$(".header").html("");
@@ -300,37 +285,4 @@ var app = {
 			localStorage.setItem("entries", JSON.stringify(entries));
 		}
 	},
-	
-	// Native alerts
-	showAlert: function (message, title) {
-		if (navigator.notification) {
-			navigator.notification.alert(message, null, title, 'OK');
-		} else {
-			alert(title ? (title + ": " + message) : message);
-		}
-	}
-	
-	
-	/*
-	//////////////////////////////////////////
-	//// CORDOVA
-	//////////////////////////////////////////
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        console.log('Received Event: ' + id);
-    }*/
 };
