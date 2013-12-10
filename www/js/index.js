@@ -40,6 +40,17 @@ var app = {
 	showWelcomePage: function() {
 		$(".main").html("");
 		$(".header").html(this.divWelcomeHeader);
+
+		// Display number of uncommitted entries on button
+		var nr = 0;
+		if(typeof(Storage)!=="undefined") {
+			// GET FROM LOCALSTORAGE
+			var entries = JSON.parse(localStorage.getItem("entries"));
+			if (entries !== null) {
+				nr = entries.length;
+			} 
+		}
+		$("#commit_button").html("Indsend (" + nr + ")");
 		
 		$("#login_button").on("click", function() {
 			app.showLoginPage();
@@ -47,6 +58,21 @@ var app = {
 		$("#reg_button").on("click", function() {
 			app.showRegisterPage();
 		});
+		$("#commit_button").on("click", function() {
+			app.commitEntriesFromLocalStorage(function() {
+				// Display number of uncommitted entries on button
+				var nr = 0;
+				if(typeof(Storage)!=="undefined") {
+					// GET FROM LOCALSTORAGE
+					var entries = JSON.parse(localStorage.getItem("entries"));
+					if (entries !== null) {
+						nr = entries.length;
+					} 
+				}
+				$("#commit_button").html("Indsend (" + nr + ")");
+			});
+			app.showAlert("Done");
+		});		
 	},
 	showRegisterPage: function() {
 		$(".main").html(this.divRegisterBody);
@@ -159,6 +185,17 @@ var app = {
 		$(".header").html("");
 		$(".main").html(this.divWhatBody);
 		
+		// Setup event listeners
+		$("#choice1").on("click", function() {
+			app.registerResult(nSmiley, 1);
+		});
+		$("#choice2").on("click", function() {
+			app.registerResult(nSmiley, 2);
+		});
+		$("#choice3").on("click", function() {
+			app.registerResult(nSmiley, 3);
+		});		
+		
 		// Text
 		if (nSmiley < 3) {
 			$("#what_div").html("<h1>Hvad var godt?</h1>");
@@ -173,17 +210,6 @@ var app = {
 			else
 				$(this).addClass("img_smiley_hide");
 		});
-		
-		// Setup event listeners
-		$("#choice1").on("click", function() {
-			app.registerResult(nSmiley, 1);
-		});
-		$("#choice2").on("click", function() {
-			app.registerResult(nSmiley, 2);
-		});
-		$("#choice3").on("click", function() {
-			app.registerResult(nSmiley, 3);
-		});		
 	},
 	registerResult: function(nSmiley, nWhat) {
 		$(".header").html("");
@@ -202,19 +228,80 @@ var app = {
 		})
 		.done(function (response, textStatus, jqXHR){
 			var resp = $.parseJSON(response);
-			if (resp.result == "ok") {
-				
-			} else {
-				alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+			if (resp.result != "ok") {
+				app.saveEntryToLocalStorage(app.macid, nSmiley, nWhat, datetime);
 			}
 		})
 		.fail(function (jqXHR, textStatus, errorThrown){
-			alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
+			app.saveEntryToLocalStorage(app.macid, nSmiley, nWhat, datetime);
 		});
 
 		setTimeout(function(){
 			app.showMainPage();
 		}, 3000);
+	},
+	// Commit the entries that have not been sent because of connectivity issues
+	commitEntriesFromLocalStorage: function(callback) {
+		// Get local storage entries
+		var entries = JSON.parse(localStorage.getItem("entries"));
+		// Backup results
+		localStorage.setItem("backup_entries", JSON.stringify(entries));
+		// Clear local storage entries
+		localStorage.setItem("entries", JSON.stringify([]));
+		
+		if (entries !== null) {
+			var index;
+			var ent;
+			for (index = 0; index < entries.length; index++) {
+				ent = entries[index];
+				
+				var serializedData = "action=result&macid=" + ent.macid + "&smiley=" + ent.smiley + "&what=" + ent.what + "&datetime=" + ent.datetime;
+				
+				// post data to server
+				request = $.ajax({
+					url: app.serverlocation + "smiley/",
+					type: "GET",
+					data: serializedData
+				})
+				.done(function (response, textStatus, jqXHR){
+					var resp = $.parseJSON(response);
+					if (resp.result != "ok") {
+						app.saveEntryToLocalStorage(ent.macid, ent.smiley, ent.what, ent.datetime);
+					}
+				})
+				.fail(function (jqXHR, textStatus, errorThrown){
+					app.saveEntryToLocalStorage(ent.macid, ent.smiley, ent.what, ent.datetime);
+				});
+			}
+		}
+		
+		callback();
+	},
+	// Save an entry to local storage
+	saveEntryToLocalStorage: function(macid, smiley, what, datetime) {
+		var ent = {
+			macid: macid,
+			smiley: smiley,
+			what: what,
+			datetime: datetime
+		}
+	
+		var entries = JSON.parse(localStorage.getItem("entries"));
+	
+		if (entries == null) {
+			entries = [];
+		} 
+		entries.push(ent);
+
+		localStorage.setItem("entries", JSON.stringify(entries));
+	},
+	// Native alerts
+	showAlert: function (message, title) {
+		if (navigator.notification) {
+			navigator.notification.alert(message, null, title, 'OK');
+		} else {
+			alert(title ? (title + ": " + message) : message);
+		}
 	},
 	
 	//// CORDOVA
