@@ -170,13 +170,13 @@
 		
 		// Setup event listeners
 		$("#choice1").on("click", function() {
-			app.registerResult(nSmiley, 1);
+			app.showResultPage(nSmiley, 1);
 		});
 		$("#choice2").on("click", function() {
-			app.registerResult(nSmiley, 2);
+			app.showResultPage(nSmiley, 2);
 		});
 		$("#choice3").on("click", function() {
-			app.registerResult(nSmiley, 3);
+			app.showResultPage(nSmiley, 3);
 		});		
 		
 		// Text
@@ -200,7 +200,7 @@
 				app.showMainPage();
 		}, 10000);		
 	},
-	registerResult: function(nSmiley, nWhat) {
+	showResultPage: function(nSmiley, nWhat) {
 		$(".header").html("");
 		$(".main").html(this.divThanksBody);
 
@@ -246,8 +246,6 @@
 		if(typeof(Storage)!=="undefined") {
 			// Get local storage entries
 			var entries = JSON.parse(localStorage.getItem("entries"));
-			// Backup results
-			localStorage.setItem("backup_entries", JSON.stringify(entries));
 			// Clear local storage entries
 			localStorage.setItem("entries", JSON.stringify([]));
 			
