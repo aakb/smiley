@@ -218,13 +218,13 @@ var app = {
 		var d = new Date();
 		var datetime = d.getTime();
 		
-		var serializedData = "action=result&macid=" + app.macid + "&smiley=" + nSmiley + "&what=" + nWhat + "&datetime=" + datetime;
-		
 		// post data to server
-		request = $.ajax({
+		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime);
+		/*$.ajax({
 			url: app.serverlocation + "smiley/",
-			type: "GET",
-			data: serializedData
+			type: "POST",
+			data: {action: "result", macid: app.macid, smiley: nSmiley, what: nWhat, datetime: datetime},
+			dataType: "json"
 		})
 		.done(function (response, textStatus, jqXHR){
 			var resp = $.parseJSON(response);
@@ -234,12 +234,37 @@ var app = {
 		})
 		.fail(function (jqXHR, textStatus, errorThrown){
 			app.saveEntryToLocalStorage(app.macid, nSmiley, nWhat, datetime);
-		});
-
+		});*/
+		
 		setTimeout(function(){
 			app.showMainPage();
 		}, 3000);
 	},
+	
+	
+	//////////////////////////////////////////
+	//// HELPER FUNCTIONS
+	//////////////////////////////////////////
+	
+	// send a single result to the server
+	sendResultToServer: function(macid, smiley, what, datetime) {
+		$.ajax({
+			url: app.serverlocation + "smiley/",
+			type: "POST",
+			data: {action: "result", macid: macid, smiley: smiley, what: what, datetime: datetime},
+			dataType: "json"
+		})
+		.done(function (response, textStatus, jqXHR){
+			var resp = $.parseJSON(response);
+			if (resp.result != "ok") {
+				app.saveEntryToLocalStorage(macid, smiley, what, datetime);
+			}
+		})
+		.fail(function (jqXHR, textStatus, errorThrown){
+			app.saveEntryToLocalStorage(macid, smiley, what, datetime);
+		});
+	},
+	
 	// Commit the entries that have not been sent because of connectivity issues
 	commitEntriesFromLocalStorage: function(callback) {
 		// Get local storage entries
@@ -255,28 +280,13 @@ var app = {
 			for (index = 0; index < entries.length; index++) {
 				ent = entries[index];
 				
-				var serializedData = "action=result&macid=" + ent.macid + "&smiley=" + ent.smiley + "&what=" + ent.what + "&datetime=" + ent.datetime;
-				
-				// post data to server
-				request = $.ajax({
-					url: app.serverlocation + "smiley/",
-					type: "GET",
-					data: serializedData
-				})
-				.done(function (response, textStatus, jqXHR){
-					var resp = $.parseJSON(response);
-					if (resp.result != "ok") {
-						app.saveEntryToLocalStorage(ent.macid, ent.smiley, ent.what, ent.datetime);
-					}
-				})
-				.fail(function (jqXHR, textStatus, errorThrown){
-					app.saveEntryToLocalStorage(ent.macid, ent.smiley, ent.what, ent.datetime);
-				});
+				sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime);
 			}
 		}
 		
 		callback();
 	},
+	
 	// Save an entry to local storage
 	saveEntryToLocalStorage: function(macid, smiley, what, datetime) {
 		var ent = {
@@ -295,6 +305,7 @@ var app = {
 
 		localStorage.setItem("entries", JSON.stringify(entries));
 	},
+	
 	// Native alerts
 	showAlert: function (message, title) {
 		if (navigator.notification) {
@@ -304,7 +315,11 @@ var app = {
 		}
 	},
 	
+	
+	
+	//////////////////////////////////////////
 	//// CORDOVA
+	//////////////////////////////////////////
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
