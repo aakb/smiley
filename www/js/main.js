@@ -64,6 +64,13 @@
 		$(".main").html(this.divRegisterBody);
 		$(".header").html(this.divRegisterHeader);
 
+		// Custom validation of email repeat
+		$("#mail_repeat").on("change", function() {
+			if ($(this).val() !== $("#mail").first().val()) {
+				document.getElementById("mail_repeat").setCustomValidity("Emails er ikke ens");
+			}
+		});
+
 		// Setup form register submit button
 		$("#form_register").submit(function(event) {
 			event.preventDefault();
@@ -97,18 +104,17 @@
 			.always(function () {
 				$inputs.prop("disabled", false);
 			});
-			app.showMainPage();
 		});
 	},
 	showLoginPage: function() {
 		// Change HTML content
 		$(".main").html(this.divLoginBody);
 		$(".header").html(this.divLoginHeader);
-		
-		// Setup form login submit button
+
+		// Setup form register submit button
 		$("#form_login").submit(function(event) {
 			event.preventDefault();
-
+			
 			// Get macid
 			var macid = $("#macid").val();
 			

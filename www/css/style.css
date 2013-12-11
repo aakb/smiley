@@ -100,14 +100,14 @@ h1 {
 	display: inline-block;
 }
 
-input[type=text] {
+input {
 	padding:5px; border:2px solid #3792d5; 
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	width: 300px;
 	margin-left: 30px;
 }
-input[type=text]:focus {
+input focus {
 	border-color:#ff8700;
 }
 input[type=submit] {
@@ -121,3 +121,4 @@ input[type=submit] {
 	color: #ffffff;
 	font-size: larger;
 }
+

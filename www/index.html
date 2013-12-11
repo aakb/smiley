@@ -35,10 +35,10 @@
 					<table>
 						<tr>
 							<td>ID</td>
-							<td><input id="macid" type="text" name="macid"/></td>
+							<td><input id="macid" type="text" required /><br/></td>
 						</tr>
 						<tr>
-							<input type="hidden" name="action" value="login"/>
+							<input type="hidden" id="action" value="login"/>
 							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"/></div></td>
 						</tr>
 					</table>
@@ -55,34 +55,34 @@
 					<table>
 						<tr>
 							<td>Ansvarlig kontaktperson</td>
-							<td><input type="text" name="contact"/></td>
+							<td><input type="text" id="contact" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Mailadresse</td>
-							<td><input type="text" name="mail"/></td>
+							<td><input type="email" id="mail" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Gentag mailadresse</td>
-							<td><input type="text" name="mail_repeat"/></td>
+							<td><input type="email" id="mail_repeat" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Magistratsafdeling</td>
-							<td><input type="text" name="magafd"/></td>
+							<td><input type="text" id="magafd" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Forvaltning</td>
-							<td><input type="text" name="forvalt"/></td>
+							<td><input type="text" id="forvalt" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Fysisk placering</td>
-							<td><input type="text" name="place"/></td>
+							<td><input type="text" id="place" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Navn for enhed</td>
-							<td><input type="text" name="name"/></td>
+							<td><input type="text" id="name" required /><br/></td>
 						</tr>						
 						<tr>
-							<input type="hidden" name="action" value="register"/>
+							<input type="hidden" id="action" value="register"/>
 							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"></div></td>
 						</tr>
 					</table>
