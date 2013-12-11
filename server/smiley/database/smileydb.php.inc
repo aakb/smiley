@@ -22,7 +22,7 @@ class SmileyDB {
 			echo json_encode($result);
 			return;
 		} else {
-			$result = array('result'=>'error_does_not_exist');
+			$result = array('result'=>'error', 'msg'=>'error_wrong_id');
 			echo json_encode($result);
 			return;
 		}
@@ -39,7 +39,7 @@ class SmileyDB {
 																'name' 		=> $name));
 		$count = $query->rowCount();
 		if ($count > 0) {		// machine already exists
-			$result = array('result'=>'error_machine_already_exist');
+			$result = array('result'=>'error', 'msg'=>'error_machine_already_exists');
 			echo json_encode($result);
 			return;
 		}
@@ -75,7 +75,7 @@ class SmileyDB {
 		$statement = 'SELECT * FROM machine WHERE macid = :macid';
 		$query = $this->connection->execute($statement, array('macid' => $macid));
 		if ($query->rowCount() != 1) {		// machine does not exist
-			$result = array('result'=>'error_machine_does_not_exist');
+			$result = array('result'=>'error', 'msg'=>'error_machine_already_exists');
 			echo json_encode($result);
 			return;
 		}

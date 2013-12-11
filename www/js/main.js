@@ -68,6 +68,8 @@
 		$("#mail_repeat").on("change", function() {
 			if ($(this).val() !== $("#mail").first().val()) {
 				document.getElementById("mail_repeat").setCustomValidity("Emails er ikke ens");
+			} else {
+				document.getElementById("mail_repeat").setCustomValidity("");
 			}
 		});
 
@@ -94,8 +96,12 @@
 					app.macid = resp.macid;
 					alert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
 					app.showMainPage();
-				} else {
-					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+				} else if (resp.result == "error") {
+					if (resp.msg = "error_machine_already_exists") {
+						alert("Fejl! Den maskine er allerede oprettet.");
+					} else {
+						alert("Der skete en fejl. Prøv igen!");
+					}
 				}
 			})
 			.fail(function (jqXHR, textStatus, errorThrown){
@@ -134,12 +140,15 @@
 				if (resp.result == "ok") {
 					app.macid = macid;
 					app.showMainPage();
-				} else {
-					alert("Der skete en fejl: " + resp.result + ". Prøv igen!");
+				} else if (resp.result == "error") {
+					if (resp.msg = "error_wrong_id") {
+						alert("Fejl! Ukendt ID.");
+					} else {
+						alert("Der skete en fejl. Prøv igen!");
+					}
 				}
 			})
 			.fail(function (jqXHR, textStatus, errorThrown){
-				alert(textStatus + " ----- " + errorThrown);
 				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
 			})
 			.always(function () {
