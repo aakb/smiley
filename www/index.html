@@ -35,10 +35,10 @@
 					<table>
 						<tr>
 							<td>ID</td>
-							<td><input id="macid" type="text" required /><br/></td>
+							<td><input type="text" id="macid" name="macid" required /><br/></td>
 						</tr>
 						<tr>
-							<input type="hidden" id="action" value="login"/>
+							<input type="hidden" id="action" name="action" value="login"/>
 							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"/></div></td>
 						</tr>
 					</table>
@@ -55,11 +55,11 @@
 					<table>
 						<tr>
 							<td>Ansvarlig kontaktperson</td>
-							<td><input type="text" id="contact" required /><br/></td>
+							<td><input type="text" id="contact" name="contact" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Mailadresse</td>
-							<td><input type="email" id="mail" required /><br/></td>
+							<td><input type="email" id="mail" name="mail" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Gentag mailadresse</td>
@@ -67,23 +67,23 @@
 						</tr>
 						<tr>
 							<td>Magistratsafdeling</td>
-							<td><input type="text" id="magafd" required /><br/></td>
+							<td><input type="text" id="magafd" name="magafd" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Forvaltning</td>
-							<td><input type="text" id="forvalt" required /><br/></td>
+							<td><input type="text" id="forvalt" name="forvalt" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Fysisk placering</td>
-							<td><input type="text" id="place" required /><br/></td>
+							<td><input type="text" id="place" name="place" required /><br/></td>
 						</tr>
 						<tr>
 							<td>Navn for enhed</td>
-							<td><input type="text" id="name" required /><br/></td>
+							<td><input type="text" id="name" name="name" required /><br/></td>
 						</tr>						
 						<tr>
-							<input type="hidden" id="action" value="register"/>
-							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button"></div></td>
+							<input type="hidden" id="action" name="action" value="register" />
+							<td colspan="2"><div class="text_center"><input type="submit" value="Bekræft" class="input_button" /></div></td>
 						</tr>
 					</table>
 				</form>

@@ -78,7 +78,7 @@
 			event.preventDefault();
 			
 			var serializedData = $(this).serializeArray();
-
+			
 			// Disable inputs, during ajax request
 			var $inputs = $(this).find("input");
 			$inputs.prop("disabled", true);
@@ -304,5 +304,5 @@
 
 			localStorage.setItem("entries", JSON.stringify(entries));
 		}
-	},
+	}
 };
