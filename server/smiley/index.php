@@ -48,6 +48,9 @@
 		
 			$smileyDB->insertResult($macid, $datetime, $smiley, $what);
 			break;
+		case "data":
+			$smileyDB->getData("2afaj1", 1386749873647, 1386753323955);
+			break;
 		default:
 			break;
 	}

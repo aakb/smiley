@@ -90,6 +90,13 @@ class SmileyDB {
 		$result = array('result'=>'ok');
 		echo json_encode($result);															
 	}
+	
+	public function getData($macid, $start, $end) {
+		$statement = 'SELECT * FROM data WHERE macid = :macid';
+		$query = $this->connection->execute($statement, array('macid' => $macid));
+		
+		echo $query;
+	}
 }
 
 ?>
