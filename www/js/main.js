@@ -1,10 +1,10 @@
 ﻿var app = {
 	//////////////////////////////////////////
-	//// INITIALIZE
+	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
 		// Setup parameters
-		this.serverlocation = "http://localhost/";
+		this.serverlocation = "http://localhost/smiley/";
 		
 		// Setup HTML pages to insert in header and body
 		this.divWelcomeHeader = $("#div_welcome_header").html();
@@ -76,7 +76,7 @@
 
 			// Post data to server
 			$.ajax({
-				url: app.serverlocation + "smiley/",
+				url: app.serverlocation,
 				type: "POST",
 				data: serializedData,
 				dataType: "json"
@@ -118,7 +118,7 @@
 
 			// Post data to server
 			$.ajax({
-				url: app.serverlocation + "smiley/",
+				url: app.serverlocation,
 				type: "POST",
 				data: {action: "login", macid: macid},
 				dataType: "json"
@@ -223,7 +223,7 @@
 	// send a single result to the server
 	sendResultToServer: function(macid, smiley, what, datetime, callback) {
 		$.ajax({
-			url: app.serverlocation + "smiley/",
+			url: app.serverlocation,
 			type: "POST",
 			data: {action: "result", macid: macid, smiley: smiley, what: what, datetime: datetime},
 			dataType: "json"
@@ -240,6 +240,19 @@
 			callback();
 		});
 	},
+
+	// Commit single entry, recursive until empty list
+	commitListRecurse: function(list, callback) {
+		if (list.length > 0) {
+			var ent = list.pop();
+			
+			app.sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime, function() {
+				app.commitListRecurse(list, callback);
+			});
+		} else {
+			callback();
+		}
+	},
 	
 	// Commit the entries that have not been sent because of connectivity issues
 	commitEntriesFromLocalStorage: function(callback) {
@@ -250,16 +263,10 @@
 			localStorage.setItem("entries", JSON.stringify([]));
 			
 			if (entries !== null) {
-				var index;
-				var ent;
-				for (index = 0; index < entries.length; index++) {
-					ent = entries[index];
-					
-					sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime, null);
-				}
+				app.commitListRecurse(entries, callback);
+			} else {
+				callback();
 			}
-			
-			callback();
 		}
 	},
 	
