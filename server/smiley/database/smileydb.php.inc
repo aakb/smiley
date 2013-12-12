@@ -92,10 +92,13 @@ class SmileyDB {
 	}
 	
 	public function getData($macid, $start, $end) {
-		$statement = 'SELECT * FROM data WHERE macid = :macid';
-		$query = $this->connection->execute($statement, array('macid' => $macid));
+		$statement = 'SELECT datetime,smiley,what FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end';
+		$query = $this->connection->execute($statement, array(	'macid' => $macid,
+																'start' => $start,
+																'end'	=> $end));
 		
-		echo $query;
+		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($rows);
 	}
 }
 
