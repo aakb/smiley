@@ -3,29 +3,32 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		this.data = app.getData();
+		app.getData();
 		this.serverlocation = "http://localhost/smiley/";
 	
 		app.displayPie("pie", 18.373, 18.686, 2.867, 23.991, 9.592);
 		app.displayChart("chart", "#00af00", 0, 2, 1, 5, 4, 3, 5);
 	},
 	getData: function(){
-		var end = new Date();
+/*		var end = new Date();
 		var start = new Date(end.getTime() - 1000 * 60 * 60 * 24 * 7); 
 	
+		var data = {"action": "data", "macid": "2afaj1", "start": start.getTime(), "end": end.getTime()};
+		console.log(data);
+		
 		$.ajax({
-				url: app.serverlocation,
-				type: "POST",
-				data: {action: "data", macid: "2afaj1", start: start.getTime(), end: end.getTime()},
-				dataType: "json"
-			})
-			.done(function (response, textStatus, jqXHR){
-				var resp = JSON.parse(JSON.stringify(response));
-				console.debug(resp);
-			})
-			.fail(function (jqXHR, textStatus, errorThrown){
-				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
-			});
+			url: app.serverlocation,
+			type: "POST",
+			data: data,
+			dataType: "json"
+		})
+		.done(function (response, textStatus, jqXHR){
+			var resp = JSON.parse(JSON.stringify(response));
+			console.log(resp);
+		})
+		.fail(function (jqXHR, textStatus, errorThrown){
+			console.log(textStatus + " - " + errorThrown);
+		});*/
 	},
 	displayPie: function(element, s1, s2, s3, s4, s5) {
 		var paper = Raphael(element);
