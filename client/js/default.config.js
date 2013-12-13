@@ -1,3 +1,3 @@
 ﻿var config = {
-	this.serverlocation = "http://localhost/smiley/";
+	serverlocation: "http://localhost/smiley/";
 }
