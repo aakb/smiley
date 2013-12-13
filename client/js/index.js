@@ -161,11 +161,11 @@
 		});
 	},
 	showMainPage: function() {
+		app.clearClickHandlers();
+		
 		// Change HTML content
 		$(".header").html("");
 		$(".main").html(this.divMainBody);
-		
-		app.clearClickHandlers();
 		
 		// Setup event listeners
 		$("#smiley1").on("touchstart click", function(e) {
@@ -190,12 +190,12 @@
 		});
 	},
 	showWhatPage: function(nSmiley) {
+		app.clearClickHandlers();
+		
 		// Change HTML content
 		$(".header").html("");
 		$(".main").html(this.divWhatBody);
 
-		app.clearClickHandlers();
-		
 		// Setup event listeners
 		$("#choice1").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
@@ -232,6 +232,8 @@
 		}, 10000);		
 	},
 	showResultPage: function(nSmiley, nWhat) {
+		app.clearClickHandlers();
+		
 		$(".header").html("");
 		$(".main").html(this.divThanksBody);
 
@@ -242,7 +244,7 @@
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
 			setTimeout(function(){
 				app.showMainPage();
-			}, 3000);
+			}, 4000);
 		});
 	},
 	
