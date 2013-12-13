@@ -1,7 +1,7 @@
 <?php
 
-include_once dirname(__FILE__).'/../utils/conf.php.inc';
-include_once dirname(__FILE__).'/pdo_mysql.php.inc';
+include_once dirname(__FILE__).'/../utils/conf.php';
+include_once dirname(__FILE__).'/pdo_mysql.php';
 
 class SmileyDB {
 	// Construct and Destruct
@@ -98,6 +98,7 @@ class SmileyDB {
 																'end'	=> $end));
 		
 		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+		header('Content-type: application/json');
 		echo json_encode($rows);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__FILE__).'/../utils/conf.php.inc';
+include_once dirname(__FILE__).'/../utils/conf.php';
 
 /****************************************************
  * This class is implemented as a singleton pattern *

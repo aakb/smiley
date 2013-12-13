@@ -1,8 +1,8 @@
 Smiley
 -----------
-version 1:
-www/
-	contains the website code
-server/
-	contains the server code
+Setup:
+Create your own "database/settings.php.inc" file (from "database/default.settings.php.inc") with database settings
+Create your own "www/js/config.js" file (from "www/js/default.config.js") with serverlocation
+
+The web client is located in www/
 

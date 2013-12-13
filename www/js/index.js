@@ -3,9 +3,6 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		// Setup parameters
-		this.serverlocation = "http://localhost/smiley/";
-		
 		// Setup HTML pages to insert in header and body
 		this.divWelcomeHeader = $("#div_welcome_header").html();
 		this.divLoginBody = $("#div_login_body").html();
@@ -85,7 +82,7 @@
 
 			// Post data to server
 			$.ajax({
-				url: app.serverlocation,
+				url: config.serverlocation,
 				type: "POST",
 				data: serializedData,
 				dataType: "json"
@@ -130,7 +127,7 @@
 
 			// Post data to server
 			$.ajax({
-				url: app.serverlocation,
+				url: config.serverlocation,
 				type: "POST",
 				data: {action: "login", macid: macid},
 				dataType: "json"
@@ -238,7 +235,7 @@
 	// send a single result to the server
 	sendResultToServer: function(macid, smiley, what, datetime, callback) {
 		$.ajax({
-			url: app.serverlocation,
+			url: config.serverlocation,
 			type: "POST",
 			data: {action: "result", macid: macid, smiley: smiley, what: what, datetime: datetime},
 			dataType: "json"

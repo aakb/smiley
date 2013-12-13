@@ -10,7 +10,7 @@ class Conf {
 
   // Load configuration
   public function __construct() {
-    include_once dirname(__FILE__).'/settings.php.inc';    
+    include_once dirname(__FILE__).'/settings.php';    
     $this->database = $settings['database'];
     $this->server = $settings['server'];
     $this->user = $settings['user'];
