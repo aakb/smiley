@@ -15,10 +15,9 @@
 		
 		app.showWelcomePage();
 
-		// Prevent touch events
-		//$('html, body').on('touchmove', function(e){ 
-		//	e.preventDefault(); 
-		//});
+		$(document).on('touchmove', function(e) {
+			e.preventDefault();
+		});
 	},
 	
 	//////////////////////////////////////////
