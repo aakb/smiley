@@ -12,6 +12,13 @@
     width:100%;
 	color: #3792d5;/*#345a8a;*/
 	/*max-width: 800px;*/
+	overflow: auto;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 h1 {
