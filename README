@@ -6,3 +6,4 @@ Create your own "www/js/config.js" file (from "www/js/default.config.js") with s
 
 The web client is located in www/
 
+The SQL to setup the DB is here: "database/init_database.sql"
