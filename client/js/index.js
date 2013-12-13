@@ -229,7 +229,7 @@
 		setTimeout(function(){
 			if ($("#what_div").length > 0)
 				app.showMainPage();
-		}, 10000);		
+		}, 10000);
 	},
 	showResultPage: function(nSmiley, nWhat) {
 		app.clearClickHandlers();
