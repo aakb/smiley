@@ -41,13 +41,13 @@
 		}
 		$("#commit_button").html("Indsend (" + nr + ")");
 		
-		$("#login_button").on("click touchstart", function() {
+		$("#login_button").on("click", function() {
 			app.showLoginPage();
 		});
-		$("#reg_button").on("click touchstart", function() {
+		$("#reg_button").on("click", function() {
 			app.showRegisterPage();
 		});
-		$("#commit_button").on("click touchstart", function() {
+		$("#commit_button").on("click", function() {
 			app.commitEntriesFromLocalStorage(function() {
 				// Display number of uncommitted entries on button
 				var nr = 0;
@@ -163,19 +163,19 @@
 		$(".main").html(this.divMainBody);
 		
 		// Setup event listeners
-		$("#smiley1").on("click touchstart", function() {
+		$("#smiley1").on("click", function() {
 			app.showWhatPage(1);
 		});
-		$("#smiley2").on("click touchstart", function() {
+		$("#smiley2").on("click", function() {
 			app.showWhatPage(2);
 		});
-		$("#smiley3").on("click touchstart", function() {
+		$("#smiley3").on("click", function() {
 			app.showWhatPage(3);
 		});
-		$("#smiley4").on("click touchstart", function() {
+		$("#smiley4").on("click", function() {
 			app.showWhatPage(4);
 		});
-		$("#smiley5").on("click touchstart", function() {
+		$("#smiley5").on("click", function() {
 			app.showWhatPage(5);
 		});
 	},
@@ -185,13 +185,13 @@
 		$(".main").html(this.divWhatBody);
 		
 		// Setup event listeners
-		$("#choice1").on("click touchstart", function() {
+		$("#choice1").on("click", function() {
 			app.showResultPage(nSmiley, 1);
 		});
-		$("#choice2").on("click touchstart", function() {
+		$("#choice2").on("click", function() {
 			app.showResultPage(nSmiley, 2);
 		});
-		$("#choice3").on("click touchstart", function() {
+		$("#choice3").on("click", function() {
 			app.showResultPage(nSmiley, 3);
 		});		
 		
