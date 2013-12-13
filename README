@@ -2,8 +2,8 @@ Smiley
 -----------
 Setup:
 Create your own "database/settings.php" file (from "database/default.settings.php") with database settings
-Create your own "www/js/config.js" file (from "www/js/default.config.js") with serverlocation
+Create your own "client/js/config.js" file (from "client/js/default.config.js") with serverlocation
 
-The web client is located in www/
+The web client is located in client/
 
 The SQL to setup the DB is here: "database/init_database.sql"
