@@ -14,8 +14,11 @@
 		this.divThanksBody = $("#div_thanks_body").html();
 		
 		app.showWelcomePage();
-		
-		$("body").on("touchmove", function() {});
+
+		// Prevent touch events
+		$('html, body').on('touchstart touchmove', function(e){ 
+			e.preventDefault(); 
+		});
 	},
 	
 	//////////////////////////////////////////
