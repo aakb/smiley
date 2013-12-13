@@ -41,13 +41,16 @@
 		}
 		$("#commit_button").html("Indsend (" + nr + ")");
 		
-		$("#login_button").on("click", function() {
+		$("#login_button").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showLoginPage();
 		});
-		$("#reg_button").on("click", function() {
+		$("#reg_button").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showRegisterPage();
 		});
-		$("#commit_button").on("click", function() {
+		$("#commit_button").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.commitEntriesFromLocalStorage(function() {
 				// Display number of uncommitted entries on button
 				var nr = 0;
@@ -162,20 +165,27 @@
 		$(".header").html("");
 		$(".main").html(this.divMainBody);
 		
+		app.clearClickHandlers();
+		
 		// Setup event listeners
-		$("#smiley1").on("touchend", function() {
+		$("#smiley1").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(1);
 		});
-		$("#smiley2").on("click", function() {
+		$("#smiley2").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(2);
 		});
-		$("#smiley3").on("click", function() {
+		$("#smiley3").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(3);
 		});
-		$("#smiley4").on("click", function() {
+		$("#smiley4").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(4);
 		});
-		$("#smiley5").on("click", function() {
+		$("#smiley5").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(5);
 		});
 	},
@@ -183,15 +193,20 @@
 		// Change HTML content
 		$(".header").html("");
 		$(".main").html(this.divWhatBody);
+
+		app.clearClickHandlers();
 		
 		// Setup event listeners
-		$("#choice1").on("click", function() {
+		$("#choice1").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showResultPage(nSmiley, 1);
 		});
-		$("#choice2").on("click", function() {
+		$("#choice2").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showResultPage(nSmiley, 2);
 		});
-		$("#choice3").on("click", function() {
+		$("#choice3").on("touchstart click", function(e) {
+			e.stopPropagation(); e.preventDefault();
 			app.showResultPage(nSmiley, 3);
 		});		
 		
@@ -305,5 +320,10 @@
 
 			localStorage.setItem("entries", JSON.stringify(entries));
 		}
+	},
+	
+	// Removes all on "click touchstart" event handlers
+	clearClickHandlers: function() {
+		$("#smiley1 #smiley2 #smiley3 #smiley4 #smiley5 #choice1 #choice2 #choice3").off();
 	}
 };
