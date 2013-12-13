@@ -14,6 +14,8 @@
 		this.divThanksBody = $("#div_thanks_body").html();
 		
 		app.showWelcomePage();
+		
+		$("body").on("touchmove", function() {});
 	},
 	
 	//////////////////////////////////////////
