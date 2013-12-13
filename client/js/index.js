@@ -163,7 +163,7 @@
 		$(".main").html(this.divMainBody);
 		
 		// Setup event listeners
-		$("#smiley1").on("click", function() {
+		$("#smiley1").on("touchend", function() {
 			app.showWhatPage(1);
 		});
 		$("#smiley2").on("click", function() {
