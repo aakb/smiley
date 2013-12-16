@@ -18,6 +18,17 @@
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
+
+		if(typeof(Storage)!=="undefined") {
+			var macid = localStorage.getItem("macid");
+		
+			if (macid == null) {
+				app.showWelcomePage();
+			} else {
+				this.macid = macid;
+				app.showMainPage();
+			}
+		}
 	},
 	
 	//////////////////////////////////////////
@@ -98,6 +109,7 @@
 				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
 					app.macid = resp.macid;
+					app.saveMacidToLocalStorage(macid);
 					alert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
 					app.showMainPage();
 				} else if (resp.result == "error") {
@@ -143,6 +155,7 @@
 				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
 					app.macid = macid;
+					app.saveMacidToLocalStorage(macid);
 					app.showMainPage();
 				} else if (resp.result == "error") {
 					if (resp.msg = "error_wrong_id") {
@@ -162,6 +175,7 @@
 	},
 	showMainPage: function() {
 		app.clearClickHandlers();
+		clearTimeout(app.timer);
 		
 		// Change HTML content
 		$(".header").html("");
@@ -191,6 +205,7 @@
 	},
 	showWhatPage: function(nSmiley) {
 		app.clearClickHandlers();
+		clearTimeout(app.timer);
 		
 		// Change HTML content
 		$(".header").html("");
@@ -225,14 +240,14 @@
 				$(this).addClass("img_smiley_hide");
 		});
 
-		// Timeout hack: see if #what_div exists...
-		setTimeout(function(){
-			if ($("#what_div").length > 0)
-				app.showMainPage();
+		// timeout => change page
+		app.timer = setTimeout(function(){
+			app.showMainPage();
 		}, 10000);
 	},
 	showResultPage: function(nSmiley, nWhat) {
 		app.clearClickHandlers();
+		clearTimeout(app.timer);
 		
 		$(".header").html("");
 		$(".main").html(this.divThanksBody);
@@ -242,7 +257,7 @@
 		
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
-			setTimeout(function(){
+			app.timer = setTimeout(function(){
 				app.showMainPage();
 			}, 4000);
 		});
@@ -321,6 +336,18 @@
 			entries.push(ent);
 
 			localStorage.setItem("entries", JSON.stringify(entries));
+		}
+	},
+
+	// Logout: remove macid from localStorage
+	logout: function() {
+		localStorage.removeItem("macid");
+	},
+	
+	// Save macid to localStorage
+	saveMacidToLocalStorage: function(macid) {
+		if(typeof(Storage)!=="undefined") {
+			localStorage.setItem("macid", macid);
 		}
 	},
 	
