@@ -18,7 +18,7 @@
 		$("#page_main").remove();
 		$("#page_thanks").remove();
 		
-		console.log(app.pageMain);
+		alert(app.pageWelcome);
 		
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
