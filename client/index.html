@@ -160,7 +160,10 @@
 		<script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
-			app.init();
+			$(document).ready(function() {
+				console.log("document ready");
+				app.init();
+			});
 		</script>
     </body>
 </html>
