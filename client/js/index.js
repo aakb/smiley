@@ -3,8 +3,6 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		console.log("app.init()");
-		
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
 		this.pageLogin = $("#page_login").html();
