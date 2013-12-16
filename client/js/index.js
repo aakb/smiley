@@ -40,7 +40,7 @@
 	
 	showWelcomePage: function() {
 		// Change HTML content
-		$(".main").html(this.pageWelcome);
+		$("#main").html(this.pageWelcome);
 		
 		// Display number of uncommitted entries on button
 		// Check if local storage is supported
@@ -82,7 +82,7 @@
 	
 	showRegisterPage: function() {
 		// Change HTML content
-		$(".main").html(this.pageRegister);
+		$("#main").html(this.pageRegister);
 
 		// Custom validation of email repeat
 		$("#mail_repeat").on("change", function() {
@@ -136,7 +136,7 @@
 	
 	showLoginPage: function() {
 		// Change HTML content
-		$(".main").html(this.pageLogin);
+		$("#main").html(this.pageLogin);
 
 		// Setup form register submit button
 		$("#form_login").submit(function(event) {
@@ -185,7 +185,7 @@
 		clearTimeout(app.timer);
 		
 		// Change HTML content
-		$(".main").html(this.pageMain);
+		$("#main").html(this.pageMain);
 		
 		// Hide bottom images
 		$(".img_choice").hide();
