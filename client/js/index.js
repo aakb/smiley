@@ -3,8 +3,6 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		$("#main").html("TEST");
-	
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
 		this.pageLogin = $("#page_login").html();
