@@ -92,6 +92,8 @@ class SmileyDB {
 	}
 	
 	public function getData($macid, $start, $end) {
+		// process date. from   dd/mm/yyyy to milliseconds from 01.01.1970.
+	
 		$statement = 'SELECT datetime,smiley,what FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end';
 		$query = $this->connection->execute($statement, array(	'macid' => $macid,
 																'start' => $start,
