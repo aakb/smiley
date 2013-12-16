@@ -18,8 +18,6 @@
 		$("#page_main").remove();
 		$("#page_thanks").remove();
 		
-		alert(app.pageWelcome);
-		
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
