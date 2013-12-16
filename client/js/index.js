@@ -3,6 +3,8 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
+		console.log("app.init()");
+		
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
 		this.pageLogin = $("#page_login").html();
@@ -15,6 +17,8 @@
 		$("#page_register").remove();
 		$("#page_main").remove();
 		$("#page_thanks").remove();
+		
+		console.log(app.pageMain);
 		
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
