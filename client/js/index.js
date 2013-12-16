@@ -10,13 +10,13 @@
 		this.pageMain = $("#page_main").html();
 		this.pageThanks = $("#page_thanks").html();
 		
-		
+	/*	
 		$("#page_welcome").remove();
 		$("#page_login").remove();
 		$("#page_register").remove();
 		$("#page_main").remove();
 		$("#page_thanks").remove();
-
+*/
 		alert(this.pageWelcome);
 
 		
