@@ -3,7 +3,7 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		alert("alive");
+		$("#main").html("TEST");
 	
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
@@ -25,7 +25,7 @@
 		if(typeof(Storage)!=="undefined") {
 			var macid = localStorage.getItem("macid");
 		
-			if (macid == null) {
+			if (macid == null || macid == "") {
 				app.showWelcomePage();
 			} else {
 				this.macid = macid;
