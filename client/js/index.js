@@ -3,22 +3,25 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		// Setup HTML pages to insert in header and body
-		this.divWelcomeHeader = $("#div_welcome_header").html();
-		this.divLoginBody = $("#div_login_body").html();
-		this.divLoginHeader = $("#div_login_header").html();
-		this.divRegisterBody = $("#div_register_body").html();
-		this.divRegisterHeader = $("#div_register_header").html();
-		this.divMainBody = $("#div_main_body").html();
-		this.divWhatBody = $("#div_what_body").html();
-		this.divThanksBody = $("#div_thanks_body").html();
+		// Load HTML parts
+		this.pageWelcome = $("#page_welcome").html();
+		this.pageLogin = $("#page_login").html();
+		this.pageRegister = $("#page_register").html();
+		this.pageMain = $("#page_main").html();
+		this.pageThanks = $("#page_thanks").html();
+		
+		$("#page_welcome").remove();
+		$("#page_login").remove();
+		$("#page_register").remove();
+		$("#page_main").remove();
+		$("#page_thanks").remove();
 		
 		app.showWelcomePage();
 
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
-
+		
 		if(typeof(Storage)!=="undefined") {
 			var macid = localStorage.getItem("macid");
 		
@@ -36,9 +39,9 @@
 	//////////////////////////////////////////
 	
 	showWelcomePage: function() {
-		$(".main").html("");
-		$(".header").html(this.divWelcomeHeader);
-
+		// Change HTML content
+		$(".main").html(this.pageWelcome);
+		
 		// Display number of uncommitted entries on button
 		// Check if local storage is supported
 		var nr = 0;
@@ -52,6 +55,7 @@
 		}
 		$("#commit_button").html("Indsend (" + nr + ")");
 		
+		// Setup event listeners
 		$("#login_button").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
 			app.showLoginPage();
@@ -75,9 +79,10 @@
 			});
 		});		
 	},
+	
 	showRegisterPage: function() {
-		$(".main").html(this.divRegisterBody);
-		$(".header").html(this.divRegisterHeader);
+		// Change HTML content
+		$(".main").html(this.pageRegister);
 
 		// Custom validation of email repeat
 		$("#mail_repeat").on("change", function() {
@@ -109,7 +114,7 @@
 				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
 					app.macid = resp.macid;
-					app.saveMacidToLocalStorage(macid);
+					app.saveMacidToLocalStorage(app.macid);
 					alert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
 					app.showMainPage();
 				} else if (resp.result == "error") {
@@ -128,10 +133,10 @@
 			});
 		});
 	},
+	
 	showLoginPage: function() {
 		// Change HTML content
-		$(".main").html(this.divLoginBody);
-		$(".header").html(this.divLoginHeader);
+		$(".main").html(this.pageLogin);
 
 		// Setup form register submit button
 		$("#form_login").submit(function(event) {
@@ -173,13 +178,20 @@
 			});
 		});
 	},
+	
 	showMainPage: function() {
+		// Clear timer and event handlers
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
 		
 		// Change HTML content
-		$(".header").html("");
-		$(".main").html(this.divMainBody);
+		$(".main").html(this.pageMain);
+		
+		// Hide bottom images
+		$(".img_choice").hide();
+		
+		// Set text
+		$("#table_text").html("<h1>Tilfreds med betjeningen?</h1>");
 		
 		// Setup event listeners
 		$("#smiley1").on("touchstart click", function(e) {
@@ -206,11 +218,10 @@
 	showWhatPage: function(nSmiley) {
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
-		
-		// Change HTML content
-		$(".header").html("");
-		$(".main").html(this.divWhatBody);
 
+		// Change HTML content
+		$(".main").html(this.pageMain);
+		
 		// Setup event listeners
 		$("#choice1").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
@@ -227,9 +238,9 @@
 		
 		// Text
 		if (nSmiley < 3) {
-			$("#what_div").html("<h1>Hvad var godt?</h1>");
+			$("#table_text").html("<h1>Hvad var godt?</h1>");
 		} else {
-			$("#what_div").html("<h1>Hvad var dårligt?</h1>");
+			$("#table_text").html("<h1>Hvad var dårligt?</h1>");
 		}
 		
 		// Show selected smiley, hide others
@@ -249,8 +260,7 @@
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
 		
-		$(".header").html("");
-		$(".main").html(this.divThanksBody);
+		$("#main").html(app.pageThanks);
 
 		var d = new Date();
 		var datetime = d.getTime();
