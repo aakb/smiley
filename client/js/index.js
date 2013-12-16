@@ -3,7 +3,7 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
-		alert("fisk");
+		alert("alive");
 	
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
@@ -217,6 +217,7 @@
 			app.showWhatPage(5);
 		});
 	},
+	
 	showWhatPage: function(nSmiley) {
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
@@ -258,6 +259,7 @@
 			app.showMainPage();
 		}, 10000);
 	},
+	
 	showResultPage: function(nSmiley, nWhat) {
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
