@@ -24,7 +24,7 @@
 		</div>
 
 		<!-- Page Content -->
-		<div id="page_welcome">
+		<div id="page_welcome" class="container">
 			<h1>Velkommen til <span class="text_b7">b7</span></h1>
 			Hvis du allerede har ID på maskinen kan du logge ind her <div class="button_div" id="login_button">Login</div><br/>
 			Ellers skal du registrere maskinen her <div class="button_div" id="reg_button">Registrer</div><br/>
@@ -32,7 +32,7 @@
 			For at sende ikke afleverede målinger (pga. manglende internet) tryk her <div class="button_div" id="commit_button">Indsend</div><br/>
 		</div>
 		
-		<div id="page_login">
+		<div id="page_login" class="container">
 			<h2>Login</h2>
 			Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.
 			<div class="form_div">
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div id="page_register">
+		<div id="page_register" class="container">
 			<h2>Registrer</h2>
 			Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.
 			
@@ -126,7 +126,7 @@
 			</div>
 		</div>
 
-		<div id="page_main">
+		<div id="page_main" class="container">
 			<div class="header"></div>
 			<table class="table_smiley" id="table_choice">
 				<tr>
@@ -149,7 +149,7 @@
 			</table>
 		</div>
 		
-		<div id="page_thanks">
+		<div id="page_thanks" class="container">
 			<div class="header"></div>
 			<h1>Mange tak</h1>
 			<h2>Vi bruger dit besyv til at forbedre vores service.</h2>
@@ -161,6 +161,7 @@
         <script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
+				alert("running");
 				app.init();
 			});
 		</script>
