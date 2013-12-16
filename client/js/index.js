@@ -3,6 +3,8 @@
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
+		alert("fisk");
+	
 		// Load HTML parts
 		this.pageWelcome = $("#page_welcome").html();
 		this.pageLogin = $("#page_login").html();
@@ -10,14 +12,12 @@
 		this.pageMain = $("#page_main").html();
 		this.pageThanks = $("#page_thanks").html();
 		
-	/*	$("#page_welcome").remove();
+		$("#page_welcome").remove();
 		$("#page_login").remove();
 		$("#page_register").remove();
 		$("#page_main").remove();
-		$("#page_thanks").remove();*/
+		$("#page_thanks").remove();
 		
-		app.showWelcomePage();
-
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
@@ -31,6 +31,8 @@
 				this.macid = macid;
 				app.showMainPage();
 			}
+		} else {
+			app.showWelcomePage();
 		}
 	},
 	
