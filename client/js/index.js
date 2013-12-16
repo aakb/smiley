@@ -10,11 +10,11 @@
 		this.pageMain = $("#page_main").html();
 		this.pageThanks = $("#page_thanks").html();
 		
-		$("#page_welcome").remove();
+	/*	$("#page_welcome").remove();
 		$("#page_login").remove();
 		$("#page_register").remove();
 		$("#page_main").remove();
-		$("#page_thanks").remove();
+		$("#page_thanks").remove();*/
 		
 		app.showWelcomePage();
 
@@ -40,7 +40,7 @@
 	
 	showWelcomePage: function() {
 		// Change HTML content
-		$("#main").html(this.pageWelcome);
+		$("#main").html(app.pageWelcome);
 		
 		// Display number of uncommitted entries on button
 		// Check if local storage is supported
@@ -82,7 +82,7 @@
 	
 	showRegisterPage: function() {
 		// Change HTML content
-		$("#main").html(this.pageRegister);
+		$("#main").html(app.pageRegister);
 
 		// Custom validation of email repeat
 		$("#mail_repeat").on("change", function() {
@@ -136,7 +136,7 @@
 	
 	showLoginPage: function() {
 		// Change HTML content
-		$("#main").html(this.pageLogin);
+		$("#main").html(app.pageLogin);
 
 		// Setup form register submit button
 		$("#form_login").submit(function(event) {
@@ -185,7 +185,7 @@
 		clearTimeout(app.timer);
 		
 		// Change HTML content
-		$("#main").html(this.pageMain);
+		$("#main").html(app.pageMain);
 		
 		// Hide bottom images
 		$(".img_choice").hide();
@@ -220,7 +220,7 @@
 		clearTimeout(app.timer);
 
 		// Change HTML content
-		$(".main").html(this.pageMain);
+		$(".main").html(app.pageMain);
 		
 		// Setup event listeners
 		$("#choice1").on("touchstart click", function(e) {
