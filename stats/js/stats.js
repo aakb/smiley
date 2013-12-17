@@ -20,7 +20,21 @@ var app = {
 				chart.forceY( [1,5]);
  
 				chart.xAxis.axisLabel('Date').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
-				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('Smiley').tickFormat(d3.format(',f'));
+				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('Smiley')
+				.tickFormat(function(d, i){
+					if (d >= 5)
+						return "Meget glad";
+					else if (d < 5 && d >= 4)
+						return "Glad";
+					else if (d < 4 && d >= 3)
+						return "Hverken/Eller";
+					else if (d < 3 && d >= 2)
+						return "Sur";
+					else
+						return "Meget sur";
+				});
+				
+				//.tickFormat(d3.format(',f'));
  
 				d3.select('#chart svg').datum(testdata).transition().duration(500).call(chart);
 				nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
@@ -110,10 +124,6 @@ var app = {
 			d.push({key: tx, val: app.data[i][1]});
 		}
 		return d;
-		/*return [ 
-		{	"key" : "Fordeling af smileys i den sidste uge", 
-			"values" : d
-		}];*/
 	},
 	returnGraphDataPerDay: function() {
 		var d = new Array();
@@ -121,7 +131,7 @@ var app = {
 			d.push([((new Date(app.data[i].Date)).getTime()), app.data[i].AvgSmiley]);
 		}
 		return [ 
-		{	"key" : "Gennemsnitlig Smiley (Jo højere, jo bedre)" , 
+		{	"key" : "Gennemsnitlig tilfredshed" , 
 			"bar": false,
 			"values" : d
 		}].map(function(series) {
