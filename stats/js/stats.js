@@ -22,16 +22,16 @@ var app = {
 				chart.xAxis.axisLabel('Date').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
 				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('Smiley')
 				.tickFormat(function(d, i){
-					if (d >= 5)
-						return "Meget glad";
-					else if (d < 5 && d >= 4)
-						return "Glad";
-					else if (d < 4 && d >= 3)
-						return "Hverken/Eller";
-					else if (d < 3 && d >= 2)
-						return "Sur";
+					if (d >= 4.5)
+						return "Meget glad(" + d + ")";
+					else if (d < 4.5 && d >= 3.5)
+						return "Glad(" + d + ")";
+					else if (d < 3.5 && d >= 2.5)
+						return "Hverken/Eller(" + d + ")";
+					else if (d < 2.5 && d >= 1.5)
+						return "Sur(" + d + ")";
 					else
-						return "Meget sur";
+						return "Meget sur(" + d + ")";
 				});
 				
 				//.tickFormat(d3.format(',f'));
