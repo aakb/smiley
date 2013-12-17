@@ -46,7 +46,7 @@ var app = {
 			var testdata = app.returnPieDataWeekly();
 			
 			nv.addGraph(function() {
-				var width = 500,
+				var width = 800,
 					height = 500;
 
 				var chart = nv.models.pieChart()
