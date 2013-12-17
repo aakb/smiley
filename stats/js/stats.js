@@ -1,8 +1,15 @@
-﻿var app = {
+﻿function getUrlVar(key){
+	var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
+	return result && unescape(result[1]) || ""; 
+}
+
+var app = {
 	//////////////////////////////////////////
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
+		this.macid = getUrlVar("macid");
+	
 		this.aDay = 1000 * 60 * 60 * 24;
 		this.serverlocation = "http://localhost/smiley/";
 		app.getDataPerDay(function() {
@@ -31,6 +38,8 @@
 				var chart = nv.models.pieChart()
 					.x(function(d) { return d.key })
 					.y(function(d) { return d.val })
+					.showLabels(true)
+					.labelThreshold(.05)
 					.color(d3.scale.category10().range())
 					.width(width)
 					.height(height);
@@ -51,7 +60,7 @@
 		var t_end   = end.getTime();
 		var t_start = start.getTime();
 		
-		var da = {"action": "dataPerDay", "macid": "2afaj1"};
+		var da = {"action": "dataPerDay", "macid": app.macid};
 		$.ajax({url: app.serverlocation, 
 			   type: "GET",
 			   data: da,
@@ -68,7 +77,7 @@
 		var t_start = firstdate.getTime();
 		var t_end   = lastdate.getTime();
 		
-		var da = {"action": "datapie", "macid": "2afaj1", "start": t_start, "end": t_end};
+		var da = {"action": "datapie", "macid": app.macid, "start": t_start, "end": t_end};
 		
 		$.ajax({url: app.serverlocation, 
 			   type: "GET",
@@ -100,10 +109,11 @@
 			
 			d.push({key: tx, val: app.data[i][1]});
 		}
-		return [ 
+		return d;
+		/*return [ 
 		{	"key" : "Fordeling af smileys i den sidste uge", 
 			"values" : d
-		}];
+		}];*/
 	},
 	returnGraphDataPerDay: function() {
 		var d = new Array();

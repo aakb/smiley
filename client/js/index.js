@@ -197,11 +197,11 @@
 		// Note: inverse numbers: Very Happy Smiley: 5 points, ...		
 		$("#smiley1").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(5);
+			app.showWhatPage(1);
 		});
 		$("#smiley2").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(4);
+			app.showWhatPage(2);
 		});
 		$("#smiley3").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
@@ -209,11 +209,11 @@
 		});
 		$("#smiley4").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(2);
+			app.showWhatPage(4);
 		});
 		$("#smiley5").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(1);
+			app.showWhatPage(5);
 		});
 	},
 	
@@ -247,7 +247,7 @@
 		
 		// Show selected smiley, hide others
 		$(".img_smiley").each(function(index) {
-			if (index == nSmiley - 1)
+			if (index == 4 - (nSmiley - 1))
 				$(this).addClass("img_smiley_selected");
 			else
 				$(this).addClass("img_smiley_hide");
