@@ -46,10 +46,11 @@ var app = {
 			var testdata = app.returnPieDataWeekly();
 			
 			nv.addGraph(function() {
-				var width = 800,
+				var width = 500,
 					height = 500;
 
 				var chart = nv.models.pieChart()
+					.margin({top: 30, right: 10, bottom: 30, left: 90})
 					.x(function(d) { return d.key })
 					.y(function(d) { return d.val })
 					.showLabels(true)
