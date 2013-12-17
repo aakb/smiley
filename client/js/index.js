@@ -194,13 +194,14 @@
 		$("#table_text").html("<h1>Tilfreds med betjeningen?</h1>");
 		
 		// Setup event listeners
+		// Note: inverse numbers: Very Happy Smiley: 5 points, ...		
 		$("#smiley1").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(1);
+			app.showWhatPage(5);
 		});
 		$("#smiley2").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(2);
+			app.showWhatPage(4);
 		});
 		$("#smiley3").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
@@ -208,11 +209,11 @@
 		});
 		$("#smiley4").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(4);
+			app.showWhatPage(2);
 		});
 		$("#smiley5").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.showWhatPage(5);
+			app.showWhatPage(1);
 		});
 	},
 	

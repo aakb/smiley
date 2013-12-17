@@ -24,8 +24,6 @@
 		app.getDataAverageSmileyFromPeriod(function() {
 			var testdata = app.returnPieDataWeekly();
 			
-			console.log(testdata);
-			
 			nv.addGraph(function() {
 				var width = 500,
 					height = 500;
@@ -39,9 +37,9 @@
 		
 				d3.select("#pie svg").datum(testdata)
 					.transition().duration(1200)
-					  .attr('width', width)
-					  .attr('height', height)
-					  .call(chart);
+					.attr('width', width)
+					.attr('height', height)
+					.call(chart);
 				return chart;
 			});	
 		}, new Date((new Date()).getTime() - 7 * app.aDay), new Date());
@@ -60,7 +58,6 @@
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
-			console.log(response);
 			app.data = JSON.parse(response);
 		})
 		.always(function() {
@@ -79,7 +76,6 @@
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
-			console.log(response);
 			app.data = JSON.parse(response);
 		})
 		.always(function() {
@@ -102,13 +98,10 @@
 			else if (opi == 5)
 				tx = "Meget Glad";
 			
-			console.log(app.data[i][1]);
-			
 			d.push({key: tx, val: app.data[i][1]});
 		}
-		console.log(d);
 		return [ 
-		{	"key" : "Fordeling af smileys i den sidste uge" , 
+		{	"key" : "Fordeling af smileys i den sidste uge", 
 			"values" : d
 		}];
 	},
