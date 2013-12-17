@@ -11,7 +11,7 @@ var app = {
 		this.macid = getUrlVar("macid");
 	
 		this.aDay = 1000 * 60 * 60 * 24;
-		this.serverlocation = "http://localhost/smiley/";
+
 		app.getDataPerDay(function() {
 			var testdata = app.returnGraphDataPerDay();
 			
@@ -75,7 +75,7 @@ var app = {
 		var t_start = start.getTime();
 		
 		var da = {"action": "dataPerDay", "macid": app.macid};
-		$.ajax({url: app.serverlocation, 
+		$.ajax({url: config.serverlocation, 
 			   type: "GET",
 			   data: da,
 			   dataType: "text"
@@ -93,7 +93,7 @@ var app = {
 		
 		var da = {"action": "datapie", "macid": app.macid, "start": t_start, "end": t_end};
 		
-		$.ajax({url: app.serverlocation, 
+		$.ajax({url: config.serverlocation, 
 			   type: "GET",
 			   data: da,
 			   dataType: "text"
