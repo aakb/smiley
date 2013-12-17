@@ -91,13 +91,27 @@ class SmileyDB {
 		echo json_encode($result);															
 	}
 	
-	public function getData($macid, $start, $end) {
-		// process date. from   dd/mm/yyyy to milliseconds from 01.01.1970.
+	public function getPercentageSmileyFromPeriod($macid, $start, $end) {
+		$arr = array();
 	
-		$statement = 'SELECT datetime,smiley,what FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end';
-		$query = $this->connection->execute($statement, array(	'macid' => $macid,
-																'start' => $start,
-																'end'	=> $end));
+		for ($i = 1; $i <= 5; $i++) {
+			$statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley';
+			$query = $this->connection->execute($statement, array(	'macid' => $macid,
+																	'start' => $start,
+																	'end'	=> $end,
+																	'smiley' => $i));
+					
+			$rows = $query->fetch(PDO::FETCH_ASSOC);
+			array_push($arr, array($i, 0 +$rows["NumberSmiley"]));
+		}
+		header('Content-type: application/json');
+		echo json_encode($arr);
+	}
+	
+	public function getDataPerDay($macid) {
+		$statement = 'SELECT avg(Smiley) as AvgSmiley, DATE(FROM_UNIXTIME(datetime/1000, "%Y-%m-%d")) as Date FROM data WHERE macid = :macid GROUP BY Date';
+		
+		$query = $this->connection->execute($statement, array('macid' => $macid));
 		
 		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 		header('Content-type: application/json');

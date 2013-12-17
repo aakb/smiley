@@ -1,0 +1,59 @@
+﻿body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+	background-color:#FFFFFF;
+    background-attachment:fixed;
+	font-family: Arial;
+    font-size:larger;
+    margin:0px;
+    padding:0px;
+    width:800px;
+	color: #3792d5;
+}
+
+h1 {
+	font-size: largest;
+}
+
+h2 {
+	font-size: larger;
+}
+
+.center {
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+	width:800px;
+}
+
+.text_center {
+	text-align: center;
+}
+
+.text_b7 {
+	color: #ff8700;
+}
+
+.button_div {
+	width: 200px;
+	padding:5px 15px; 
+	background:#ff8700; 
+	border:0 none;
+	margin: 20px;
+	cursor:pointer;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	color: #ffffff;
+	font-size: larger;
+	display: inline-block;
+	cursor: pointer;
+}
+
+table {
+	width: 100%;
+}
+
+.graph {
+	display: inline;
+}

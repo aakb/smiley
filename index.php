@@ -5,8 +5,17 @@
 
 	$smileyDB = new SmileyDB();
 	
-	if (!isset($_POST["action"])) return;
-	$action = $_POST["action"];
+	$action = "";
+	if (isset($_POST["action"])) {
+		$action = $_POST["action"];
+	} else if (isset($_GET["action"])) {
+		$action = $_GET["action"];
+	}
+	
+	if ($action == "") {
+		return;
+	}
+	
 	switch ($action) {
 		case "login":
 			if (!isset($_POST["macid"])) {
@@ -71,24 +80,35 @@
 	
 			$smileyDB->insertResult($macid, $datetime, $smiley, $what);
 			break;
-		case "data":
+		case "dataPerDay":
+			if (!isset($_GET["macid"])) {
+				return;
+			}
+
+			$macid = $_GET["macid"];
+
+			if ($macid == "") {
+				return;
+			}
+		
+			$smileyDB->getDataPerDay($macid);
+			break;
+		case "datapie":
 			if (!isset($_GET["macid"]) ||
 				!isset($_GET["start"]) ||
 				!isset($_GET["end"])) {
 				return;
 			}
-		
+
 			$macid = $_GET["macid"];
 			$start = $_GET["start"];
 			$end   = $_GET["end"];
-			
-			if ($macid == "" ||
-				$start == "" ||
-				$end   == "") {
+
+			if ($macid == "") {
 				return;
 			}
 		
-			$smileyDB->getData($macid, $start, $end);
+			$smileyDB->getPercentageSmileyFromPeriod($macid, $start, $end);
 			break;
 		default:
 			break;
