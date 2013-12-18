@@ -20,7 +20,7 @@ var app = {
 				chart.forceY( [1,5]);
  
 				chart.xAxis.axisLabel('Date').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
-				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('Smiley')
+				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('')
 				.tickFormat(function(d, i){
 					if (d >= 4.5)
 						return "Meget glad(" + d + ")";
@@ -33,7 +33,7 @@ var app = {
 					else
 						return "Meget sur(" + d + ")";
 				});
-				chart.margin({top: 30, right: 10, bottom: 30, left: 90});
+				chart.margin({top: 50, right: 90, bottom: 50, left: 90});
 
 				//.tickFormat(d3.format(',f'));
  
