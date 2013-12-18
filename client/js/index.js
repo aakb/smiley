@@ -239,7 +239,7 @@
 		});		
 		
 		// Text
-		if (nSmiley < 3) {
+		if (nSmiley > 3) {
 			$("#table_text").html("<h1>Hvad var godt?</h1>");
 		} else {
 			$("#table_text").html("<h1>Hvad var dårligt?</h1>");
