@@ -19,7 +19,7 @@ var app = {
 				var chart = nv.models.lineChart();
 				chart.forceY( [1,5]);
  
-				chart.xAxis.axisLabel('Date').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+				chart.xAxis.axisLabel('').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
 				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('')
 				.tickFormat(function(d, i){
 					if (d >= 4.5)
@@ -33,7 +33,7 @@ var app = {
 					else
 						return "Meget sur(" + d + ")";
 				});
-				chart.margin({top: 50, right: 90, bottom: 50, left: 90});
+				chart.margin({top: 50, right: 150, bottom: 50, left: 150});
 
 				//.tickFormat(d3.format(',f'));
  
@@ -58,6 +58,7 @@ var app = {
 					.color(d3.scale.category10().range())
 					.width(width)
 					.height(height);
+				chart.color(['#880000', '#ff0000', '#aaaaaa', '#00ff00', '#008800']);
 		
 				d3.select("#pie svg").datum(testdata)
 					.transition().duration(1200)
