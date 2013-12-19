@@ -270,9 +270,11 @@ var app = {
 		
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
-			app.timer = setTimeout(function(){
-				app.showMainPage();
-			}, 4000);
+			app.commitEntriesFromLocalStorage(function() {
+				app.timer = setTimeout(function(){
+					app.showMainPage();
+				}, 4000);
+			});
 		});
 	},
 	

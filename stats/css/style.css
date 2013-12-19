@@ -76,3 +76,7 @@ table {
 .graph {
 	display: block;
 }
+
+.graph-inline {
+	display: inline-block;
+}
