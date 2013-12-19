@@ -65,6 +65,31 @@ class SmileyDB {
 																'place' 	=> $place, 
 																'name' 		=> $name));
 		
+		// Send mail to contact
+		$to  = $mail; 
+		$subject = 'b7 oprettelse';
+		$message = '
+		<html>
+		<head>
+		  <title>b7 oprettelse</title>
+		</head>
+		<body>
+		  <h2>Følgende maskine er blevet oprettet:
+		  Login: '.$macid.'<br/>
+		  Magistratsafdeling: '.$magafd.'<br/>
+		  Forvaltning: '.$forvalt.'<br/>
+		  Fysisk placering: '.$place.'<br/>
+		  Navn på enhed: '.$name.'<br/>
+		  <h2>Statistik</h2>
+		  Statistikken for den pågældende maskine er tilgængelig fra følgende link:<br/>
+		  <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a>
+		</body>
+		</html>
+		';
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		mail($to, $subject, $message, $headers);
+		
 		// return macid
 		$result = array('result'=>'ok', 'macid'=>$macid);
 		echo json_encode($result);	

@@ -3,7 +3,9 @@ Smiley
 Setup:
 Create your own "database/settings.php" file (from "database/default.settings.php") with database settings
 Create your own "client/js/config.js" file (from "client/js/default.config.js") with serverlocation
+Create your own "stats/js/config.js" file (from "stats/js/default.config.js") with serverlocation
 
 The web client is located in client/
+The statistics page is located in stats/
 
 The SQL to setup the DB is here: "database/init_database.sql"

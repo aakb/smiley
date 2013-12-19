@@ -34,8 +34,6 @@ var app = {
 						return "Meget sur(" + d + ")";
 				});
 				chart.margin({top: 50, right: 150, bottom: 50, left: 150});
-
-				//.tickFormat(d3.format(',f'));
  
 				d3.select('#chart svg').datum(testdata).transition().duration(500).call(chart);
 				nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
@@ -127,13 +125,14 @@ var app = {
 		}
 		return d;
 	},
+	// Return data formatted for "graph per day"
 	returnGraphDataPerDay: function() {
 		var d = new Array();
 		for (var i = 0; i < app.data.length; i++) {
 			d.push([((new Date(app.data[i].Date)).getTime()), app.data[i].AvgSmiley]);
 		}
 		return [ 
-		{	"key" : "Gennemsnitlig tilfredshed" , 
+		{	"key" : "Tilfredshed" , 
 			"bar": false,
 			"values" : d
 		}].map(function(series) {
