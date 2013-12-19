@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 include_once dirname(__FILE__).'/../utils/conf.php';
 include_once dirname(__FILE__).'/pdo_mysql.php';
@@ -74,20 +74,22 @@ class SmileyDB {
 		  <title>b7 oprettelse</title>
 		</head>
 		<body>
-		  <h2>Følgende maskine er blevet oprettet:
-		  Login: '.$macid.'<br/>
-		  Magistratsafdeling: '.$magafd.'<br/>
-		  Forvaltning: '.$forvalt.'<br/>
-		  Fysisk placering: '.$place.'<br/>
-		  Navn på enhed: '.$name.'<br/>
+		  <h2>FÃ¸lgende maskine er blevet oprettet:</h2>
+		  <em>Login</em>: '.$macid.'<br/>
+		  <em>Magistratsafdeling</em>: '.$magafd.'<br/>
+		  <em>Forvaltning</em>: '.$forvalt.'<br/>
+		  <em>Fysisk placering</em>: '.$place.'<br/>
+		  <em>Navn pÃ¥ enhed</em>: '.$name.'<br/>
 		  <h2>Statistik</h2>
-		  Statistikken for den pågældende maskine er tilgængelig fra følgende link:<br/>
+		  Statistikken for den pÃ¥gÃ¦ldende maskine er tilgÃ¦ngelig fra fÃ¸lgende link:<br/>
 		  <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a>
 		</body>
 		</html>
 		';
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+		$headers .= 'To: '.$contact.' <'.$mail.'>' . "\r\n";
+		$headers .= 'From: ITK <www-data@gambit.aakb.dk>' . "\r\n";		
 		mail($to, $subject, $message, $headers);
 		
 		// return macid
