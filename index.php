@@ -104,11 +104,26 @@
 			$start = $_GET["start"];
 			$end   = $_GET["end"];
 
-			if ($macid == "") {
+			if ($macid == "" || $start == "" || $end == "") {
 				return;
 			}
 		
 			$smileyDB->getPercentageSmileyFromPeriod($macid, $start, $end);
+			break;
+		case "dataWhat":
+			if (!isset($_GET["macid"]) ||
+				!isset($_GET["today"])) {
+				return;
+			}
+
+			$macid = $_GET["macid"];
+			$today = $_GET["today"];
+
+			if ($macid == "" || $today == "") {
+				return;
+			}
+		
+			$smileyDB->getWhatThisWeekCompareLastWeek($macid, $today);
 			break;
 		default:
 			break;

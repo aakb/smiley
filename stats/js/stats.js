@@ -1,4 +1,4 @@
-﻿function getUrlVar(key){
+function getUrlVar(key){
 	var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
 	return result && unescape(result[1]) || ""; 
 }
@@ -12,6 +12,10 @@ var app = {
 	
 		this.aDay = 1000 * 60 * 60 * 24;
 
+		app.getDataWhat(function() {
+			
+		});
+		
 		app.getDataPerDay(function() {
 			var testdata = app.returnGraphDataPerDay();
 			
@@ -66,6 +70,24 @@ var app = {
 				return chart;
 			});	
 		}, new Date((new Date()).getTime() - 7 * app.aDay), new Date());
+	},
+	getDataWhat: function(callback){
+		var today = new Date();
+		var t_today = today.getTime();
+		
+		var da = {"action": "dataWhat", "macid": app.macid, "today": t_today};
+		$.ajax({url: config.serverlocation, 
+			   type: "GET",
+			   data: da,
+			   dataType: "text"
+		})
+		.done(function(response, textStatus, jqXHR) {
+			console.log(response);
+			app.data = JSON.parse(response);
+		})
+		.always(function() {
+			callback();
+		});
 	},
 	getDataPerDay: function(callback){
 		var end = new Date();

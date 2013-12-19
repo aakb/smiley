@@ -7,9 +7,9 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 		<!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />-->
+		<link rel="stylesheet" type="text/css" href="css/nv.d3.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>b7 statistik</title>
-		<link href="css/nv.d3.css" rel="stylesheet" type="text/css">
     </head>
     <body>
 		<div class="center">
@@ -26,25 +26,74 @@
 			</div>
 			<div id="main" class="main">
 				<div>
+					<div class="summary">
+						Du ser her resultaterne fra <span id="date_start"></span> til <span id="date_end"></span>.<br/>
+						I denne periode er den generelle tilfredshed: <span id="satis_general"></span> %.<br/>
+						<span id="number_of_respondants"></span> har svaret.<br/>
+						<span id="satis_happy"></span> % har været meget tilfredse.<br/>
+						<span id="satis_unhappy"></span> % har været med utilfredse.<br/>
+					</div>
+				</div>
+				<div>
 					<h2>Tilfredshed denne uge</h2>
 					<div id="pie" class="graph">
+						<svg style='height:500px; width: 1000px'> </svg>
+					</div>
+					<div class="graph">
+						<table class="summary_table">
+							<tr>
+								<td></td>
+								<td><img class="table_img" src="img/5.png"/></td>
+								<td><img class="table_img" src="img/4.png"/></td>
+								<td><img class="table_img" src="img/3.png"/></td>
+								<td><img class="table_img" src="img/2.png"/></td>
+								<td><img class="table_img" src="img/1.png"/></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Fysiske rammer</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Betjening</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Andet</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Samlet Resultat</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div>
+					<h2>Udvikling over tid</h2>
+					<div id="chart" class="graph">
 						<svg style='height:500px'> </svg>
 					</div>
-					<div>
-						<div id="histo1" class="graph-inline">
-							<svg style='height:500px'> </svg>
-						</div>
-						<div id="histo2" class="graph-inline">
-							<svg style='height:500px'> </svg>
-						</div>
-						<div id="histo3" class="graph-inline">
-							<svg style='height:500px'> </svg>
-						</div>
-					</div>
-				<div>
-				<h2>Udvikling over tid</h2>
-				<div id="chart" class="graph">
-					<svg style='height:500px'> </svg>
 				</div>
 			</div>
 		</div>

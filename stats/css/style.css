@@ -69,14 +69,28 @@ h2 {
 	cursor: pointer;
 }
 
-table {
-	width: 100%;
-}
-
 .graph {
 	display: block;
 }
 
 .graph-inline {
 	display: inline-block;
+}
+
+/* Display circles at datapoints */
+.nvd3 .nv-groups .nv-point {
+    stroke-opacity: 0.5 !important;
+    stroke-width: 5px;
+}
+
+.table_img{
+	width: 100px;
+}
+
+.summary_table {
+	border: 1px solid black;
+}
+
+.summary_table td {
+	border: 1px solid black;
 }
