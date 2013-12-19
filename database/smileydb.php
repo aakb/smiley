@@ -56,6 +56,12 @@ class SmileyDB {
 			$id = $row["id"] + 1;
 		}
 		$macid = $macid . $id;
+		$macid = mb_ereg_replace("Ø","OE",$macid);
+		$macid = mb_ereg_replace("ø","oe",$macid);
+		$macid = mb_ereg_replace("Å","AA",$macid);
+		$macid = mb_ereg_replace("å","aa",$macid);
+		$macid = mb_ereg_replace("Æ","AE",$macid);
+		$macid = mb_ereg_replace("æ","ae",$macid);
 
 		// insert new machine
 		$statement = 'INSERT INTO machine (macid, contact, mail, magafd, forvalt, place, name) VALUES (:macid, :contact, :mail, :magafd, :forvalt, :place, :name)';
