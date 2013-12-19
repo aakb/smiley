@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `data` (
+﻿CREATE TABLE IF NOT EXISTS `data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `macid` text NOT NULL,
   `datetime` bigint(20) NOT NULL,

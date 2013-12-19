@@ -1,4 +1,6 @@
-﻿<?php
+<?php
+
+header('Content-Type: text/json; charset=utf-8');
 
 include_once dirname(__FILE__).'/../utils/conf.php';
 include_once dirname(__FILE__).'/pdo_mysql.php';
@@ -45,7 +47,7 @@ class SmileyDB {
 		}
 	
 		// make macid: first letter of "contant", "magafd", "forvalt", "place", "name" and next id
-		$macid = substr($contact, 0, 1) . substr($magafd, 0, 1) . substr($forvalt, 0, 1) . substr($place, 0, 1) . substr($name, 0, 1);
+		$macid = mb_substr($contact, 0, 1, "utf-8") . mb_substr($magafd, 0, 1, "utf-8") . mb_substr($forvalt, 0, 1, "utf-8") . mb_substr($place, 0, 1, "utf-8") . mb_substr($name, 0, 1, "utf-8");
 		$statement = "SELECT * FROM machine ORDER BY id DESC LIMIT 1";
 		$query = $this->connection->execute($statement);
 		$id = 1;
@@ -71,6 +73,7 @@ class SmileyDB {
 		$message = '
 		<html>
 		<head>
+		  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		  <title>b7 oprettelse</title>
 		</head>
 		<body>
@@ -88,8 +91,7 @@ class SmileyDB {
 		';
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-		$headers .= 'To: '.$contact.' <'.$mail.'>' . "\r\n";
-		$headers .= 'From: ITK <www-data@gambit.aakb.dk>' . "\r\n";		
+		$headers .= 'From: b7' . "\r\n";		
 		mail($to, $subject, $message, $headers);
 		
 		// return macid

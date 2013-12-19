@@ -1,4 +1,4 @@
-﻿var app = {
+var app = {
 	//////////////////////////////////////////
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
@@ -126,7 +126,7 @@
 				}
 			})
 			.fail(function (jqXHR, textStatus, errorThrown){
-				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
+				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører. " + errorThrown);
 			})
 			.always(function () {
 				$inputs.prop("disabled", false);

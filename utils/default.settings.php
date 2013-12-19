@@ -6,3 +6,5 @@ $settings = array(
   'user' =>'admin',
   'passwd' =>'',
 );
+
+?>
