@@ -37,9 +37,9 @@ var app = {
 				for (var j = 0; j < 3; j++) {
 					number_of_responds += app.data[0][j][i];
 					cumulative_satisfaction += app.data[0][j][i] * (i+1);
-					if (i == 4)
+					if (i == 0)
 						number_of_satisfied += app.data[0][j][i];
-					else if (i == 0)
+					else if (i == 4)
 						number_of_dissatisfied += app.data[0][j][i];
 						
 					$("#entry_"+j+i).html(app.data[0][j][i]);
