@@ -13,32 +13,24 @@
     </head>
     <body>
 		<div class="center">
-			<div id="header" class="header">
-				<div class="header_left">
-					<img draggable="false" src="img/logo_b7.png" alt=""/>
-				</div>
-				<div class="header_center">
-					<h1>Statistik</h1>
-				</div>
-				<div class="header_right">
-					<img draggable="false" src="img/logo_aak.png" alt=""/>
-				</div>
-			</div>
 			<div id="main" class="main">
-				<div>
-					<div class="summary">
-						Du ser her resultaterne fra <span id="date_start"></span> til <span id="date_end"></span>.<br/>
-						I denne periode er den generelle tilfredshed: <span id="satis_general"></span> %.<br/>
-						<span id="number_of_respondants"></span> har svaret.<br/>
-						<span id="satis_happy"></span> % har været meget tilfredse.<br/>
-						<span id="satis_unhappy"></span> % har været med utilfredse.<br/>
+				<div class="header">
+					<div class="header_left"><h1><span class="text_b7">b7</span> Statistik</h1></div>
+					<div class="header_right">
+						<img draggable="false" src="img/logo_aak.png" alt=""/>
 					</div>
 				</div>
-				<div>
-					<h2>Tilfredshed denne uge</h2>
-					<div id="pie" class="graph">
-						<svg style='height:500px; width: 1000px'> </svg>
+				<div class="section">
+					<div class="summary">
+						Du ser her resultaterne for perioden fra <span class="text_b7" id="date_start"></span> til <span class="text_b7" id="date_end"></span>.<br/>
+						I denne periode er den generelle tilfredshed: <span class="text_b7" id="satis_general"></span> %.<br/>
+						<span class="text_b7" id="number_of_responds"></span> har svaret.<br/>
+						<span class="text_b7" id="satis_happy"></span> % har været meget tilfredse.<br/>
+						<span class="text_b7" id="satis_unhappy"></span> % har været meget utilfredse.<br/>
 					</div>
+				</div>
+				<div class="section">
+					<h2>Tal for denne uge</h2>
 					<div class="graph">
 						<table class="summary_table">
 							<tr>
@@ -48,48 +40,55 @@
 								<td><img class="table_img" src="img/3.png"/></td>
 								<td><img class="table_img" src="img/2.png"/></td>
 								<td><img class="table_img" src="img/1.png"/></td>
-								<td></td>
+								<td>Samlet antal besvarelser</td>
 							</tr>
 							<tr>
 								<td>Fysiske rammer</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td><span id="entry_00"></span></td>
+								<td><span id="entry_01"></span></td>
+								<td><span id="entry_02"></span></td>
+								<td><span id="entry_03"></span></td>
+								<td><span id="entry_04"></span></td>
+								<td><span id="entry_05"></span></td>
 							</tr>
 							<tr>
 								<td>Betjening</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td><span id="entry_10"></span></td>
+								<td><span id="entry_11"></span></td>
+								<td><span id="entry_12"></span></td>
+								<td><span id="entry_13"></span></td>
+								<td><span id="entry_14"></span></td>
+								<td><span id="entry_15"></span></td>
 							</tr>
 							<tr>
 								<td>Andet</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td><span id="entry_20"></span></td>
+								<td><span id="entry_21"></span></td>
+								<td><span id="entry_22"></span></td>
+								<td><span id="entry_23"></span></td>
+								<td><span id="entry_24"></span></td>
+								<td><span id="entry_25"></span></td>
 							</tr>
-							<tr>
-								<td>Samlet Resultat</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+							<tr class="double_line">
+								<td>Sum</td>
+								<td><span id="entry_30"></span></td>
+								<td><span id="entry_31"></span></td>
+								<td><span id="entry_32"></span></td>
+								<td><span id="entry_33"></span></td>
+								<td><span id="entry_34"></span></td>
+								<td><span id="entry_35"></span></td>
 							</tr>
 						</table>
 					</div>
+
 				</div>
-				<div>
+				<div class="section">
+					<h2>Gennemsnitlig tilfredshed for denne uge</h2>
+					<div id="pie" class="graph">
+						<svg style='height:500px; width: 1000px'> </svg>
+					</div>
+				</div>
+				<div class="section">
 					<h2>Udvikling over tid</h2>
 					<div id="chart" class="graph">
 						<svg style='height:500px'> </svg>
