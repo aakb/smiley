@@ -93,23 +93,6 @@
 		
 			$smileyDB->getDataPerDay($macid);
 			break;
-		case "datapie":
-			if (!isset($_GET["macid"]) ||
-				!isset($_GET["start"]) ||
-				!isset($_GET["end"])) {
-				return;
-			}
-
-			$macid = $_GET["macid"];
-			$start = $_GET["start"];
-			$end   = $_GET["end"];
-
-			if ($macid == "" || $start == "" || $end == "") {
-				return;
-			}
-		
-			$smileyDB->getPercentageSmileyFromPeriod($macid, $start, $end);
-			break;
 		case "dataWhat":
 			if (!isset($_GET["macid"]) ||
 				!isset($_GET["today"])) {
@@ -123,7 +106,7 @@
 				return;
 			}
 		
-			$smileyDB->getWhatThisWeekCompareLastWeek($macid, $today);
+			$smileyDB->getWhatThisWeekComparePreviously($macid, $today);
 			break;
 		default:
 			break;

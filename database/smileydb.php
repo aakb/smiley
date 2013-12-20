@@ -126,22 +126,6 @@ class SmileyDB {
 		echo json_encode($result);															
 	}
 	
-	public function getPercentageSmileyFromPeriod($macid, $start, $end) {
-		$arr = array();
-	
-		for ($i = 1; $i <= 5; $i++) {
-			$statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley';
-			$query = $this->connection->execute($statement, array(	'macid' => $macid,
-																	'start' => $start,
-																	'end'	=> $end,
-																	'smiley' => $i));
-					
-			$rows = $query->fetch(PDO::FETCH_ASSOC);
-			array_push($arr, array($i, 0 +$rows["NumberSmiley"]));
-		}
-		echo json_encode($arr);
-	}
-	
 	public function getDataPerDay($macid) {
 		$statement = 'SELECT avg(smiley) as AvgSmiley, DATE(FROM_UNIXTIME(datetime/1000, "%Y-%m-%d")) as Date FROM data WHERE macid = :macid GROUP BY Date';
 		
@@ -165,7 +149,7 @@ class SmileyDB {
 																		'what'   => $k));
 						
 				$rows = $query->fetch(PDO::FETCH_ASSOC);
-				array_push($insidearr, array($i, 0+$rows["NumberSmiley"]));
+				array_push($insidearr, 0+$rows["NumberSmiley"]);
 			}
 			array_push($arr, $insidearr);
 		}
@@ -174,7 +158,7 @@ class SmileyDB {
 	}
 	
 	// Not necessarily optimal with 30 queries into db
-	public function getWhatThisWeekCompareLastWeek($macid, $today) {
+	public function getWhatThisWeekComparePreviously($macid, $today) {
 		$aDay = 1000 * 60 * 60 * 24;
 		$oneWeekAgo = $today -  $aDay * 7;
 		$twoWeeksAgo = $today - $aDay * 14;
