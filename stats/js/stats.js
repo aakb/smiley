@@ -70,7 +70,7 @@ var app = {
 					.showLabels(false)
 					.width(width)
 					.height(height);
-				chart.color(['#880000', '#ff0000', '#aaaaaa', '#00ff00', '#008800']);
+				chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
 				chart.tooltipContent(function(key, y, e, graph) { return y + " %" })
 				
 				d3.select("#pie svg").datum(testdata)
@@ -154,7 +154,7 @@ var app = {
 	returnWhatDataWeekly: function(numberOfEntries) {
 		var d = new Array();
 		for (var i = 0; i < app.data[0][0].length; i++) {
-			var tx = app.smileyText[i];
+			var tx = app.smileyText[4-i];
 			var val = 0;
 			for (var j = 0; j < app.data[0].length; j++) {
 				val += app.data[0][j][i];
