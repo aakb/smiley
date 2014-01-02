@@ -1,4 +1,5 @@
 // GET parameters
+// from: https://gist.github.com/varemenos/2531765
 function getUrlVar(key){
 	var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
 	return result && unescape(result[1]) || ""; 
@@ -6,34 +7,55 @@ function getUrlVar(key){
 
 // returns date as danish date, e.g. 13. Dec. 2013
 function getDanishDate(date) {
-	//var weekday = ["Søndag","Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag"];
 	var months  = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
-	
 	return date.getDate() + ". " + months[date.getMonth()] + ". " + date.getFullYear();
 } 
+
+// from: http://stackoverflow.com/questions/7580824/how-to-convert-a-week-number-to-a-date-in-javascript
+function firstDayOfWeek(year, week) {
+    var d = new Date(year, 0, 1), offset = d.getTimezoneOffset();
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+	var w = week;
+	if (year == d.getFullYear()) {
+		w = w - 1;
+	}
+    d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000 * w);
+    d.setTime(d.getTime() + (d.getTimezoneOffset() - offset) * 60 * 1000);
+    d.setDate(d.getDate() - 3);
+    return d;
+}
 
 var app = {
 	//////////////////////////////////////////
 	//// CONSTRUCTOR
 	//////////////////////////////////////////
     init: function() {
+		// Constants
+		this.aDay = 1000 * 60 * 60 * 24;
+		this.smileyText = ["Meget utilfreds", "Utilfreds", "Hverken/eller", "Tilfreds", "Meget tilfreds"];
+
 		this.macid = getUrlVar("macid");
-		console.log(this.macid);
-		
 		if (this.macid == "") {
 			$("body").html("");
+			return;
 		}
 		
-		this.weeknr = getUrlVar("week");
-		if (this.weeknr != "") {
-			console.log(this.weeknr);
+		// Set now and a week ago to week/year if set, else to now and a week ago.
+		this.week = getUrlVar("week");
+		this.year = getUrlVar("year");
+		if (app.week != "" && app.year != "") {
+			if (app.week < 1 || app.week > 52) {
+				$("body").html("");
+				return;
+			}
+			this.oneWeekAgo = firstDayOfWeek(app.year, app.week);
+			this.now = new Date(app.oneWeekAgo.getTime() + 7 * app.aDay);
+			$("#week_text").html(" (uge " + app.week + ", Ã¥r " + app.year + ")");
+		} else {
+			this.now = new Date();
+			this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
 		}
 		
-	
-		this.aDay = 1000 * 60 * 60 * 24;
-		this.now = new Date();
-		this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
-		this.smileyText = ["Meget utilfreds", "Utilfreds", "Hverken/eller", "Tilfreds", "Meget tilfreds"];
 		
 		// Populate summary, table and pie chart
 		app.getDataWhat(function() {
@@ -50,10 +72,11 @@ var app = {
 				for (var j = 0; j < 3; j++) {
 					number_of_responds += app.data[0][j][i];
 					cumulative_satisfaction += app.data[0][j][i] * (5 - i);
-					if (i == 0)
+					if (i == 0) {
 						number_of_satisfied += app.data[0][j][i];
-					else if (i == 4)
+					} else if (i == 4) {
 						number_of_dissatisfied += app.data[0][j][i];
+					}
 						
 					$("#entry_"+j+i).html(app.data[0][j][i]);
 					
@@ -76,8 +99,8 @@ var app = {
 			// Fill pie chart
 			var testdata = app.returnWhatDataWeekly(number_of_responds);
 			nv.addGraph(function() {
-				var width = 500,
-					height = 500;
+				var width = 600,
+					height = 600;
 
 				var chart = nv.models.pieChart()
 					.x(function(d) { return d.key })
@@ -87,7 +110,7 @@ var app = {
 					.height(height);
 				chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
 				chart.tooltipContent(function(key, y, e, graph) { return y + " %" })
-				chart.margin({top: 0, right: 0, bottom: 0, left: 0});
+				chart.margin({top: 50, right: 50, bottom: 50, left: 50});
 				
 				d3.select("#pie svg").datum(testdata)
 					.transition().duration(1200)
@@ -129,10 +152,7 @@ var app = {
 		});
 	},
 	getDataWhat: function(callback){
-		var today = new Date();
-		var t_today = today.getTime();
-		
-		var da = {"action": "dataWhat", "macid": app.macid, "today": t_today};
+		var da = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
 			   data: da,
@@ -148,12 +168,6 @@ var app = {
 	},
 	
 	getDataOverTime: function(callback){
-		var end = new Date();
-		var start = new Date(0);
-		
-		var t_end   = end.getTime();
-		var t_start = start.getTime();
-		
 		var da = {"action": "dataPerDay", "macid": app.macid};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
