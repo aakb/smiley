@@ -26,6 +26,8 @@ var app = {
 		
 		// Populate summary, table and pie chart
 		app.getDataWhat(function() {
+			console.log(app.data);
+
 			// Find values for summary
 			var number_of_responds = 0;
 			var cumulative_satisfaction = 0;
@@ -36,7 +38,7 @@ var app = {
 				var r_column = 0;
 				for (var j = 0; j < 3; j++) {
 					number_of_responds += app.data[0][j][i];
-					cumulative_satisfaction += app.data[0][j][i] * (i+1);
+					cumulative_satisfaction += app.data[0][j][i] * (5 - i);
 					if (i == 0)
 						number_of_satisfied += app.data[0][j][i];
 					else if (i == 4)
@@ -50,13 +52,15 @@ var app = {
 			}
 
 			// Fill summary
-			$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_responds)).toFixed(2));
-			$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_responds)).toFixed(2));
+			if (number_of_responds > 0) {
+				$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_responds)).toFixed(2));
+				$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_responds)).toFixed(2));
+				$("#satis_general").html((20.0 * (cumulative_satisfaction / number_of_responds)).toFixed(2));
+			}
 			$("#number_of_responds").html(number_of_responds);
-			$("#satis_general").html((20.0 * (cumulative_satisfaction / number_of_responds)).toFixed(2));
+			$("#entry_35").html(number_of_responds);
 			$("#date_start").html(getDanishDate(app.oneWeekAgo));
 			$("#date_end").html(getDanishDate(app.now));
-			$("#entry_35").html(number_of_responds);
 			
 			// Fill pie chart
 			var testdata = app.returnWhatDataWeekly(number_of_responds);
