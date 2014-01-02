@@ -140,7 +140,8 @@ class SmileyDB {
 
 		for ($k = 1; $k <= 3; $k++) {
 			$insidearr = array();
-			for ($i = 5; $i > 0; $i--) {
+			// Reverse order to get happy smiley first
+			for ($i = 5; $i >= 1; $i--) {
 				$statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley AND what = :what';
 				$query = $this->connection->execute($statement, array(	'macid' => $macid,
 																		'start' => $start,
