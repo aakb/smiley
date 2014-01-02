@@ -50,7 +50,7 @@ var app = {
 			}
 			this.oneWeekAgo = firstDayOfWeek(app.year, app.week);
 			this.now = new Date(app.oneWeekAgo.getTime() + 7 * app.aDay);
-			$("#week_text").html(" (uge " + app.week + ", år " + app.year + ")");
+			$("#week_text").html(" (uge " + app.week + ", " + app.year + ")");
 		} else {
 			this.now = new Date();
 			this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
@@ -128,7 +128,7 @@ var app = {
 				var chart = nv.models.lineChart();
 				chart.forceY( [1,5]);
  
-				chart.xAxis.axisLabel('').tickFormat(function(d) { return d3.time.format('%b. %d %Y')(new Date(d)); });
+				chart.xAxis.axisLabel('').tickFormat(function(d) { return d3.time.format('%d/%m-%Y')(new Date(d)); });
 				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('')
 					.tickFormat(function(d, i){
 						var dd = parseFloat(d).toFixed(2);
