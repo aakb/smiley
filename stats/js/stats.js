@@ -34,6 +34,7 @@ var app = {
 		this.aDay = 1000 * 60 * 60 * 24;
 		this.smileyText = ["Meget utilfreds", "Utilfreds", "Hverken/eller", "Tilfreds", "Meget tilfreds"];
 
+		// Get macid from param "macid", if empty return empty page
 		this.macid = getUrlVar("macid");
 		if (this.macid == "") {
 			$("body").html("");
@@ -56,11 +57,8 @@ var app = {
 			this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
 		}
 		
-		
-		// Populate summary, table and pie chart
+		// Summary, table and pie chart
 		app.getDataWhat(function() {
-			console.log(app.data);
-
 			// Find values for summary
 			var number_of_responds = 0;
 			var cumulative_satisfaction = 0;
@@ -99,28 +97,25 @@ var app = {
 			// Fill pie chart
 			var testdata = app.returnWhatDataWeekly(number_of_responds);
 			nv.addGraph(function() {
-				var width = 600,
-					height = 600;
+				var width = 600;
+				var height = 600;
 
-				var chart = nv.models.pieChart()
-					.x(function(d) { return d.key })
-					.y(function(d) { return d.val })
-					.showLabels(true)
-					.width(width)
-					.height(height);
+				var chart = nv.models.pieChart();
+				chart.x(function(d) { return d.key });
+				chart.y(function(d) { return d.val });
+				chart.showLabels(true);
+				chart.width(width);
+				chart.height(height);
 				chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
-				chart.tooltipContent(function(key, y, e, graph) { return y + " %" })
+				chart.tooltipContent(function(key, y, e, graph) { return y + " %" });
 				chart.margin({top: 50, right: 50, bottom: 50, left: 50});
 				
-				d3.select("#pie svg").datum(testdata)
-					.transition().duration(1200)
-					.attr('width', width)
-					.attr('height', height)
-					.call(chart);
+				d3.select("#pie svg").datum(testdata).transition().duration(1200).attr('width', width).attr('height', height).call(chart);
 				return chart;
 			});	
 		});
 		
+		// Graph: development over time
 		app.getDataOverTime(function() {
 			var testdata = app.returnGraphDataPerDay();
 			
@@ -151,27 +146,27 @@ var app = {
 			});
 		});
 	},
+	// Get data for "piechart" and "table"
 	getDataWhat: function(callback){
-		var da = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
+		var data = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
-			   data: da,
+			   data: data,
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
-			console.log(response);
 			app.data = JSON.parse(response);
 		})
 		.always(function() {
 			callback();
 		});
 	},
-	
+	// Get data for "graph: development over time"
 	getDataOverTime: function(callback){
-		var da = {"action": "dataPerDay", "macid": app.macid};
+		var data = {"action": "dataPerDay", "macid": app.macid};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
-			   data: da,
+			   data: data,
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
@@ -181,30 +176,30 @@ var app = {
 			callback();
 		});
 	},
-	// return data formatted for "piechart: smiley distribution this week"
+	// Return data formatted for "piechart" and "table"
 	returnWhatDataWeekly: function(numberOfEntries) {
-		var d = new Array();
+		var data = new Array();
 		for (var i = 0; i < app.data[0][0].length; i++) {
-			var tx = app.smileyText[4-i];
-			var val = 0;
+			var text = app.smileyText[4-i];
+			var value = 0;
 			for (var j = 0; j < app.data[0].length; j++) {
-				val += app.data[0][j][i];
+				value += app.data[0][j][i];
 			}
-			val = val / numberOfEntries * 100.0;
-			d.push({key: tx, val: val});
+			value = value / numberOfEntries * 100.0;
+			data.push({key: text, val: value});
 		}
-		return d;
+		return data;
 	},
 	// Return data formatted for "graph: development over time"
 	returnGraphDataPerDay: function() {
-		var d = new Array();
+		var data = new Array();
 		for (var i = 0; i < app.data.length; i++) {
-			d.push([((new Date(app.data[i].Date)).getTime()), app.data[i].AvgSmiley]);
+			data.push([((new Date(app.data[i].Date)).getTime()), app.data[i].AvgSmiley]);
 		}
 		return [ 
 		{	"key" : "Tilfredshed" , 
 			"bar": false,
-			"values" : d
+			"values" : data
 		}].map(function(series) {
 			series.values = series.values.map(function(d) { return {x: d[0], y: d[1] } });
 			return series;
