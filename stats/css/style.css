@@ -68,12 +68,6 @@ h2 {
 	display: inline-block;
 }
 
-/* Display circles at datapoints */
-.nvd3 .nv-groups .nv-point {
-    stroke-opacity: 0.5 !important;
-    stroke-width: 5px;
-}
-
 .table_img{
 	width: 100%;
 }
@@ -98,6 +92,16 @@ h2 {
 	margin-bottom: 50px;
 }
 
+
+/* Changes to nvd3 css */
+
+/* data points on graph over time */
+.nvd3 .nv-groups .nv-point {
+    stroke-opacity: 0.5 !important;
+    stroke-width: 5px;
+}
+
+/* text on piechart */
 .nv-label text {
 	font-size: 10pt;
 	font-weight: bold;
