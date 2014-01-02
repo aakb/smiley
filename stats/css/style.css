@@ -29,11 +29,11 @@ h2 {
 .header_right {
 	float: right;
 	margin-right: 20px;
+	margin-top: 10px;
 	display: inline-block;
 }
 
 .header_left {
-	margin-right: 20px;
 	display: inline-block;
 }
 
