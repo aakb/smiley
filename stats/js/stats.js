@@ -82,11 +82,12 @@ var app = {
 				var chart = nv.models.pieChart()
 					.x(function(d) { return d.key })
 					.y(function(d) { return d.val })
-					.showLabels(false)
+					.showLabels(true)
 					.width(width)
 					.height(height);
 				chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
 				chart.tooltipContent(function(key, y, e, graph) { return y + " %" })
+				chart.margin({top: 0, right: 0, bottom: 0, left: 0});
 				
 				d3.select("#pie svg").datum(testdata)
 					.transition().duration(1200)
@@ -104,19 +105,20 @@ var app = {
 				var chart = nv.models.lineChart();
 				chart.forceY( [1,5]);
  
-				chart.xAxis.axisLabel('').tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+				chart.xAxis.axisLabel('').tickFormat(function(d) { return d3.time.format('%b. %d %Y')(new Date(d)); });
 				chart.yAxis.tickValues([1,2,3,4,5]).axisLabel('')
 					.tickFormat(function(d, i){
-						if (d >= 4.5)
-							return app.smileyText[4] + " (" + d + ")";
-						else if (d < 4.5 && d >= 3.5)
-							return app.smileyText[3] + " (" + d + ")";
-						else if (d < 3.5 && d >= 2.5)
-							return app.smileyText[2] + " (" + d + ")";
-						else if (d < 2.5 && d >= 1.5)
-							return app.smileyText[1] + " (" + d + ")";
+						var dd = parseFloat(d).toFixed(2);
+						if (dd >= 4.5)
+							return app.smileyText[4] + " (" + dd + ")";
+						else if (dd < 4.5 && d >= 3.5)
+							return app.smileyText[3] + " (" + dd + ")";
+						else if (dd < 3.5 && d >= 2.5)
+							return app.smileyText[2] + " (" + dd + ")";
+						else if (dd < 2.5 && d >= 1.5)
+							return app.smileyText[1] + " (" + dd + ")";
 						else
-							return app.smileyText[0] + " (" + d + ")";
+							return app.smileyText[0] + " (" + dd + ")";
 					});
 				chart.margin({top: 50, right: 150, bottom: 50, left: 150});
  
