@@ -169,6 +169,43 @@ class SmileyDB {
 		
 		echo json_encode(array($thisWeek, $lastWeek));
 	}
+	
+	// Invoke this each monday to send mails about results from last week
+	public function sendWeeklyMails() {
+		$week = 0 + date("W");
+		$year = 0 + date("Y");
+		
+		$statement = 'SELECT * FROM machine';
+		$query = $this->connection->execute($statement);
+	
+		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($rows as $row) {
+			// Send mail to contact
+			$to  = $row["mail"]; 
+			$subject = 'b7 ugentlig statistik';
+			$message = '
+			<html>
+			<head>
+			  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			  <title>b7 ugentlig statistik: uge '.$week.'('.$year.')</title>
+			</head>
+			<body>
+			  <h2>Statistik for uge '.$week.' ('.$year.')</h2>
+			  <a href="http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'">http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'</a>
+			  <h2>For følgende maskine</h2>
+			  <em>Magistratsafdeling</em>: '.$row["magafd"].'<br/>
+			  <em>Forvaltning</em>: '.$row["forvalt"].'<br/>
+			  <em>Fysisk placering</em>: '.$row["place"].'<br/>
+			  <em>Navn på enhed</em>: '.$row["name"].'<br/>
+			</body>
+			</html>
+			';
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+			$headers .= 'From: b7' . "\r\n";		
+			mail($to, $subject, $message, $headers);
+		}
+	}
 }
 
 ?>

@@ -108,6 +108,18 @@
 		
 			$smileyDB->getWhatThisWeekComparePreviously($macid, $today);
 			break;
+		case "weeklyMails":
+			// Only allow Cron to invoke
+			if (php_sapi_name() == 'cli') {   
+				if (isset($_SERVER['TERM'])) {   
+					return;
+				}   
+			} else { 
+				return;
+			}
+
+			$smileyDB->sendWeeklyMails();
+			break;
 		default:
 			break;
 	}
