@@ -18,6 +18,17 @@ var app = {
 	//////////////////////////////////////////
     init: function() {
 		this.macid = getUrlVar("macid");
+		console.log(this.macid);
+		
+		if (this.macid == "") {
+			$("body").html("");
+		}
+		
+		this.weeknr = getUrlVar("week");
+		if (this.weeknr != "") {
+			console.log(this.weeknr);
+		}
+		
 	
 		this.aDay = 1000 * 60 * 60 * 24;
 		this.now = new Date();
