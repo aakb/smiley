@@ -162,12 +162,10 @@ class SmileyDB {
 	public function getWhatThisWeekComparePreviously($macid, $today) {
 		$aDay = 1000 * 60 * 60 * 24;
 		$oneWeekAgo = $today -  $aDay * 7;
-		$twoWeeksAgo = $today - $aDay * 14;
 		
 		$thisWeek = $this->getWhat($macid, $oneWeekAgo, $today);
-		$lastWeek = $this->getWhat($macid, $twoWeeksAgo, $oneWeekAgo);
 		
-		echo json_encode(array($thisWeek, $lastWeek));
+		echo json_encode($thisWeek);
 	}
 	
 	// Invoke this each monday to send mails about results from last week

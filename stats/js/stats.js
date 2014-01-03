@@ -70,17 +70,17 @@ var app = {
 			for (var i = 0; i < 5; i++) {
 				var r_column = 0;
 				for (var j = 0; j < 3; j++) {
-					number_of_respondents += app.data[0][j][i];
-					cumulative_satisfaction += app.data[0][j][i] * (5 - i);
+					number_of_respondents += app.data[j][i];
+					cumulative_satisfaction += app.data[j][i] * (5 - i);
 					if (i == 0) {
-						number_of_satisfied += app.data[0][j][i];
+						number_of_satisfied += app.data[j][i];
 					} else if (i == 4) {
-						number_of_dissatisfied += app.data[0][j][i];
+						number_of_dissatisfied += app.data[j][i];
 					}
 						
-					$("#entry_"+j+i).html(app.data[0][j][i]);
+					$("#entry_"+j+i).html(app.data[j][i]);
 					
-					r_column += app.data[0][j][i];
+					r_column += app.data[j][i];
 				}
 				$("#entry_3"+i).html(r_column);
 			}
@@ -182,11 +182,11 @@ var app = {
 	// Return data formatted for "piechart" and "table"
 	returnWhatDataWeekly: function(numberOfEntries) {
 		var data = new Array();
-		for (var i = 0; i < app.data[0][0].length; i++) {
+		for (var i = 0; i < app.data[0].length; i++) {
 			var text = app.smileyText[4-i];
 			var value = 0;
-			for (var j = 0; j < app.data[0].length; j++) {
-				value += app.data[0][j][i];
+			for (var j = 0; j < app.data.length; j++) {
+				value += app.data[j][i];
 			}
 			value = value / numberOfEntries * 100.0;
 			data.push({key: text, val: value});
