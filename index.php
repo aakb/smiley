@@ -6,15 +6,11 @@
 	$smileyDB = new SmileyDB();
 	
 	// Cron: Weekly mails
-	if (isset($_SERVER['argv'])) {
-		if (isset($_SERVER['argv'][1])) {
-			if ($_SERVER['argv'][1] == "weeklyMails") {
-				// Only allow cli
-				if (php_sapi_name() == 'cli') {   
-					$smileyDB->sendWeeklyMails();
-					return;
-				}
-			}
+	if (isset($_SERVER['argv']) && isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == "weeklyMails") {
+		// Only allow cli
+		if (php_sapi_name() == 'cli') {   
+			$smileyDB->sendWeeklyMails();
+			return;
 		}
 	}
 	
