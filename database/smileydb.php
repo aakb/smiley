@@ -174,6 +174,13 @@ class SmileyDB {
 	public function sendWeeklyMails() {
 		$week = 0 + date("W");
 		$year = 0 + date("Y");
+
+		// Count one week back
+		$week = $week - 1;
+		if ($week < 1) {
+			$week = 52;
+			$year = $year - 1;
+		}
 		
 		$statement = 'SELECT * FROM machine';
 		$query = $this->connection->execute($statement);
@@ -182,12 +189,12 @@ class SmileyDB {
 		foreach ($rows as $row) {
 			// Send mail to contact
 			$to  = $row["mail"]; 
-			$subject = 'b7 ugentlig statistik';
+			$subject = 'b7 statistik uge '.$week.', '.$year;
 			$message = '
 			<html>
 			<head>
 			  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			  <title>b7 ugentlig statistik: uge '.$week.'('.$year.')</title>
+			  <title>b7 ugentlig statistik for uge '.$week.'('.$year.')</title>
 			</head>
 			<body>
 			  <h2>Statistik for uge '.$week.' ('.$year.')</h2>

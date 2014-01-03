@@ -5,6 +5,19 @@
 
 	$smileyDB = new SmileyDB();
 	
+	// Cron: Weekly mails
+	if (isset($_SERVER['argv'])) {
+		if (isset($_SERVER['argv'][1])) {
+			if ($_SERVER['argv'][1] == "weeklyMails") {
+				// Only allow cli
+				if (php_sapi_name() == 'cli') {   
+					$smileyDB->sendWeeklyMails();
+					return;
+				}
+			}
+		}
+	}
+	
 	$action = "";
 	if (isset($_POST["action"])) {
 		$action = $_POST["action"];
@@ -107,18 +120,6 @@
 			}
 		
 			$smileyDB->getWhatThisWeekComparePreviously($macid, $today);
-			break;
-		case "weeklyMails":
-			// Only allow Cron to invoke
-			if (php_sapi_name() == 'cli') {   
-				if (isset($_SERVER['TERM'])) {   
-					return;
-				}   
-			} else { 
-				return;
-			}
-
-			$smileyDB->sendWeeklyMails();
 			break;
 		default:
 			break;
