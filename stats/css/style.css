@@ -70,6 +70,13 @@ h2 {
 	font-style: italic;
 }
 
+.color_red {
+	color: red;
+}
+
+.color_green {
+	color: green;
+}
 
 /* Changes to nvd3 css */
 

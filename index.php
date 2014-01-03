@@ -115,7 +115,22 @@
 				return;
 			}
 		
-			$smileyDB->getWhatThisWeekComparePreviously($macid, $today);
+			$smileyDB->getWhatThisWeek($macid, $today);
+			break;
+		case "dataWhatPast":
+			if (!isset($_GET["macid"]) ||
+				!isset($_GET["end"])) {
+				return;
+			}
+
+			$macid = $_GET["macid"];
+			$end = $_GET["end"];
+
+			if ($macid == "" || $end == "") {
+				return;
+			}
+		
+			$smileyDB->getWhatPast($macid, $end);
 			break;
 		default:
 			break;

@@ -158,14 +158,20 @@ class SmileyDB {
 		return $arr;
 	}
 	
-	// Not necessarily optimal with 30 queries into db
-	public function getWhatThisWeekComparePreviously($macid, $today) {
+	// Not necessarily optimal with 15 queries into db
+	public function getWhatThisWeek($macid, $today) {
 		$aDay = 1000 * 60 * 60 * 24;
 		$oneWeekAgo = $today -  $aDay * 7;
 		
 		$thisWeek = $this->getWhat($macid, $oneWeekAgo, $today);
 		
 		echo json_encode($thisWeek);
+	}
+
+	public function getWhatPast($macid, $end) {
+		$past = $this->getWhat($macid, 0, $end);
+		
+		echo json_encode($past);
 	}
 	
 	// Invoke this each monday to send mails about results from last week
