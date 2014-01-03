@@ -2,9 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8" />
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="format-detection" content="telephone=no" />
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 		<link rel="stylesheet" type="text/css" href="css/nv.d3.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>b7 statistik</title>
@@ -22,13 +19,14 @@
 					<div class="summary">
 						Du ser her resultaterne for perioden fra <span class="text_b7" id="date_start"></span> til og med <span class="text_b7" id="date_end"></span><span id="week_text"></span>.<br/>
 						I denne periode er den generelle tilfredshed: <span class="text_b7" id="satis_general">0</span> %.<br/>
-						<span class="text_b7" id="number_of_responds">0</span> har svaret.<br/>
+						<span class="text_b7" id="number_of_respondents">0</span> har svaret.<br/>
 						<span class="text_b7" id="satis_happy">0</span> % har været meget tilfredse.<br/>
 						<span class="text_b7" id="satis_unhappy">0</span> % har været meget utilfredse.<br/>
 					</div>
 				</div>
 				<div class="section">
 					<h2>Tal for denne uge</h2>
+					<div class="graph_description">Tabellen viser hvordan besvarelserne fordeler sig for den pågældende uge.</div>
 					<div class="graph">
 						<table class="summary_table">
 							<tr>
@@ -67,7 +65,7 @@
 								<td><span id="entry_24"></span></td>
 								<td><span id="entry_25"></span></td>
 							</tr>
-							<tr class="double_line">
+							<tr>
 								<td>Sum</td>
 								<td><span id="entry_30"></span></td>
 								<td><span id="entry_31"></span></td>
@@ -82,12 +80,14 @@
 				</div>
 				<div class="section">
 					<h2>Gennemsnitlig tilfredshed for denne uge</h2>
+					<div class="graph_description">Diagramet viser den procentvise fordeling af tilfredshed i besvarelserne.</div>
 					<div id="pie" class="graph">
 						<svg style='height:500px; width: 1000px'> </svg>
 					</div>
 				</div>
 				<div class="section">
 					<h2>Udvikling over tid</h2>
+					<div class="graph_description">Grafen viser udviklingen i den gennemsnitlige tilfredshed pr. dag fra første registrering.</div>
 					<div id="chart" class="graph">
 						<svg style='height:500px'> </svg>
 					</div>

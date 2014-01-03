@@ -5,12 +5,13 @@ function getUrlVar(key){
 	return result && unescape(result[1]) || ""; 
 }
 
-// returns date as danish date, e.g. 13. Dec. 2013
+// Returns date as danish date, e.g. 13. Dec. 2013
 function getDanishDate(date) {
 	var months  = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 	return date.getDate() + ". " + months[date.getMonth()] + ". " + date.getFullYear();
 } 
 
+// Returns the first day of the week defined by the (year, week) input
 // from: http://stackoverflow.com/questions/7580824/how-to-convert-a-week-number-to-a-date-in-javascript
 function firstDayOfWeek(year, week) {
     var d = new Date(year, 0, 1), offset = d.getTimezoneOffset();
@@ -59,16 +60,17 @@ var app = {
 		
 		// Summary, table and pie chart
 		app.getDataWhat(function() {
-			// Find values for summary
-			var number_of_responds = 0;
-			var cumulative_satisfaction = 0;
+			// Values for summary
+			var number_of_respondents = 0;
+			var cumulative_satisfaction = 0;		// contains sum of value (5,4,3,2,1) of smileys
 			var number_of_satisfied = 0;
 			var number_of_dissatisfied = 0;
 
+			// Fill table with values, and find values for summary
 			for (var i = 0; i < 5; i++) {
 				var r_column = 0;
 				for (var j = 0; j < 3; j++) {
-					number_of_responds += app.data[0][j][i];
+					number_of_respondents += app.data[0][j][i];
 					cumulative_satisfaction += app.data[0][j][i] * (5 - i);
 					if (i == 0) {
 						number_of_satisfied += app.data[0][j][i];
@@ -84,18 +86,18 @@ var app = {
 			}
 
 			// Fill summary
-			if (number_of_responds > 0) {
-				$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_responds)).toFixed(2));
-				$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_responds)).toFixed(2));
-				$("#satis_general").html((20.0 * (cumulative_satisfaction / number_of_responds)).toFixed(2));
+			if (number_of_respondents > 0) {
+				$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_respondents)).toFixed(2));
+				$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_respondents)).toFixed(2));
+				$("#satis_general").html((20.0 * (cumulative_satisfaction / number_of_respondents)).toFixed(2));
 			}
-			$("#number_of_responds").html(number_of_responds);
-			$("#entry_35").html(number_of_responds);
+			$("#number_of_respondents").html(number_of_respondents);
+			$("#entry_35").html(number_of_respondents);
 			$("#date_start").html(getDanishDate(app.oneWeekAgo));
 			$("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 			
 			// Fill pie chart
-			var testdata = app.returnWhatDataWeekly(number_of_responds);
+			var testdata = app.returnWhatDataWeekly(number_of_respondents);
 			nv.addGraph(function() {
 				var width = 600;
 				var height = 600;
@@ -104,11 +106,12 @@ var app = {
 				chart.x(function(d) { return d.key });
 				chart.y(function(d) { return d.val });
 				chart.showLabels(true);
+				chart.showLegend(false);
 				chart.width(width);
 				chart.height(height);
 				chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
 				chart.tooltipContent(function(key, y, e, graph) { return y + " %" });
-				chart.margin({top: 50, right: 50, bottom: 50, left: 50});
+				chart.margin({top: -50, right: 50, bottom: 50, left: 50});
 				
 				d3.select("#pie svg").datum(testdata).transition().duration(1200).attr('width', width).attr('height', height).call(chart);
 				return chart;
@@ -138,20 +141,20 @@ var app = {
 						else
 							return app.smileyText[0] + " (" + dd + ")";
 					});
-				chart.margin({top: 50, right: 150, bottom: 50, left: 150});
+				chart.margin({top: 50, right: 50, bottom: 50, left: 150});
  
 				d3.select('#chart svg').datum(testdata).transition().duration(500).call(chart);
-				nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
+				nv.utils.windowResize(function() { d3.select('#chart svg').call(chart); });
 				return chart;
 			});
 		});
 	},
 	// Get data for "piechart" and "table"
 	getDataWhat: function(callback){
-		var data = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
+		var input_data = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
-			   data: data,
+			   data: input_data,
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
@@ -163,10 +166,10 @@ var app = {
 	},
 	// Get data for "graph: development over time"
 	getDataOverTime: function(callback){
-		var data = {"action": "dataPerDay", "macid": app.macid};
+		var input_data = {"action": "dataPerDay", "macid": app.macid};
 		$.ajax({url: config.serverlocation, 
 			   type: "GET",
-			   data: data,
+			   data: input_data,
 			   dataType: "text"
 		})
 		.done(function(response, textStatus, jqXHR) {
