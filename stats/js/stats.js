@@ -92,7 +92,7 @@ var app = {
 			$("#number_of_responds").html(number_of_responds);
 			$("#entry_35").html(number_of_responds);
 			$("#date_start").html(getDanishDate(app.oneWeekAgo));
-			$("#date_end").html(getDanishDate(app.now));
+			$("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 			
 			// Fill pie chart
 			var testdata = app.returnWhatDataWeekly(number_of_responds);
