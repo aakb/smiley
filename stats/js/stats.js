@@ -113,7 +113,7 @@ var app = {
 						// For each entry show comparison with past
 						for (var i = 0; i < 5; i++) {
 							for (var j = 0; j < 3; j++) {
-								var comp = (app.data[j][i] / number_of_respondents - app.datapast[j][i] / number_of_respondents_past).toFixed(2);
+								var comp = (100.0 * (app.data[j][i] / number_of_respondents - app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
 								if (comp > 0.0) {
 									$("#entry_"+j+i).append("<br/>(+" + comp + " %)");
 								} else if (comp < 0.0) {
