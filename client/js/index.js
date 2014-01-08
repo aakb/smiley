@@ -19,7 +19,7 @@ var app = {
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
-		
+
 		if(typeof(Storage)!=="undefined") {
 			var macid = localStorage.getItem("macid");
 		
@@ -270,11 +270,19 @@ var app = {
 		
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
-			app.commitEntriesFromLocalStorage(function() {
-				app.timer = setTimeout(function(){
-					app.showMainPage();
-				}, 4000);
-			});
+            app.ping(
+                function() {
+                    app.commitEntriesFromLocalStorage(function() {
+                    app.timer = setTimeout(function(){
+                        app.showMainPage();
+                    }, 4000);
+                });},
+                function() {
+                    app.timer = setTimeout(function(){
+                        app.showMainPage();
+                    }, 4000);
+                }
+            );
 		});
 	},
 	
@@ -353,6 +361,20 @@ var app = {
 			localStorage.setItem("entries", JSON.stringify(entries));
 		}
 	},
+
+    // Ping server
+    ping: function(success, failure) {
+        $.ajax({
+            url: config.serverlocation + "/ping",
+            type: "GET"
+        })
+        .done(function (response, textStatus, jqXHR) {
+            success();
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            failure();
+        });
+    },
 
 	// Logout: remove macid from localStorage
 	logout: function() {
