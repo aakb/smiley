@@ -68,7 +68,6 @@ var app = {
 
 			// Fill table with values, and find values for summary
 			for (var i = 0; i < 5; i++) {
-				var r_column = 0;
 				for (var j = 0; j < 3; j++) {
 					number_of_respondents += app.data[j][i];
 					cumulative_satisfaction += app.data[j][i] * (5 - i);
@@ -77,12 +76,12 @@ var app = {
 					} else if (i == 4) {
 						number_of_dissatisfied += app.data[j][i];
 					}
-						
-					$("#entry_"+j+i).html(app.data[j][i]);
+
+//					$("#entry_"+j+i).html(app.data[j][i]);
 					
-					r_column += app.data[j][i];
+					//r_column += app.data[j][i];
 				}
-				$("#entry_3"+i).html(r_column);
+				//$("#entry_3"+i).html(r_column);
 			}
 
 			var satisfaction_general = 0.0;
@@ -91,7 +90,8 @@ var app = {
 			if (number_of_respondents > 0) {
 				$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_respondents)).toFixed(2));
 				$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_respondents)).toFixed(2));
-				satisfaction_general = (20.0 * (cumulative_satisfaction / number_of_respondents)).toFixed(2);
+
+                satisfaction_general = (20.0 * (cumulative_satisfaction / number_of_respondents)).toFixed(2);
 				$("#satis_general").html(satisfaction_general);
 				
 				// Compare with past
@@ -101,11 +101,15 @@ var app = {
 				
 					for (var i = 0; i < 5; i++) {
 						var r_column_past = 0;
-						for (var j = 0; j < 3; j++) {
+                        var r_column = 0;
+                        for (var j = 0; j < 3; j++) {
+                            $("#entry_"+j+i).html("" + ((app.data[j][i] / number_of_respondents) * 100.0).toFixed(2) + " %");
 							number_of_respondents_past += app.datapast[j][i];
 							cumulative_satisfaction_past += app.datapast[j][i] * (5 - i);
 							r_column_past += app.datapast[j][i];
+                            r_column += app.data[j][i];
 						}
+                        $("#entry_3"+i).html("" + ((r_column / number_of_respondents) * 100.0).toFixed(2) + " %");
 					}
 					
 					var satisfaction_general_past = 0;
@@ -123,20 +127,20 @@ var app = {
 						}
 
 						satisfaction_general_past = (20.0 * (cumulative_satisfaction_past / number_of_respondents_past)).toFixed(2);
-					}
 
-					// Compare general satisfaction with past
-					var satisfaction_general_compare = (satisfaction_general - satisfaction_general_past).toFixed(2);
-					if (satisfaction_general_compare > 0.0) {
-						$("#satis_general_past").html("(<span class=\"color_green\">+" + satisfaction_general_compare + " % </span> over gennemsnittet)");
-					} else if (satisfaction_general_compare < 0.0) {
-						$("#satis_general_past").html("(<span class=\"color_red\">" + satisfaction_general_compare + " % </span> under gennemsnittet)");
-					}
+                        // Compare general satisfaction with past
+                        var satisfaction_general_compare = (satisfaction_general - satisfaction_general_past).toFixed(2);
+                        if (satisfaction_general_compare > 0.0) {
+                            $("#satis_general_past").html("(<span class=\"color_green\">+" + satisfaction_general_compare + " % </span> over gennemsnittet)");
+                        } else if (satisfaction_general_compare < 0.0) {
+                            $("#satis_general_past").html("(<span class=\"color_red\">" + satisfaction_general_compare + " % </span> under gennemsnittet)");
+                        }
+                    }
 				});
 			}
 			// Fill summary and table
 			$("#number_of_respondents").html(number_of_respondents);
-			$("#entry_35").html(number_of_respondents);
+//			$("#entry_35").html(number_of_respondents);
 			$("#date_start").html(getDanishDate(app.oneWeekAgo));
 			$("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 						
