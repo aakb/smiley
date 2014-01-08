@@ -249,7 +249,7 @@ class SmileyDB {
         $xml->appendChild($root);
 
         foreach ($machines as $machine) {
-            if (!isset($machine["test"]) || $machine["test"]) {
+            if (isset($machine["test"]) && $machine["test"]) {
                 continue;
             }
             $entry = $xml->createElement("machine");
