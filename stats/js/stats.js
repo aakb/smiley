@@ -99,24 +99,30 @@ var app = {
 				app.getDataWhatPast(function() {
 					var number_of_respondents_past = 0;
 					var cumulative_satisfaction_past = 0;		// contains sum of value (5,4,3,2,1) of smileys
+                    var respondents_past_columns = new Array([0, 0, 0, 0, 0]);
+                    var column_percentages = new Array([0.0, 0.0, 0.0, 0.0, 0.0]);
 
                     // Fill table values
                     // Find cumulative satisfaction past and number of respondents
 					for (var i = 0; i < 5; i++) {
                         var r_column = 0;
+                        var r_column_past = 0;
                         for (var j = 0; j < 3; j++) {
                             $("#entry_"+j+i).html("" + ((app.data[j][i] / number_of_respondents) * 100.0).toFixed(2) + " %");
 							number_of_respondents_past += app.datapast[j][i];
 							cumulative_satisfaction_past += app.datapast[j][i] * (5 - i);
                             r_column += app.data[j][i];
+                            r_column_past += app.datapast[j][i];
 						}
-                        $("#entry_3"+i).html("" + ((r_column / number_of_respondents) * 100.0).toFixed(2) + " %");
+                        column_percentages[i] = ((r_column / number_of_respondents) * 100.0).toFixed(2);
+                        $("#entry_3"+i).html("" + column_percentages[i] + " %");
+
+                        respondents_past_columns[i] = r_column_past;
 					}
 
-                    //
 					var satisfaction_general_past = 0;
 					if (number_of_respondents_past > 0) {
-						// For each entry show comparison with past
+						// For each entry add comparison with past
 						for (var i = 0; i < 5; i++) {
 							for (var j = 0; j < 3; j++) {
 								var comp = (100.0 * (app.data[j][i] / number_of_respondents - app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
@@ -126,6 +132,13 @@ var app = {
 									$("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + comp + " %)</span>");
 								}
 							}
+                            var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
+                            var column_compare = column_percentages[i] - column_percentage_past;
+                            if (column_compare > 0) {
+                                column_compare = "+" + column_compare;
+                            }
+
+                            $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_compare + " %)</span>");
 						}
 
                         // Find general satisfaction from the past
