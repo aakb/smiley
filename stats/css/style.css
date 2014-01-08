@@ -78,6 +78,10 @@ h2 {
 	color: green;
 }
 
+.color_grey {
+    color: #999999;
+}
+
 /* Changes to nvd3 css */
 
 /* data points on graph over time */

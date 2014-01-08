@@ -76,12 +76,7 @@ var app = {
 					} else if (i == 4) {
 						number_of_dissatisfied += app.data[j][i];
 					}
-
-//					$("#entry_"+j+i).html(app.data[j][i]);
-					
-					//r_column += app.data[j][i];
 				}
-				//$("#entry_3"+i).html(r_column);
 			}
 
 			var satisfaction_general = 0.0;
@@ -119,9 +114,9 @@ var app = {
 							for (var j = 0; j < 3; j++) {
 								var comp = (100.0 * (app.data[j][i] / number_of_respondents - app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
 								if (comp > 0.0) {
-									$("#entry_"+j+i).append("<br/>(+" + comp + " %)");
+									$("#entry_"+j+i).append("<br/><span class=\"color_grey\">(+" + comp + " %)</span>");
 								} else if (comp < 0.0) {
-									$("#entry_"+j+i).append("<br/>(" + comp + " %)");
+									$("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + comp + " %)</span>");
 								}
 							}
 						}
@@ -140,7 +135,6 @@ var app = {
 			}
 			// Fill summary and table
 			$("#number_of_respondents").html(number_of_respondents);
-//			$("#entry_35").html(number_of_respondents);
 			$("#date_start").html(getDanishDate(app.oneWeekAgo));
 			$("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 						
