@@ -233,6 +233,50 @@ class SmileyDB {
 			mail($to, $subject, $message, $headers);
 		}
 	}
+
+    // Returns an XML document of the data
+    public function getXMLData() {
+        date_default_timezone_set('Europe/Copenhagen');
+
+        // Get data from database
+        $statement = 'SELECT * FROM machine';
+        $query = $this->connection->execute($statement);
+        $machines = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // Create XML document
+        $xml = new DOMDocument("1.0");
+        $root = $xml->createElement("machines");
+        $xml->appendChild($root);
+
+        foreach ($machines as $machine) {
+            if (!isset($machine["test"]) || $machine["test"]) {
+                continue;
+            }
+            $entry = $xml->createElement("machine");
+            $entry->setAttribute("magafd", $machine["magafd"]);
+            $entry->setAttribute("forvalt", $machine["forvalt"]);
+            $entry->setAttribute("place", $machine["place"]);
+            $entry->setAttribute("name", $machine["name"]);
+
+            $root->appendChild($entry);
+
+            $statement = 'SELECT * FROM data WHERE macid = :macid';
+            $query = $this->connection->execute($statement, array('macid' => $machine["macid"]));
+            $dataForMachine = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($dataForMachine as $data) {
+                $dataEntry = $xml->createElement("data");
+                $dataEntry->setAttribute("timestamp", date("c", $data["datetime"] / 1000));
+                $dataEntry->setAttribute("smiley", $data["smiley"]);
+                $dataEntry->setAttribute("what", $data["what"]);
+
+                $entry->appendChild($dataEntry);
+            }
+        }
+
+        header('Content-type: application/xml');
+        echo $xml->saveXML();
+    }
 }
 
 ?>
