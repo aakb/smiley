@@ -4,21 +4,13 @@
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
 	background-color:#FFFFFF;
     background-attachment:fixed;
-	font-family: Arial;
+	font-family: "Arial", sans-serif;
     font-size:larger;
     height:100%;
-    margin:0px;
-    padding:0px;
+    margin:0;
+    padding:0;
     width:100%;
-	color: #3792d5;
-}
-
-h1 {
-	font-size: largest;
-}
-
-h2 {
-	font-size: larger;
+    color: #2a76cc;
 }
 
 .container {
@@ -41,7 +33,7 @@ h2 {
 	background-color: #FFFFFF;
 	width: 100%;
 	position: fixed;
-	bottom: 0px;
+	bottom: 0;
 	z-index: -1;
 	border: 0;
 	margin: 0;
@@ -113,18 +105,14 @@ h2 {
 	color: #ffffff;
 	font-size: larger;
 	display: inline-block;
-	cursor: pointer;
 }
 
 input {
-	padding:5px; border:2px solid #3792d5; 
+	padding:5px; border:2px solid #2a76cc;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	height: 44px;
 	width: 350px;
-}
-input focus {
-	border-color:#ff8700;
 }
 input[type=submit] {
 	padding:5px 15px; 
@@ -136,7 +124,6 @@ input[type=submit] {
 	border-radius: 5px;
 	color: #ffffff;
 	font-size: larger;
-	cursor: pointer;
 }
 
 .graph {
