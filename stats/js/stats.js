@@ -133,7 +133,7 @@ var app = {
 								}
 							}
                             var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
-                            var column_compare = column_percentages[i] - column_percentage_past;
+                            var column_compare = (column_percentages[i] - column_percentage_past).toFixed(2);
                             if (column_compare > 0) {
                                 column_compare = "+" + column_compare;
                             }
