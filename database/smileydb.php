@@ -2,7 +2,7 @@
 
 header('Content-Type: text/json; charset=utf-8');
 
-include_once dirname(__FILE__).'/../utils/conf.php';
+include_once dirname(__FILE__) . '/../config/conf.php';
 include_once dirname(__FILE__).'/pdo_mysql.php';
 
 /**
