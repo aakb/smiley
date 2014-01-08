@@ -4,17 +4,23 @@ var app = {
 	//////////////////////////////////////////
     init: function() {
 		// Load HTML parts
-		this.pageWelcome = $("#page_welcome").html();
-		this.pageLogin = $("#page_login").html();
-		this.pageRegister = $("#page_register").html();
-		this.pageMain = $("#page_main").html();
-		this.pageThanks = $("#page_thanks").html();
-		
-		$("#page_welcome").remove();
-		$("#page_login").remove();
-		$("#page_register").remove();
-		$("#page_main").remove();
-		$("#page_thanks").remove();
+        var pageWelcomeDiv  = $("#page_welcome");
+        var pageLoginDiv    = $("#page_login");
+        var pageRegisterDiv = $("#page_register");
+        var pageMainDiv     = $("#page_main");
+        var pageThanksDiv   = $("#page_thanks");
+
+		this.pageWelcome = pageWelcomeDiv.html();
+		this.pageLogin = pageLoginDiv.html();
+		this.pageRegister = pageRegisterDiv.html();
+		this.pageMain = pageMainDiv.html();
+		this.pageThanks = pageThanksDiv.html();
+
+        pageWelcomeDiv.remove();
+        pageLoginDiv.remove();
+        pageRegisterDiv.remove();
+        pageMainDiv.remove();
+        pageThanksDiv.remove();
 		
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
@@ -53,7 +59,9 @@ var app = {
 		} else {
 			alert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt.");
 		}
-		$("#commit_button").html("Indsend (" + nr + ")");
+
+        var commitButton = $("#commit_button");
+        commitButton.html("Indsend (" + nr + ")");
 		
 		// Setup event listeners
 		$("#login_button").on("touchstart click", function(e) {
@@ -64,7 +72,7 @@ var app = {
 			e.stopPropagation(); e.preventDefault();
 			app.showRegisterPage();
 		});
-		$("#commit_button").on("touchstart click", function(e) {
+        commitButton.on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
 			app.commitEntriesFromLocalStorage(function() {
 				// Display number of uncommitted entries on button
@@ -265,8 +273,7 @@ var app = {
 		
 		$("#main").html(app.pageThanks);
 
-		var d = new Date();
-		var datetime = d.getTime();
+		var datetime = (new Date()).getTime();
 		
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
@@ -378,7 +385,9 @@ var app = {
 
 	// Logout: remove macid from localStorage
 	logout: function() {
-		localStorage.removeItem("macid");
+        if(typeof(Storage)!=="undefined") {
+		    localStorage.removeItem("macid");
+        }
 	},
 	
 	// Save macid to localStorage
