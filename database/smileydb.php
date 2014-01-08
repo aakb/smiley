@@ -197,17 +197,19 @@ class SmileyDB {
 			$message = '
 			<html>
 			<head>
-			  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			  <title>b7 ugentlig statistik for uge '.$week.'('.$year.')</title>
+			    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			    <title>b7 ugentlig statistik for uge '.$week.'('.$year.')</title>
 			</head>
 			<body>
-			  <h2>Statistik for uge '.$week.' ('.$year.')</h2>
-			  <a href="http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'">http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'</a>
-			  <h2>For følgende maskine</h2>
-			  <em>Magistratsafdeling</em>: '.$row["magafd"].'<br/>
-			  <em>Forvaltning</em>: '.$row["forvalt"].'<br/>
-			  <em>Fysisk placering</em>: '.$row["place"].'<br/>
-			  <em>Navn på enhed</em>: '.$row["name"].'<br/>
+			    <div>
+                    <h2>Statistik for uge '.$week.' ('.$year.')</h2>
+                    <a href="http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'">http://smiley.aakb.dk/stats/?macid='.$row["macid"].'&week='.$week.'&year='.$year.'</a>
+                    <h2>For følgende maskine</h2>
+                    <em>Magistratsafdeling</em>: '.$row["magafd"].'<br/>
+                    <em>Forvaltning</em>: '.$row["forvalt"].'<br/>
+                    <em>Fysisk placering</em>: '.$row["place"].'<br/>
+                    <em>Navn på enhed</em>: '.$row["name"].'<br/>
+			    </div>
 			</body>
 			</html>
 			';
