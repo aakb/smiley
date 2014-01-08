@@ -5,6 +5,10 @@ header('Content-Type: text/json; charset=utf-8');
 include_once dirname(__FILE__).'/../utils/conf.php';
 include_once dirname(__FILE__).'/pdo_mysql.php';
 
+/**
+ * Class SmileyDB
+ * Handles all interaction with smiley database
+ */
 class SmileyDB {
 	// Construct and Destruct
 	public function __construct() {
@@ -14,6 +18,7 @@ class SmileyDB {
 		$this->connection = null;
 	}
 
+    // Confirms that machine has been registered
 	public function login($macid) {
 		$statement = 'SELECT * FROM machine WHERE macid = :macid';
 		$query = $this->connection->execute($statement, array('macid' => $macid));
@@ -30,6 +35,7 @@ class SmileyDB {
 		}
 	}
 
+    // Register a new machine
 	public function register($contact, $mail, $magafd, $forvalt, $place, $name) {
 		// machine already exist?
 		$statement = 'SELECT * FROM machine WHERE contact = :contact AND mail = :mail AND magafd = :magafd AND forvalt = :forvalt AND place = :place AND name = :name';
@@ -91,7 +97,9 @@ class SmileyDB {
 		  <em>Navn på enhed</em>: '.$name.'<br/>
 		  <h2>Statistik</h2>
 		  Statistikken for den pågældende maskine er tilgængelig fra følgende link:<br/>
-		  <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a>
+		  <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a><br/>
+		  <br/>
+		  Der vil fremover blive sent en ugentlig mail (hver mandag) med et link til den foregående uges statistik.
 		</body>
 		</html>
 		';
@@ -104,7 +112,8 @@ class SmileyDB {
 		$result = array('result'=>'ok', 'macid'=>$macid);
 		echo json_encode($result);	
 	}
-  
+
+    // Inserts the result in db
 	public function insertResult($macid, $datetime, $smiley, $what) {
 		// test for valid macid
 		$statement = 'SELECT * FROM machine WHERE macid = :macid';
@@ -125,7 +134,8 @@ class SmileyDB {
 		$result = array('result'=>'ok');
 		echo json_encode($result);															
 	}
-	
+
+    // Returns all data for $macid grouped by day
 	public function getDataPerDay($macid) {
 		$statement = 'SELECT avg(smiley) as AvgSmiley, DATE(FROM_UNIXTIME(datetime/1000, "%Y-%m-%d")) as Date FROM data WHERE macid = :macid GROUP BY Date';
 		
@@ -135,7 +145,9 @@ class SmileyDB {
 		echo json_encode($rows);
 	}
 
-	private function getWhat($macid, $start, $end) {
+    // Returns data for $macid from the period from $start to $end
+    // Not necessarily optimal with 15 queries into db
+    private function getWhat($macid, $start, $end) {
 		$arr = array();
 
 		for ($k = 1; $k <= 3; $k++) {
@@ -157,8 +169,8 @@ class SmileyDB {
 		
 		return $arr;
 	}
-	
-	// Not necessarily optimal with 15 queries into db
+
+    // Returns data for $macid from period from one week ago until $today
 	public function getWhatThisWeek($macid, $today) {
 		$aDay = 1000 * 60 * 60 * 24;
 		$oneWeekAgo = $today -  $aDay * 7;
@@ -168,12 +180,14 @@ class SmileyDB {
 		echo json_encode($thisWeek);
 	}
 
+    // Returns data from the beginning of time (January 1, 1970) until $end
 	public function getWhatPast($macid, $end) {
 		$past = $this->getWhat($macid, 0, $end);
 		
 		echo json_encode($past);
 	}
-	
+
+    // Send a mail to each registered machine with a link to the statistics from last week
 	// Invoke this each monday to send mails about results from last week
 	public function sendWeeklyMails() {
 		$week = 0 + date("W");

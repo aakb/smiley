@@ -1,4 +1,5 @@
-﻿CREATE TABLE IF NOT EXISTS `data` (
+﻿/* Create table for data */
+CREATE TABLE IF NOT EXISTS `data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `macid` text NOT NULL,
   `datetime` bigint(20) NOT NULL,
@@ -8,6 +9,7 @@
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
+/* Create table for registered machines */
 CREATE TABLE IF NOT EXISTS `machine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `macid` text NOT NULL,
