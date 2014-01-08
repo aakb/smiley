@@ -62,7 +62,7 @@ var app = {
 		app.getDataWhat(function() {
 			// Values for summary
 			var number_of_respondents = 0;
-			var cumulative_satisfaction = 0;		// contains sum of value (5,4,3,2,1) of smileys
+			var cumulative_satisfaction = 0;		// contains sum of values (5,4,3,2,1) of smileys
 			var number_of_satisfied = 0;
 			var number_of_dissatisfied = 0;
 
