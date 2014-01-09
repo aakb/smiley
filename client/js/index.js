@@ -29,33 +29,33 @@ var app = {
     pageThanksDiv.remove();
 
     // Avoid touchmove events (scrolling).
-		$(document).on('touchmove', function(e) {
-			e.preventDefault();
-		});
+    $(document).on('touchmove', function(e) {
+      e.preventDefault();
+    });
 
     // Auto login (go to main page) if macid is stored in local storage, otherwise go to welcome page.
-		if(typeof(Storage) !== "undefined") {
-			var macid = localStorage.getItem("macid");
+    if(typeof(Storage) !== "undefined") {
+      var macid = localStorage.getItem("macid");
 
-			if (macid == null || macid == "") {
-				app.showWelcomePage();
-			}
+      if (macid == null || macid == "") {
+        app.showWelcomePage();
+      }
       else {
-				this.macid = macid;
-				app.showMainPage();
-			}
-		}
+        this.macid = macid;
+        app.showMainPage();
+      }
+    }
     else {
-			app.showWelcomePage();
-		}
-	},
+      app.showWelcomePage();
+    }
+  },
 
   /**
    * Shows the welcome page and sets up event listeners.
    */
-	showWelcomePage: function() {
-		// Change the HTML content.
-		$("#main").html(app.pageWelcome);
+  showWelcomePage: function() {
+    // Change the HTML content.
+    $("#main").html(app.pageWelcome);
 
     // Find the commit_button.
     var commitButton = $("#commit_button");
@@ -79,23 +79,23 @@ var app = {
     // Update the text on commit_button.
     updateButtonText(commitButton);
 
-		// Setup event listeners.
-		$("#login_button").on("touchstart click", function(e) {
-			e.stopPropagation(); e.preventDefault();
-			app.showLoginPage();
-		});
-		$("#reg_button").on("touchstart click", function(e) {
-			e.stopPropagation(); e.preventDefault();
-			app.showRegisterPage();
-		});
+    // Setup event listeners.
+    $("#login_button").on("touchstart click", function(e) {
+      e.stopPropagation(); e.preventDefault();
+      app.showLoginPage();
+    });
+    $("#reg_button").on("touchstart click", function(e) {
+      e.stopPropagation(); e.preventDefault();
+      app.showRegisterPage();
+    });
     commitButton.on("touchstart click", function(e) {
-			e.stopPropagation(); e.preventDefault();
+      e.stopPropagation(); e.preventDefault();
 
       // Try to commit the entries stored locally.
       app.commitEntriesFromLocalStorage(function() {
         updateButtonText(commitButton);
-			});
-		});		
+      });
+    });
 	},
 
   /**
