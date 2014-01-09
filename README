@@ -4,8 +4,8 @@ This project consists of a client to gather information and a statistics page to
 
 Setup
 -----------
-Create your own "utils/settings.php" file (from "utils/default.settings.php") with database settings
-Create your own "utils/config.js" file (from "utils/default.config.js") with serverlocation
+Create your own "config/settings.php" file (from "config/default.settings.php") with database settings
+Create your own "config/config.js" file (from "config/default.config.js") with serverlocation
 
 The web client is located in client/
 The statistics page is located in stats/
