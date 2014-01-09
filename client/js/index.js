@@ -34,10 +34,9 @@ var app = {
 		});
 
     // Auto login (go to main page) if macid is stored in local storage, otherwise go to welcome page.
-		if(typeof(Storage)!=="undefined") {
+		if(typeof(Storage) !== "undefined") {
 			var macid = localStorage.getItem("macid");
 
-      //
 			if (macid == null || macid == "") {
 				app.showWelcomePage();
 			}
@@ -64,7 +63,7 @@ var app = {
     // Displays the number of uncommitted entries on button.
     var updateButtonText = function(button) {
       var nr = 0;
-      if(typeof(Storage)!=="undefined") {
+      if(typeof(Storage) !== "undefined") {
         var entries = JSON.parse(localStorage.getItem("entries"));
         if (entries !== null) {
           nr = entries.length;
@@ -148,7 +147,7 @@ var app = {
           // Go to main page.
           app.showMainPage();
 				} else if (resp.result == "error") {
-					if (resp.msg = "error_machine_already_exists") {
+					if (resp.msg == "error_machine_already_exists") {
 						alert("Fejl! Den maskine er allerede oprettet.");
 					}
           else {
@@ -202,7 +201,7 @@ var app = {
 					app.showMainPage();
 				}
         else if (resp.result == "error") {
-					if (resp.msg = "error_wrong_id") {
+					if (resp.msg == "error_wrong_id") {
 						alert("Fejl! Ukendt ID.");
 					}
           else {
@@ -326,13 +325,16 @@ var app = {
 
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
+      // Test if the connection to the server is up
       app.ping(
+        // If the connection is up, commit from local storage.
         function() {
           app.commitEntriesFromLocalStorage(function() {
           app.timer = setTimeout(function(){
             app.showMainPage();
           }, 4000);
         });},
+        // If the connections is not up, go to main page.
         function() {
           app.timer = setTimeout(function(){
             app.showMainPage();
@@ -362,11 +364,13 @@ var app = {
 			var resp = JSON.parse(JSON.stringify(response));
 
 			if (resp.result != "ok") {
+        // If an error occurred, save the entry to local storage.
 				app.saveEntryToLocalStorage(macid, smiley, what, datetime);
 			}
 			callback();
 		})
 		.fail(function (jqXHR, textStatus, errorThrown) {
+      // When the commit fails, save to local storage.
 			app.saveEntryToLocalStorage(macid, smiley, what, datetime);
 			callback();
 		});
@@ -381,6 +385,7 @@ var app = {
 	commitListRecurse: function(list, callback) {
 		// The stop condition is an empty list.
     if (list.length > 0) {
+      // Pop top element of list.
 			var ent = list.pop();
 
       // Commit the entry and then recursively commit the rest of the list.
@@ -397,7 +402,7 @@ var app = {
    * @param callback the function to call when the list is empty.
    */
 	commitEntriesFromLocalStorage: function(callback) {
-		if(typeof(Storage)!=="undefined") {
+		if(typeof(Storage) !== "undefined") {
 			// Get local storage entries
 			var entries = JSON.parse(localStorage.getItem("entries"));
 
@@ -422,7 +427,7 @@ var app = {
    */
 	// Save an entry to local storage
 	saveEntryToLocalStorage: function(macid, smiley, what, datetime) {
-		if(typeof(Storage)!=="undefined") {
+		if(typeof(Storage) !== "undefined") {
 			var ent = {
 				macid: macid,
 				smiley: smiley,
@@ -443,8 +448,8 @@ var app = {
 
   /**
    * Ping the server.
-   * @param success
-   * @param failure
+   * @param success the function to call if the server answers.
+   * @param failure the function to call if the ping failed.
    */
   ping: function(success, failure) {
     $.ajax({
@@ -463,7 +468,7 @@ var app = {
    * Removes the macid from local storage.
    */
 	logout: function() {
-    if(typeof(Storage)!=="undefined") {
+    if(typeof(Storage) !== "undefined") {
 		  localStorage.removeItem("macid");
     }
 	},
@@ -473,7 +478,7 @@ var app = {
    * @param macid
    */
 	saveMacidToLocalStorage: function(macid) {
-		if(typeof(Storage)!=="undefined") {
+		if(typeof(Storage) !== "undefined") {
 			localStorage.setItem("macid", macid);
 		}
 	},
