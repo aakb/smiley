@@ -231,14 +231,13 @@ var app = {
 		// Change the HTML content.
 		$("#main").html(app.pageMain);
 		
-		// Hide bottom images
+		// Hide bottom images.
 		$(".img_choice").hide();
 		
 		// Set text
 		$("#table_text").html("<h1>Tilfreds med betjeningen?</h1>");
 		
-		// Setup event listeners
-		// Note: inverse numbers: Very Happy Smiley: 5 points, ...		
+		// Setup the event listeners.
 		$("#smiley1").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
 			app.showWhatPage(1);
@@ -260,12 +259,17 @@ var app = {
 			app.showWhatPage(5);
 		});
 	},
-	
+
+  /**
+   * Shows the what page, registers event listeners and timer.
+   * @param nSmiley The selected smiley from main page.
+   */
 	showWhatPage: function(nSmiley) {
+    // Clear timers and event handlers.
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
 
-		// Change HTML content
+		// Change the HTML content.
 		$(".main").html(app.pageMain);
 		
 		// Setup event listeners
@@ -280,86 +284,106 @@ var app = {
 		$("#choice3").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
 			app.showResultPage(nSmiley, 3);
-		});		
-		
-		// Text
+		});
+
+		// Change the text according to the selected smiley.
 		if (nSmiley > 3) {
 			$("#table_text").html("<h1>Hvad var godt?</h1>");
 		} else {
 			$("#table_text").html("<h1>Hvad var dårligt?</h1>");
 		}
 		
-		// Show selected smiley, hide others
+		// Show the selected smiley and hide the others.
 		$(".img_smiley").each(function(index) {
-			if (index == 4 - (nSmiley - 1))
-				$(this).addClass("img_smiley_selected");
-			else
-				$(this).addClass("img_smiley_hide");
+			if (index == 4 - (nSmiley - 1)) {
+        $(this).addClass("img_smiley_selected");
+      }
+			else {
+        $(this).addClass("img_smiley_hide");
+      }
 		});
 
-		// timeout => change page
+		// Set timeout for page. If user has not selected a reason for the smiley before the timeout, then load main page again.
 		app.timer = setTimeout(function(){
 			app.showMainPage();
 		}, 10000);
 	},
-	
+
+  /**
+   * Shows the result page.
+   * @param nSmiley the selected smiley.
+   * @param nWhat   the reason for the smiley.
+   */
 	showResultPage: function(nSmiley, nWhat) {
+    // Clear event handlers and timer.
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
-		
+
+    // Set the HTML content.
 		$("#main").html(app.pageThanks);
 
-		var datetime = (new Date()).getTime();
-		
+    var datetime = (new Date()).getTime();
+
 		// Post data to server
 		app.sendResultToServer(app.macid, nSmiley, nWhat, datetime, function() {
-            app.ping(
-                function() {
-                    app.commitEntriesFromLocalStorage(function() {
-                    app.timer = setTimeout(function(){
-                        app.showMainPage();
-                    }, 4000);
-                });},
-                function() {
-                    app.timer = setTimeout(function(){
-                        app.showMainPage();
-                    }, 4000);
-                }
-            );
+      app.ping(
+        function() {
+          app.commitEntriesFromLocalStorage(function() {
+          app.timer = setTimeout(function(){
+            app.showMainPage();
+          }, 4000);
+        });},
+        function() {
+          app.timer = setTimeout(function(){
+            app.showMainPage();
+          }, 4000);
+        }
+      );
 		});
 	},
-	
-	
-	//////////////////////////////////////////
-	//// HELPER FUNCTIONS
-	//////////////////////////////////////////
-	
-	// send a single result to the server
+
+  /**
+   * Sends a single result to the server.
+   * @param macid the macid of the machine.
+   * @param smiley the selected smiley.
+   * @param what the selected reason for the smiley.
+   * @param datetime the time of the result.
+   * @param callback the function to call when the function is done.
+   */
 	sendResultToServer: function(macid, smiley, what, datetime, callback) {
+    // Send the result to the server.
 		$.ajax({
 			url: config.serverlocation,
 			type: "POST",
 			data: {action: "result", macid: macid, smiley: smiley, what: what, datetime: datetime},
 			dataType: "json"
 		})
-		.done(function (response, textStatus, jqXHR){
+		.done(function (response, textStatus, jqXHR) {
 			var resp = JSON.parse(JSON.stringify(response));
+
 			if (resp.result != "ok") {
 				app.saveEntryToLocalStorage(macid, smiley, what, datetime);
 			}
 			callback();
 		})
-		.fail(function (jqXHR, textStatus, errorThrown){
+		.fail(function (jqXHR, textStatus, errorThrown) {
 			app.saveEntryToLocalStorage(macid, smiley, what, datetime);
 			callback();
 		});
 	},
 
+  /**
+   * Recursively commit the list.
+   * @param list the list of results to commit.
+   * @param callback the function to call when the list is empty.
+   */
 	// Commit single entry, recursive until empty list
 	commitListRecurse: function(list, callback) {
-		if (list.length > 0) {
+		// The stop condition is an empty list.
+    if (list.length > 0) {
 			var ent = list.pop();
-			
+
+      // Commit the entry and then recursively commit the rest of the list.
 			app.sendResultToServer(ent.macid, ent.smiley, ent.what, ent.datetime, function() {
 				app.commitListRecurse(list, callback);
 			});
@@ -367,15 +391,20 @@ var app = {
 			callback();
 		}
 	},
-	
-	// Commit the entries that have not been sent because of connectivity issues
+
+  /**
+   * Commit the results that have not been sent.
+   * @param callback the function to call when the list is empty.
+   */
 	commitEntriesFromLocalStorage: function(callback) {
 		if(typeof(Storage)!=="undefined") {
 			// Get local storage entries
 			var entries = JSON.parse(localStorage.getItem("entries"));
+
 			// Clear local storage entries
 			localStorage.setItem("entries", JSON.stringify([]));
-			
+
+      // Recursively commit the list
 			if (entries !== null) {
 				app.commitListRecurse(entries, callback);
 			} else {
@@ -383,7 +412,14 @@ var app = {
 			}
 		}
 	},
-	
+
+  /**
+   * Save a result to local storage.
+   * @param macid the macid of the machine.
+   * @param smiley the selected smiley.
+   * @param what the reason for the selected smiley.
+   * @param datetime the time of the result.
+   */
 	// Save an entry to local storage
 	saveEntryToLocalStorage: function(macid, smiley, what, datetime) {
 		if(typeof(Storage)!=="undefined") {
@@ -405,35 +441,46 @@ var app = {
 		}
 	},
 
-    // Ping server
-    ping: function(success, failure) {
-        $.ajax({
-            url: config.serverlocation + "/ping",
-            type: "GET"
-        })
-        .done(function (response, textStatus, jqXHR) {
-            success();
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            failure();
-        });
-    },
+  /**
+   * Ping the server.
+   * @param success
+   * @param failure
+   */
+  ping: function(success, failure) {
+    $.ajax({
+      url: config.serverlocation + "/ping",
+      type: "GET"
+    })
+    .done(function (response, textStatus, jqXHR) {
+      success();
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      failure();
+    });
+  },
 
-	// Logout: remove macid from localStorage
+  /**
+   * Removes the macid from local storage.
+   */
 	logout: function() {
-        if(typeof(Storage)!=="undefined") {
-		    localStorage.removeItem("macid");
-        }
+    if(typeof(Storage)!=="undefined") {
+		  localStorage.removeItem("macid");
+    }
 	},
-	
-	// Save macid to localStorage
+
+  /**
+   * Save the macid to local storage.
+   * @param macid
+   */
 	saveMacidToLocalStorage: function(macid) {
 		if(typeof(Storage)!=="undefined") {
 			localStorage.setItem("macid", macid);
 		}
 	},
 	
-	// Removes all on "click touchstart" event handlers
+  /**
+   * Clear the event handlers for the smileys and the whats.
+   */
 	clearClickHandlers: function() {
 		$("#smiley1 #smiley2 #smiley3 #smiley4 #smiley5 #choice1 #choice2 #choice3").off();
 	}
