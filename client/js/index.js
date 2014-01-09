@@ -1,69 +1,86 @@
+/**
+ * App class.
+ * @type {{init: init, showWelcomePage: showWelcomePage, showRegisterPage: showRegisterPage, showLoginPage: showLoginPage, showMainPage: showMainPage, showWhatPage: showWhatPage, showResultPage: showResultPage, sendResultToServer: sendResultToServer, commitListRecurse: commitListRecurse, commitEntriesFromLocalStorage: commitEntriesFromLocalStorage, saveEntryToLocalStorage: saveEntryToLocalStorage, ping: ping, logout: logout, saveMacidToLocalStorage: saveMacidToLocalStorage, clearClickHandlers: clearClickHandlers}}
+ */
 var app = {
-	//////////////////////////////////////////
-	//// CONSTRUCTOR
-	//////////////////////////////////////////
-    init: function() {
-		// Load HTML parts
-        var pageWelcomeDiv  = $("#page_welcome");
-        var pageLoginDiv    = $("#page_login");
-        var pageRegisterDiv = $("#page_register");
-        var pageMainDiv     = $("#page_main");
-        var pageThanksDiv   = $("#page_thanks");
+  /**
+   * Initialization of the app.
+   */
+  init: function() {
+    // Find container divs.
+    var pageWelcomeDiv  = $("#page_welcome");
+    var pageLoginDiv    = $("#page_login");
+    var pageRegisterDiv = $("#page_register");
+    var pageMainDiv     = $("#page_main");
+    var pageThanksDiv   = $("#page_thanks");
 
-		this.pageWelcome = pageWelcomeDiv.html();
-		this.pageLogin = pageLoginDiv.html();
-		this.pageRegister = pageRegisterDiv.html();
-		this.pageMain = pageMainDiv.html();
-		this.pageThanks = pageThanksDiv.html();
+    // Get the content of containers.
+    this.pageWelcome = pageWelcomeDiv.html();
+    this.pageLogin = pageLoginDiv.html();
+    this.pageRegister = pageRegisterDiv.html();
+    this.pageMain = pageMainDiv.html();
+    this.pageThanks = pageThanksDiv.html();
 
-        pageWelcomeDiv.remove();
-        pageLoginDiv.remove();
-        pageRegisterDiv.remove();
-        pageMainDiv.remove();
-        pageThanksDiv.remove();
-		
+    // Remove the containers.
+    pageWelcomeDiv.remove();
+    pageLoginDiv.remove();
+    pageRegisterDiv.remove();
+    pageMainDiv.remove();
+    pageThanksDiv.remove();
+
+    // Avoid touchmove events (scrolling).
 		$(document).on('touchmove', function(e) {
 			e.preventDefault();
 		});
 
+    // Auto login (go to main page) if macid is stored in local storage, otherwise go to welcome page.
 		if(typeof(Storage)!=="undefined") {
 			var macid = localStorage.getItem("macid");
-		
+
+      //
 			if (macid == null || macid == "") {
 				app.showWelcomePage();
-			} else {
+			}
+      else {
 				this.macid = macid;
 				app.showMainPage();
 			}
-		} else {
+		}
+    else {
 			app.showWelcomePage();
 		}
 	},
-	
-	//////////////////////////////////////////
-	//// DISPLAY PAGE FUNCTIONS
-	//////////////////////////////////////////
-	
-	showWelcomePage: function() {
-		// Change HTML content
-		$("#main").html(app.pageWelcome);
-		
-		// Display number of uncommitted entries on button
-		// Check if local storage is supported
-		var nr = 0;
-		if(typeof(Storage)!=="undefined") {
-			var entries = JSON.parse(localStorage.getItem("entries"));
-			if (entries !== null) {
-				nr = entries.length;
-			} 
-		} else {
-			alert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt.");
-		}
 
-        var commitButton = $("#commit_button");
-        commitButton.html("Indsend (" + nr + ")");
-		
-		// Setup event listeners
+  /**
+   * Shows the welcome page and sets up event listeners.
+   */
+	showWelcomePage: function() {
+		// Change the HTML content.
+		$("#main").html(app.pageWelcome);
+
+    // Find the commit_button.
+    var commitButton = $("#commit_button");
+
+    // Displays the number of uncommitted entries on button.
+    var updateButtonText = function(button) {
+      var nr = 0;
+      if(typeof(Storage)!=="undefined") {
+        var entries = JSON.parse(localStorage.getItem("entries"));
+        if (entries !== null) {
+          nr = entries.length;
+        }
+      }
+      else {
+        alert("Advarsel: dette device understøtter ikke Web Storage, så hvis data ikke kan afleveres til serveren, går de tabt. Dette skyldes at browseren ikke er opdateret.");
+      }
+
+      button.html("Indsend (" + nr + ")");
+    }
+
+    // Update the text on commit_button.
+    updateButtonText(commitButton);
+
+		// Setup event listeners.
 		$("#login_button").on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
 			app.showLoginPage();
@@ -72,31 +89,29 @@ var app = {
 			e.stopPropagation(); e.preventDefault();
 			app.showRegisterPage();
 		});
-        commitButton.on("touchstart click", function(e) {
+    commitButton.on("touchstart click", function(e) {
 			e.stopPropagation(); e.preventDefault();
-			app.commitEntriesFromLocalStorage(function() {
-				// Display number of uncommitted entries on button
-				var nr = 0;
-				if(typeof(Storage)!=="undefined") {
-					var entries = JSON.parse(localStorage.getItem("entries"));
-					if (entries !== null) {
-						nr = entries.length;
-					} 
-				}
-				$("#commit_button").html("Indsend (" + nr + ")");
+
+      // Try to commit the entries stored locally.
+      app.commitEntriesFromLocalStorage(function() {
+        updateButtonText(commitButton);
 			});
 		});		
 	},
-	
+
+  /**
+   * Shows the register page and sets up event listeners.
+   */
 	showRegisterPage: function() {
-		// Change HTML content
+		// Change the HTML content.
 		$("#main").html(app.pageRegister);
 
-		// Custom validation of email repeat
+		// Setup custom validation for the email_repeat input.
 		$("#mail_repeat").on("change", function() {
 			if ($(this).val() !== $("#mail").first().val()) {
 				document.getElementById("mail_repeat").setCustomValidity("Emails er ikke ens");
-			} else {
+			}
+      else {
 				document.getElementById("mail_repeat").setCustomValidity("");
 			}
 		});
@@ -104,31 +119,39 @@ var app = {
 		// Setup form register submit button
 		$("#form_register").submit(function(event) {
 			event.preventDefault();
-			
+
+      // Serialize the input data from form.
 			var serializedData = $(this).serializeArray();
 			
-			// Disable inputs, during ajax request
+			// Disable inputs during the ajax request.
 			var $inputs = $(this).find("input");
 			$inputs.prop("disabled", true);
 
-			// Post data to server
+			// Post the data to the server.
 			$.ajax({
 				url: config.serverlocation,
 				type: "POST",
 				data: serializedData,
 				dataType: "json"
 			})
-			.done(function (response, textStatus, jqXHR){
-				var resp = JSON.parse(JSON.stringify(response));
+			.done(function (response, textStatus, jqXHR) {
+        var resp = JSON.parse(JSON.stringify(response));
+
 				if (resp.result == "ok") {
-					app.macid = resp.macid;
+					// Set the app.macid and save to local storage for auto-login.
+          app.macid = resp.macid;
 					app.saveMacidToLocalStorage(app.macid);
-					alert("Registreringen lykkedes!\r\nID'et til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind.");
-					app.showMainPage();
+
+          // Show alert to user of success and with the macid of the registered machine.
+					alert("Registreringen lykkedes!\r\nmacid til denne opsætning er \r\n" + app.macid + "\r\nSkriv den ned, så du har den til næste gange du skal logge denne maskine ind. De indtastede informationer og også sendt til den registrerede email-adresse.");
+
+          // Go to main page.
+          app.showMainPage();
 				} else if (resp.result == "error") {
 					if (resp.msg = "error_machine_already_exists") {
 						alert("Fejl! Den maskine er allerede oprettet.");
-					} else {
+					}
+          else {
 						alert("Der skete en fejl. Prøv igen!");
 					}
 				}
@@ -137,11 +160,15 @@ var app = {
 				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører. " + errorThrown);
 			})
 			.always(function () {
+        // Reenable the inputs.
 				$inputs.prop("disabled", false);
 			});
 		});
 	},
-	
+
+  /**
+   * Shows the login page and sets event listeners.
+   */
 	showLoginPage: function() {
 		// Change HTML content
 		$("#main").html(app.pageLogin);
@@ -150,14 +177,14 @@ var app = {
 		$("#form_login").submit(function(event) {
 			event.preventDefault();
 			
-			// Get macid
+			// Get the macid from the input.
 			var macid = $("#macid").val();
 			
-			// Disable inputs, during ajax request
+			// Disable inputs during the ajax request.
 			var $inputs = $(this).find("input");
 			$inputs.prop("disabled", true);         
 
-			// Post data to server
+			// Post the login data to the server.
 			$.ajax({
 				url: config.serverlocation,
 				type: "POST",
@@ -167,13 +194,18 @@ var app = {
 			.done(function (response, textStatus, jqXHR){
 				var resp = JSON.parse(JSON.stringify(response));
 				if (resp.result == "ok") {
-					app.macid = macid;
+          // Set the app.macid and save to local storage for auto-login.
+ 					app.macid = macid;
 					app.saveMacidToLocalStorage(macid);
+
+          // Go to the main page.
 					app.showMainPage();
-				} else if (resp.result == "error") {
+				}
+        else if (resp.result == "error") {
 					if (resp.msg = "error_wrong_id") {
 						alert("Fejl! Ukendt ID.");
-					} else {
+					}
+          else {
 						alert("Der skete en fejl. Prøv igen!");
 					}
 				}
@@ -182,17 +214,21 @@ var app = {
 				alert("Der skete en fejl. Prøv igen! Dette skyldes formentlig manglende internetforbindelse eller at serveren ikke kører.");
 			})
 			.always(function () {
+        // Reenable the inputs.
 				$inputs.prop("disabled", false);
 			});
 		});
 	},
-	
+
+  /**
+   * Shows the main page and registers event listeners.
+   */
 	showMainPage: function() {
-		// Clear timer and event handlers
+		// Clear timers and event handlers.
 		app.clearClickHandlers();
 		clearTimeout(app.timer);
 		
-		// Change HTML content
+		// Change the HTML content.
 		$("#main").html(app.pageMain);
 		
 		// Hide bottom images
