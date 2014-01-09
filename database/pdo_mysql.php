@@ -76,5 +76,3 @@ class PDOMysql {
     return self::$instance;
   }
 }
-
-?>

@@ -7,4 +7,3 @@ $settings = array(
   'passwd' =>'',
 );
 
-?>

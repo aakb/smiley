@@ -1,28 +1,40 @@
 <?php
 
+// Set the default content type to json.
 header('Content-Type: text/json; charset=utf-8');
 
 include_once dirname(__FILE__) . '/../config/conf.php';
 include_once dirname(__FILE__).'/pdo_mysql.php';
 
 /**
- * Class SmileyDB
- * Handles all interaction with smiley database
+ * Handles all interaction with the smiley database
  */
 class SmileyDB {
-	// Construct and Destruct
-	public function __construct() {
+
+  /**
+   * Constructor
+   */
+  public function __construct() {
 		$this->connection = PDOMysql::getInstance();
 	}
-	public function __destruct() {
+
+  /**
+   * Destructor
+   */
+  public function __destruct() {
 		$this->connection = null;
 	}
 
-    // Confirms that machine has been registered
-	public function login($macid) {
+  /**
+   * Check that the machine has been registered. Outputs the result as json.
+   * @param $macid id of the machine.
+   */
+  public function login($macid) {
+    // Get machines with macid = $macid.
 		$statement = 'SELECT * FROM machine WHERE macid = :macid';
 		$query = $this->connection->execute($statement, array('macid' => $macid));
-	
+
+    // Count the number of hits. If one then success, else error.
 		$count = $query->rowCount();
 		if ($count == 1) {		// machine exists
 			$result = array('result'=>'ok');
@@ -35,9 +47,17 @@ class SmileyDB {
 		}
 	}
 
-    // Register a new machine
-	public function register($contact, $mail, $magafd, $forvalt, $place, $name) {
-		// machine already exist?
+  /**
+   * Register a new machine with the given parameters. Outputs the macid as json.
+   * @param $contact name of the contact.
+   * @param $mail email of the contact.
+   * @param $magafd magistratsafdelingen.
+   * @param $forvalt forvaltningen.
+   * @param $place placement of the machine.
+   * @param $name device name.
+   */
+  public function register($contact, $mail, $magafd, $forvalt, $place, $name) {
+		// Does the machine already exist in the database?
 		$statement = 'SELECT * FROM machine WHERE contact = :contact AND mail = :mail AND magafd = :magafd AND forvalt = :forvalt AND place = :place AND name = :name';
 		$query = $this->connection->execute($statement, array(	'contact' 	=> $contact,
 																'mail' 		=> $mail,
@@ -46,13 +66,14 @@ class SmileyDB {
 																'place' 	=> $place,
 																'name' 		=> $name));
 		$count = $query->rowCount();
-		if ($count > 0) {		// machine already exists
+		if ($count > 0) {
+		  // The machine already exists.
 			$result = array('result'=>'error', 'msg'=>'error_machine_already_exists');
 			echo json_encode($result);
 			return;
 		}
 	
-		// make macid: first letter of "contant", "magafd", "forvalt", "place", "name" and next id
+		// Make the macid from the first letter of "contant", "magafd", "forvalt", "place", "name" and next id in the machine table.
 		$macid = mb_substr($contact, 0, 1, "utf-8") . mb_substr($magafd, 0, 1, "utf-8") . mb_substr($forvalt, 0, 1, "utf-8") . mb_substr($place, 0, 1, "utf-8") . mb_substr($name, 0, 1, "utf-8");
 		$statement = "SELECT * FROM machine ORDER BY id DESC LIMIT 1";
 		$query = $this->connection->execute($statement);
@@ -62,6 +83,8 @@ class SmileyDB {
 			$id = $row["id"] + 1;
 		}
 		$macid = $macid . $id;
+
+    // Replace the danish characters with english substitutes.
 		$macid = mb_ereg_replace("Ø","OE",$macid);
 		$macid = mb_ereg_replace("ø","oe",$macid);
 		$macid = mb_ereg_replace("Å","AA",$macid);
@@ -69,7 +92,7 @@ class SmileyDB {
 		$macid = mb_ereg_replace("Æ","AE",$macid);
 		$macid = mb_ereg_replace("æ","ae",$macid);
 
-		// insert new machine
+		// Insert the new machine.
 		$statement = 'INSERT INTO machine (macid, contact, mail, magafd, forvalt, place, name) VALUES (:macid, :contact, :mail, :magafd, :forvalt, :place, :name)';
 		$query = $this->connection->execute($statement, array(	'macid' 	=> $macid,
 																'contact' 	=> $contact, 
@@ -79,7 +102,7 @@ class SmileyDB {
 																'place' 	=> $place, 
 																'name' 		=> $name));
 		
-		// Send mail to contact
+		// Send email to the contact.
 		$to  = $mail; 
 		$subject = 'b7 oprettelse';
 		$message = '
@@ -108,14 +131,20 @@ class SmileyDB {
 		$headers .= 'From: b7' . "\r\n";		
 		mail($to, $subject, $message, $headers);
 		
-		// return macid
+		// Return the macid to the client
 		$result = array('result'=>'ok', 'macid'=>$macid);
 		echo json_encode($result);	
 	}
 
-    // Inserts the result in db
-	public function insertResult($macid, $datetime, $smiley, $what) {
-		// test for valid macid
+  /**
+   * Insert a result in the database.
+   * @param $macid id of the machine.
+   * @param $datetime the client registered time of the result.
+   * @param $smiley the selected smiley.
+   * @param $what the reason for the smiley.
+   */
+  public function insertResult($macid, $datetime, $smiley, $what) {
+		// Test for existing macid.
 		$statement = 'SELECT * FROM machine WHERE macid = :macid';
 		$query = $this->connection->execute($statement, array('macid' => $macid));
 		if ($query->rowCount() != 1) {		// machine does not exist
@@ -124,7 +153,7 @@ class SmileyDB {
 			return;
 		}
 		
-		// insert new result into db
+		// Insert the new result into the database.
 		$statement = 'INSERT INTO data (macid, datetime, smiley, what) VALUES (:macid, :datetime, :smiley, :what)';
 		$query = $this->connection->execute($statement, array(	'macid'  	=> $macid,
 																'datetime' 	=> $datetime,
@@ -135,8 +164,11 @@ class SmileyDB {
 		echo json_encode($result);															
 	}
 
-    // Returns all data for $macid grouped by day
-	public function getDataPerDay($macid) {
+  /**
+   * Returns all data for $macid, grouped by day.
+   * @param $macid the macid of the machine to get data for.
+   */
+  public function getDataPerDay($macid) {
 		$statement = 'SELECT avg(smiley) as AvgSmiley, DATE(FROM_UNIXTIME(datetime/1000, "%Y-%m-%d")) as Date FROM data WHERE macid = :macid GROUP BY Date';
 		
 		$query = $this->connection->execute($statement, array('macid' => $macid));
@@ -145,33 +177,42 @@ class SmileyDB {
 		echo json_encode($rows);
 	}
 
-    // Returns data for $macid from the period from $start to $end
-    // Not necessarily optimal with 15 queries into db
-    private function getWhat($macid, $start, $end) {
-		$arr = array();
+  /**
+   * Return data for $macid from the period from $start to $end. The data is number of the different smileys (1-5) for each what (1-3).
+   * @param $macid the macid of the machine to get data for.
+   * @param $start the timestamp (milliseconds since Jan. 1, 1970) of the period start.
+   * @param $end the timestamp (milliseconds since Jan. 1, 1970) of the period end.
+   * @return array with the data for the period. Structure:  {what1(smiley5,smiley4,smiley3,smiley2,smiley1), what2(smiley5,smiley4,smiley3,smiley2,smiley1), what3(smiley5,smiley4,smiley3,smiley2,smiley1)}
+   */
+  private function getWhat($macid, $start, $end) {
+    $arr = array();
 
-		for ($k = 1; $k <= 3; $k++) {
-			$insidearr = array();
-			// Reverse order to get happy smiley first
-			for ($i = 5; $i >= 1; $i--) {
-				$statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley AND what = :what';
-				$query = $this->connection->execute($statement, array(	'macid' => $macid,
-																		'start' => $start,
-																		'end'	=> $end,
-																		'smiley' => $i,
-																		'what'   => $k));
-						
-				$rows = $query->fetch(PDO::FETCH_ASSOC);
-				array_push($insidearr, 0+$rows["NumberSmiley"]);
-			}
-			array_push($arr, $insidearr);
-		}
+    for ($k = 1; $k <= 3; $k++) {
+      $insidearr = array();
+      // Reverse order to get happy smiley first
+      for ($i = 5; $i >= 1; $i--) {
+        $statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley AND what = :what';
+        $query = $this->connection->execute($statement, array(	'macid' => $macid,
+                                    'start' => $start,
+                                    'end'	=> $end,
+                                    'smiley' => $i,
+                                    'what'   => $k));
+
+        $rows = $query->fetch(PDO::FETCH_ASSOC);
+        array_push($insidearr, 0+$rows["NumberSmiley"]);
+      }
+      array_push($arr, $insidearr);
+    }
 		
 		return $arr;
 	}
 
-    // Returns data for $macid from period from one week ago until $today
-	public function getWhatThisWeek($macid, $today) {
+  /**
+   * Outputs the data for $macid from the period of one week ago until $today.
+   * @param $macid the id of the machine to get data for.
+   * @param $today the latest timestamp (milliseconds since Jan. 1, 1970) to include in the result.
+   */
+  public function getWhatThisWeek($macid, $today) {
 		$aDay = 1000 * 60 * 60 * 24;
 		$oneWeekAgo = $today -  $aDay * 7;
 		
@@ -180,33 +221,40 @@ class SmileyDB {
 		echo json_encode($thisWeek);
 	}
 
-    // Returns data from the beginning of time (January 1, 1970) until $end
-	public function getWhatPast($macid, $end) {
+  /**
+   * Outputs the data from the beginning of time (January 1, 1970) until $end
+   * @param $macid id of the machine to get data for.
+   * @param $end the latest timestamp (milliseconds since Jan. 1, 1970) to include in the result.
+   */
+  public function getWhatPast($macid, $end) {
 		$past = $this->getWhat($macid, 0, $end);
 		
 		echo json_encode($past);
 	}
 
-    // Send a mail to each registered machine with a link to the statistics from last week
-	// Invoke this each monday to send mails about results from last week
-	public function sendWeeklyMails() {
+  /**
+   * Send a mail to each registered machine with a link to the statistics from last week.
+   */
+  public function sendWeeklyMails() {
+    // Get week and year of now.
 		$week = 0 + date("W");
 		$year = 0 + date("Y");
 
-		// Count one week back
+		// Count time one week back.
 		$week = $week - 1;
 		if ($week < 1) {
 			$week = 52;
 			$year = $year - 1;
 		}
-		
+
+    // Get all the machines from the database.
 		$statement = 'SELECT * FROM machine';
 		$query = $this->connection->execute($statement);
-	
 		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($rows as $row) {
-			// Send mail to contact
-			$to  = $row["mail"]; 
+
+    // Send a mail with last weeks statistics to each machine's contact.
+    foreach ($rows as $row) {
+			$to  = $row["mail"];
 			$subject = 'b7 statistik uge '.$week.', '.$year;
 			$message = '
 			<html>
@@ -234,49 +282,59 @@ class SmileyDB {
 		}
 	}
 
-    // Returns an XML document of the data
-    public function getXMLData() {
-        date_default_timezone_set('Europe/Copenhagen');
+  /**
+   * Outputs an XML document of all the data.
+   */
+  public function getXMLData() {
+    // Set the timezone.
+    date_default_timezone_set('Europe/Copenhagen');
 
-        // Get data from database
-        $statement = 'SELECT * FROM machine';
-        $query = $this->connection->execute($statement);
-        $machines = $query->fetchAll(PDO::FETCH_ASSOC);
+    // Get the machines from the database.
+    $statement = 'SELECT * FROM machine';
+    $query = $this->connection->execute($statement);
+    $machines = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        // Create XML document
-        $xml = new DOMDocument("1.0");
-        $root = $xml->createElement("machines");
-        $xml->appendChild($root);
+    // Create an XML document with a <machines> root.
+    $xml = new DOMDocument("1.0");
+    $root = $xml->createElement("machines");
+    $xml->appendChild($root);
 
-        foreach ($machines as $machine) {
-            if (isset($machine["test"]) && $machine["test"]) {
-                continue;
-            }
-            $entry = $xml->createElement("machine");
-            $entry->setAttribute("magafd", $machine["magafd"]);
-            $entry->setAttribute("forvalt", $machine["forvalt"]);
-            $entry->setAttribute("place", $machine["place"]);
-            $entry->setAttribute("name", $machine["name"]);
+    foreach ($machines as $machine) {
+      // If the machines is registered as a test machine, leave out of the results.
+      if (isset($machine["test"]) && $machine["test"]) {
+        continue;
+      }
 
-            $root->appendChild($entry);
+      // Create new <machine> element.
+      $entry = $xml->createElement("machine");
+      $entry->setAttribute("magafd", $machine["magafd"]);
+      $entry->setAttribute("forvalt", $machine["forvalt"]);
+      $entry->setAttribute("place", $machine["place"]);
+      $entry->setAttribute("name", $machine["name"]);
+      $root->appendChild($entry);
 
-            $statement = 'SELECT * FROM data WHERE macid = :macid';
-            $query = $this->connection->execute($statement, array('macid' => $machine["macid"]));
-            $dataForMachine = $query->fetchAll(PDO::FETCH_ASSOC);
+      // Get all the data for $machine.
+      $statement = 'SELECT * FROM data WHERE macid = :macid';
+      $query = $this->connection->execute($statement, array('macid' => $machine["macid"]));
+      $dataForMachine = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($dataForMachine as $data) {
-                $dataEntry = $xml->createElement("data");
-                $dataEntry->setAttribute("timestamp", date("c", $data["datetime"] / 1000));
-                $dataEntry->setAttribute("smiley", $data["smiley"]);
-                $dataEntry->setAttribute("what", $data["what"]);
+      // Add each <data> element to the <machine> element.
+      foreach ($dataForMachine as $data) {
+        $dataEntry = $xml->createElement("data");
 
-                $entry->appendChild($dataEntry);
-            }
-        }
+        // Convert from timestamp (milliseconds since Jan. 1, 1970) to ISO 8601 date: 2004-02-12T15:19:21+00:00.
+        $dataEntry->setAttribute("timestamp", date("c", $data["datetime"] / 1000));
+        $dataEntry->setAttribute("smiley", $data["smiley"]);
+        $dataEntry->setAttribute("what", $data["what"]);
 
-        header('Content-type: application/xml');
-        echo $xml->saveXML();
+        $entry->appendChild($dataEntry);
+      }
     }
-}
 
-?>
+    // Set content type to XML.
+    header('Content-type: application/xml');
+
+    // Output XML document.
+    echo $xml->saveXML();
+  }
+}

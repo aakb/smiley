@@ -34,10 +34,6 @@ class Conf {
   }
   // End database configuration
 
-  // File paths
-
-  // End file paths
-
   // Define the system locations
   private $webroot = null;
   public function getWebroot() {
@@ -57,4 +53,3 @@ class Conf {
 
 $conf = new Conf();
 
-?>
