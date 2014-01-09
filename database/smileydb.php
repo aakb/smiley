@@ -155,10 +155,11 @@ class SmileyDB {
 		
 		// Insert the new result into the database.
 		$statement = 'INSERT INTO data (macid, datetime, smiley, what) VALUES (:macid, :datetime, :smiley, :what)';
-		$query = $this->connection->execute($statement, array(	'macid'  	=> $macid,
-																'datetime' 	=> $datetime,
-																'smiley' 	=> $smiley,
-																'what'   	=> $what));
+		$query = $this->connection->execute($statement, array('macid' => $macid,
+      'datetime' => $datetime,
+      'smiley' => $smiley,
+      'what' => $what)
+    );
 																
 		$result = array('result'=>'ok');
 		echo json_encode($result);															
@@ -192,11 +193,12 @@ class SmileyDB {
       // Reverse order to get happy smiley first
       for ($i = 5; $i >= 1; $i--) {
         $statement = 'SELECT count(smiley) NumberSmiley FROM data WHERE macid = :macid AND datetime >= :start AND datetime <= :end AND smiley = :smiley AND what = :what';
-        $query = $this->connection->execute($statement, array(	'macid' => $macid,
-                                    'start' => $start,
-                                    'end'	=> $end,
-                                    'smiley' => $i,
-                                    'what'   => $k));
+        $query = $this->connection->execute($statement, array('macid' => $macid,
+          'start' => $start,
+          'end' => $end,
+          'smiley' => $i,
+          'what' => $k)
+        );
 
         $rows = $query->fetch(PDO::FETCH_ASSOC);
         array_push($insidearr, 0+$rows["NumberSmiley"]);

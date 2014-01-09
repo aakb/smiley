@@ -1,41 +1,54 @@
-// GET parameters
-// from: https://gist.github.com/varemenos/2531765
+/**
+ * Get the URL parameter key.
+ * from: https://gist.github.com/varemenos/2531765
+ * @param key
+ * @returns {Array|{index: number, input: string}|*|string}
+ */
 function getUrlVar(key){
 	var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
 	return result && unescape(result[1]) || ""; 
 }
 
-// Returns date as danish date, e.g. 13. Dec. 2013
+/**
+ * Returns date as danish date, e.g. 13. Dec. 2013.
+ * @param date
+ * @returns {string}
+ */
 function getDanishDate(date) {
 	var months  = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 	return date.getDate() + ". " + months[date.getMonth()] + ". " + date.getFullYear();
 } 
 
-// Returns the first day of the week defined by the (year, week) input
-// from: http://stackoverflow.com/questions/7580824/how-to-convert-a-week-number-to-a-date-in-javascript
+/**
+ * Returns the first day of the week defined by the (year, week) input.
+ * from: http://stackoverflow.com/questions/7580824/how-to-convert-a-week-number-to-a-date-in-javascript
+ * @param year
+ * @param week
+ * @returns {Date}
+ */
 function firstDayOfWeek(year, week) {
-    var d = new Date(year, 0, 1), offset = d.getTimezoneOffset();
-    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  var d = new Date(year, 0, 1), offset = d.getTimezoneOffset();
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
 	var w = week;
 	if (year == d.getFullYear()) {
 		w = w - 1;
 	}
-    d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000 * w);
-    d.setTime(d.getTime() + (d.getTimezoneOffset() - offset) * 60 * 1000);
-    d.setDate(d.getDate() - 3);
-    return d;
+  d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000 * w);
+  d.setTime(d.getTime() + (d.getTimezoneOffset() - offset) * 60 * 1000);
+  d.setDate(d.getDate() - 3);
+  return d;
 }
 
 var app = {
-	//////////////////////////////////////////
-	//// CONSTRUCTOR
-	//////////////////////////////////////////
-    init: function() {
-		// Constants
+  /**
+   * Initializes the app.
+   */
+  init: function() {
+		// Constants.
 		this.aDay = 1000 * 60 * 60 * 24;
 		this.smileyText = ["Meget utilfreds", "Utilfreds", "Hverken/eller", "Tilfreds", "Meget tilfreds"];
 
-		// Get macid from param "macid", if empty return empty page
+		// Get macid from param "macid", if empty return empty page.
 		this.macid = getUrlVar("macid");
 		if (this.macid == "") {
 			$("body").html("");
@@ -58,14 +71,14 @@ var app = {
 			this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
 		}
 		
-		// Summary, table and pie chart
+		// Sets information in summary, table and pie chart
 		app.getDataWhat(function() {
 			// Values for summary
 			var number_of_respondents = 0;
-			var cumulative_satisfaction = 0;		// contains sum of values (5,4,3,2,1) of smileys
+			var cumulative_satisfaction = 0;
 			var number_of_satisfied = 0;
 			var number_of_dissatisfied = 0;
-            var satisfaction_general = 0.0;
+      var satisfaction_general = 0.0;
 
 			// Gather values for table
 			for (var i = 0; i < 5; i++) {
@@ -80,17 +93,16 @@ var app = {
 				}
 			}
 
-            // Fill summary and table
-            $("#number_of_respondents").html(number_of_respondents);
-            $("#date_start").html(getDanishDate(app.oneWeekAgo));
-            $("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
+      // Fill the summary and table.
+      $("#number_of_respondents").html(number_of_respondents);
+      $("#date_start").html(getDanishDate(app.oneWeekAgo));
+      $("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 
-            // Fill summary and table
 			if (number_of_respondents > 0) {
-                // Find general satisfaction
-                satisfaction_general = (20.0 * (cumulative_satisfaction / number_of_respondents)).toFixed(2);
+        // Find general satisfaction
+        satisfaction_general = (20.0 * (cumulative_satisfaction / number_of_respondents)).toFixed(2);
 
-                // Fill summary
+        // Fill in summary.
 				$("#satis_happy").html((100.0 * (number_of_satisfied / number_of_respondents)).toFixed(2));
 				$("#satis_unhappy").html((100.0 * (number_of_dissatisfied / number_of_respondents)).toFixed(2));
 				$("#satis_general").html(satisfaction_general);
@@ -98,58 +110,58 @@ var app = {
 				// Compare with past
 				app.getDataWhatPast(function() {
 					var number_of_respondents_past = 0;
-					var cumulative_satisfaction_past = 0;		// contains sum of value (5,4,3,2,1) of smileys
-                    var respondents_past_columns = new Array([0, 0, 0, 0, 0]);
-                    var column_percentages = new Array([0.0, 0.0, 0.0, 0.0, 0.0]);
+					var cumulative_satisfaction_past = 0;
+          var respondents_past_columns = new Array([0, 0, 0, 0, 0]);
+          var column_percentages = new Array([0.0, 0.0, 0.0, 0.0, 0.0]);
 
-                    // Fill table values
-                    // Find cumulative satisfaction past and number of respondents
+          // Fill table values
+          // Find cumulative satisfaction past and number of respondents
 					for (var i = 0; i < 5; i++) {
-                        var r_column = 0;
-                        var r_column_past = 0;
-                        for (var j = 0; j < 3; j++) {
-                            $("#entry_"+j+i).html("" + ((app.data[j][i] / number_of_respondents) * 100.0).toFixed(2) + " %");
+            var r_column = 0;
+            var r_column_past = 0;
+            for (var j = 0; j < 3; j++) {
+              $("#entry_"+j+i).html("" + ((app.data[j][i] / number_of_respondents) * 100.0).toFixed(2) + " %");
 							number_of_respondents_past += app.datapast[j][i];
 							cumulative_satisfaction_past += app.datapast[j][i] * (5 - i);
-                            r_column += app.data[j][i];
-                            r_column_past += app.datapast[j][i];
+              r_column += app.data[j][i];
+              r_column_past += app.datapast[j][i];
 						}
-                        column_percentages[i] = ((r_column / number_of_respondents) * 100.0).toFixed(2);
-                        $("#entry_3"+i).html("" + column_percentages[i] + " %");
+            column_percentages[i] = ((r_column / number_of_respondents) * 100.0).toFixed(2);
+            $("#entry_3"+i).html("" + column_percentages[i] + " %");
 
-                        respondents_past_columns[i] = r_column_past;
+            respondents_past_columns[i] = r_column_past;
 					}
 
 					var satisfaction_general_past = 0;
 					if (number_of_respondents_past > 0) {
 						// For each entry add past results
 						for (var i = 0; i < 5; i++) {
-							for (var j = 0; j < 3; j++) {
-                                var entry_percentage_past = (100.0 * (app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
-                                $("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + entry_percentage_past  + " %)</span>");
+              for (var j = 0; j < 3; j++) {
+                var entry_percentage_past = (100.0 * (app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
+                $("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + entry_percentage_past  + " %)</span>");
  							}
 
-                            var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
-                            $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_percentage_past + " %)</span>");
+              var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
+              $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_percentage_past + " %)</span>");
 						}
 
-                        // Find general satisfaction from the past
+            // Find general satisfaction from the past
 						satisfaction_general_past = (20.0 * (cumulative_satisfaction_past / number_of_respondents_past)).toFixed(2);
 
-                        // Compare general satisfaction with past
-                        var satisfaction_general_compare = (satisfaction_general - satisfaction_general_past).toFixed(2);
-                        if (satisfaction_general_compare > 0.0) {
-                            $("#satis_general_past").html("(<span class=\"color_green\">+" + satisfaction_general_compare + " % </span> over gennemsnittet)");
-                        } else if (satisfaction_general_compare < 0.0) {
-                            $("#satis_general_past").html("(<span class=\"color_red\">" + satisfaction_general_compare + " % </span> under gennemsnittet)");
-                        }
-                    }
+            // Compare general satisfaction with past
+            var satisfaction_general_compare = (satisfaction_general - satisfaction_general_past).toFixed(2);
+            if (satisfaction_general_compare > 0.0) {
+              $("#satis_general_past").html("(<span class=\"color_green\">+" + satisfaction_general_compare + " % </span> over gennemsnittet)");
+            } else if (satisfaction_general_compare < 0.0) {
+              $("#satis_general_past").html("(<span class=\"color_red\">" + satisfaction_general_compare + " % </span> under gennemsnittet)");
+            }
+          }
 				});
 			}
 
-			
 			// Pie chart: smiley distribution this week
 			var testdata = app.returnWhatDataWeekly(number_of_respondents);
+
 			nv.addGraph(function() {
 				var width = 600;
 				var height = 600;
@@ -202,8 +214,11 @@ var app = {
 		});
 	},
 
-	// Get data for "piechart" and "table"
-    // Stores data in app.data
+  /**
+   * Get data for the piechart, the summary and the table.
+   * Stores the data in app.data .
+   * @param callback function to call when done.
+   */
 	getDataWhat: function(callback){
 		var input_data = {"action": "dataWhat", "macid": app.macid, "today": app.now.getTime()};
 		$.ajax({url: config.serverlocation, 
@@ -219,8 +234,11 @@ var app = {
 		});
 	},
 
-	// Get data for past
-    // Stores data in app.datapast
+  /**
+   * Get data before app.oneWeekAgo for the summary and table.
+   * Stores the data in app.datapast .
+   * @param callback
+   */
 	getDataWhatPast: function(callback){
 		var input_data = {"action": "dataWhatPast", "macid": app.macid, "end": app.oneWeekAgo.getTime()};
 		$.ajax({url: config.serverlocation, 
@@ -236,8 +254,11 @@ var app = {
 		});
 	},
 
-	// Get data for "graph: development over time"
-    // Stores data in app.dataovertime
+  /**
+   * Get data for the graph.
+   * Stores the data in app.dataovertime .
+   * @param callback
+   */
 	getDataOverTime: function(callback){
 		var input_data = {"action": "dataPerDay", "macid": app.macid};
 		$.ajax({url: config.serverlocation, 
@@ -253,7 +274,11 @@ var app = {
 		});
 	},
 
-	// Returns data formatted for "piechart" and "table"
+  /**
+   * Formats the data in app.data to fit for piechart.
+   * @param numberOfEntries
+   * @returns {Array} percentages distribution of the different smileys.
+   */
 	returnWhatDataWeekly: function(numberOfEntries) {
 		var data = new Array();
 		for (var i = 0; i < app.data[0].length; i++) {
@@ -268,7 +293,10 @@ var app = {
 		return data;
 	},
 
-	// Returns data formatted for "graph: development over time"
+  /**
+   * Formats the data in app.dataovertime to fit for the graph.
+   * @returns {Array}
+   */
 	returnGraphDataPerDay: function() {
 		var data = new Array();
 		for (var i = 0; i < app.dataovertime.length; i++) {
