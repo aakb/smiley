@@ -122,23 +122,15 @@ var app = {
 
 					var satisfaction_general_past = 0;
 					if (number_of_respondents_past > 0) {
-						// For each entry add comparison with past
+						// For each entry add past results
 						for (var i = 0; i < 5; i++) {
 							for (var j = 0; j < 3; j++) {
-								var comp = (100.0 * (app.data[j][i] / number_of_respondents - app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
-								if (comp > 0.0) {
-									$("#entry_"+j+i).append("<br/><span class=\"color_grey\">(+" + comp + " %)</span>");
-								} else if (comp < 0.0) {
-									$("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + comp + " %)</span>");
-								}
-							}
-                            var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
-                            var column_compare = (column_percentages[i] - column_percentage_past).toFixed(2);
-                            if (column_compare > 0) {
-                                column_compare = "+" + column_compare;
-                            }
+                                var entry_percentage_past = (100.0 * (app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
+                                $("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + entry_percentage_past  + " %)</span>");
+ 							}
 
-                            $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_compare + " %)</span>");
+                            var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
+                            $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_percentage_past + " %)</span>");
 						}
 
                         // Find general satisfaction from the past
