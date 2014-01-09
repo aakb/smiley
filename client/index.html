@@ -1,179 +1,178 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-		<meta name="format-detection" content="telephone=no" />
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <title>b7</title>
-    </head>
-    <body>
-		<!-- Basic Page Setup -->
-		<div class="center">
-			<div id="main" class="main">
-				<h1><span class="text_b7">b7</span></h1>
-			</div>
-			<div id="footer" class="footer">
-				<div class="footer_left">
-					<img draggable="false" src="img/logo_b7.png" alt=""/>
-				</div>
-				<div class="footer_right">
-					<img draggable="false" src="img/logo_aak.png" alt=""/>
-				</div>
-			</div>
-		</div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>b7</title>
+  </head>
+  <body>
+    <!-- Basic Page Setup -->
+    <div class="center">
+      <div id="main" class="main">
+        <h1><span class="text_b7">b7</span></h1>
+      </div>
+      <div id="footer" class="footer">
+        <div class="footer_left">
+          <img draggable="false" src="img/logo_b7.png" alt=""/>
+        </div>
+        <div class="footer_right">
+          <img draggable="false" src="img/logo_aak.png" alt=""/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page_welcome" class="container">
+      <h1>Velkommen til <span class="text_b7">b7</span></h1>
+      Hvis du allerede har ID på maskinen kan du logge ind her <div class="button_div" id="login_button">Login</div><br/>
+      Ellers skal du registrere maskinen her <div class="button_div" id="reg_button">Registrer</div><br/>
+      <br/>
+      For at sende ikke afleverede målinger (pga. manglende internet) tryk her <div class="button_div" id="commit_button">Indsend</div><br/>
+    </div>
+    <div id="page_login" class="container">
+      <h2>Login</h2>
+      Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
+      <div class="form_div">
+        <form id="form_login">
+          <table>
+            <tr>
+              <td>ID</td>
+              <td><input type="text" id="macid" name="macid" required /></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="text_center">
+                  <input type="submit" value="Bekræft" class="input_button" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+    <div id="page_register" class="container">
+      <h2>Registrer</h2>
+      Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
+
+      <div class="form_div">
+        <form id="form_register">
+          <table>
+            <tr>
+              <td>
+                <table>
+                  <tr>
+                    <td>Ansvarlig kontaktperson<br/>
+                      <input type="text" id="contact" name="contact" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Mailadresse<br/>
+                      <input type="email" id="mail" name="mail" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Gentag mailadresse<br/>
+                      <input type="email" id="mail_repeat" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td>Magistratsafdeling<br/>
+                      <input type="text" id="magafd" name="magafd" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Forvaltning<br/>
+                      <input type="text" id="forvalt" name="forvalt" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Fysisk placering<br/>
+                      <input type="text" id="place" name="place" required />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Navn for enhed<br/>
+                <input type="text" id="name" name="name" required />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input type="hidden" id="action" name="action" value="register" />
+                <div class="text_center">
+                  <input type="submit" value="Bekræft" class="input_button" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <div id="page_main" class="container">
+      <div class="header"></div>
+      <table class="table_smiley" id="table_choice">
+        <tr>
+          <td>
+            <img id="smiley5" draggable="false" class="img_smiley" src="img/5.png" alt="">
+          </td>
+          <td>
+            <img id="smiley4" draggable="false" class="img_smiley" src="img/4.png" alt="">
+          </td>
+          <td>
+            <img id="smiley3" draggable="false" class="img_smiley" src="img/3.png" alt="">
+          </td>
+          <td>
+            <img id="smiley2" draggable="false" class="img_smiley" src="img/2.png" alt="">
+          </td>
+          <td>
+            <img id="smiley1" draggable="false" class="img_smiley" src="img/1.png" alt="">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5"><div id="table_text"></div></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img id="choice1" class="img_choice" draggable="false" src="img/rammer.png" alt=""></td>
+          <td><img id="choice2" class="img_choice" draggable="false" src="img/betjening.png" alt=""></td>
+          <td><img id="choice3" class="img_choice" draggable="false" src="img/andet.png" alt=""></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="page_thanks" class="container">
+      <div class="header"></div>
+      <h1>Mange tak</h1>
+      <h2>Vi bruger dit besyv til at forbedre vores service.</h2>
+    </div>
 
 
-		<!-- Page Content -->
-		<div id="page_welcome" class="container">
-			<h1>Velkommen til <span class="text_b7">b7</span></h1>
-			Hvis du allerede har ID på maskinen kan du logge ind her <div class="button_div" id="login_button">Login</div><br/>
-			Ellers skal du registrere maskinen her <div class="button_div" id="reg_button">Registrer</div><br/>
-			<br/>
-			For at sende ikke afleverede målinger (pga. manglende internet) tryk her <div class="button_div" id="commit_button">Indsend</div><br/>
-		</div>
-		<div id="page_login" class="container">
-			<h2>Login</h2>
-			Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
-			<div class="form_div">
-				<form id="form_login">
-					<table>
-						<tr>
-							<td>ID</td>
-							<td><input type="text" id="macid" name="macid" required /></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="text_center">
-									<input type="submit" value="Bekræft" class="input_button" />
-								</div>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-		<div id="page_register" class="container">
-			<h2>Registrer</h2>
-			Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
-			
-			<div class="form_div">
-				<form id="form_register">
-					<table>
-						<tr>
-							<td>
-								<table>
-									<tr>
-										<td>Ansvarlig kontaktperson<br/>
-											<input type="text" id="contact" name="contact" required />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Mailadresse<br/>
-											<input type="email" id="mail" name="mail" required />
-										</td>
-									</tr>
-									<tr>
-										<td>Gentag mailadresse<br/>
-											<input type="email" id="mail_repeat" required />
-										</td>
-									</tr>
-									<tr>
-										<td>
-										</td>
-									</tr>
-								</table>
-							</td>
-							<td>
-								<table>
-									<tr>
-										<td>Magistratsafdeling<br/>
-											<input type="text" id="magafd" name="magafd" required />
-										</td>
-									</tr>
-									<tr>
-										<td>Forvaltning<br/>
-											<input type="text" id="forvalt" name="forvalt" required />
-										</td>
-									</tr>
-									<tr>
-										<td>Fysisk placering<br/>
-											<input type="text" id="place" name="place" required />
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>Navn for enhed<br/>
-								<input type="text" id="name" name="name" required />
-							</td>
-						</tr>						
-						<tr>
-							<td colspan="2">
-								<input type="hidden" id="action" name="action" value="register" />
-								<div class="text_center">
-									<input type="submit" value="Bekræft" class="input_button" />
-								</div>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-
-		<div id="page_main" class="container">
-			<div class="header"></div>
-			<table class="table_smiley" id="table_choice">
-				<tr>
-					<td>
-						<img id="smiley5" draggable="false" class="img_smiley" src="img/5.png" alt="">
-					</td>
-					<td>
-						<img id="smiley4" draggable="false" class="img_smiley" src="img/4.png" alt="">
-					</td>
-					<td>
-						<img id="smiley3" draggable="false" class="img_smiley" src="img/3.png" alt="">
-					</td>
-					<td>
-						<img id="smiley2" draggable="false" class="img_smiley" src="img/2.png" alt="">
-					</td>
-					<td>
-						<img id="smiley1" draggable="false" class="img_smiley" src="img/1.png" alt="">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="5"><div id="table_text"></div></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><img id="choice1" class="img_choice" draggable="false" src="img/rammer.png" alt=""></td>
-					<td><img id="choice2" class="img_choice" draggable="false" src="img/betjening.png" alt=""></td>
-					<td><img id="choice3" class="img_choice" draggable="false" src="img/andet.png" alt=""></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="page_thanks" class="container">
-			<div class="header"></div>
-			<h1>Mange tak</h1>
-			<h2>Vi bruger dit besyv til at forbedre vores service.</h2>
-		</div>
-
-
-		<!-- Scripts -->
-        <script type="text/javascript" src="../libs/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="../config/config.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				app.init();
-			});
-		</script>
-    </body>
+    <!-- Scripts -->
+    <script type="text/javascript" src="../libs/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../config/config.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        app.init();
+      });
+    </script>
+  </body>
 </html>

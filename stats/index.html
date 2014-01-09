@@ -1,103 +1,104 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-		<link rel="stylesheet" type="text/css" href="css/nv.d3.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <title>b7 statistik</title>
-    </head>
-    <body>
-		<div class="center">
-			<div id="main" class="main">
-				<div class="header">
-					<div class="header_left"><h1><span class="text_b7">b7</span> Statistik</h1></div>
-					<div class="header_right">
-						<img draggable="false" src="img/logo_aak.png" alt=""/>
-					</div>
-				</div>
-				<div class="section">
-					<div class="summary">
-						Du ser her resultaterne for perioden fra <span class="text_b7" id="date_start"></span> til og med <span class="text_b7" id="date_end"></span><span id="week_text"></span>.<br/>
-						I denne periode har den gennemsnitlige tilfredshed været: <span class="text_b7" id="satis_general">0</span> % <span id="satis_general_past"></span>.<br/>
-						<span class="text_b7" id="number_of_respondents">0</span> har svaret.<br/>
-						<span class="text_b7" id="satis_happy">0</span> % har været meget tilfredse.<br/>
-						<span class="text_b7" id="satis_unhappy">0</span> % har været meget utilfredse.<br/>
-					</div>
-				</div>
-				<div class="section">
-					<h2>Tal for denne uge</h2>
-					<div class="graph_description">Tabellen viser hvordan besvarelserne fordeler sig for den pågældende uge. I parentesen står gennemsnittet af de foregående uger.</div>
-					<div class="graph">
-						<table class="summary_table">
-							<tr>
-								<td></td>
-								<td><img class="table_img" src="img/5.png"/></td>
-								<td><img class="table_img" src="img/4.png"/></td>
-								<td><img class="table_img" src="img/3.png"/></td>
-								<td><img class="table_img" src="img/2.png"/></td>
-								<td><img class="table_img" src="img/1.png"/></td>
-							</tr>
-							<tr>
-								<td>Fysiske rammer</td>
-								<td><span id="entry_00"></span></td>
-								<td><span id="entry_01"></span></td>
-								<td><span id="entry_02"></span></td>
-								<td><span id="entry_03"></span></td>
-								<td><span id="entry_04"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Personlig betjening</td>
-                                <td><span id="entry_10"></span></td>
-                                <td><span id="entry_11"></span></td>
-                                <td><span id="entry_12"></span></td>
-                                <td><span id="entry_13"></span></td>
-                                <td><span id="entry_14"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Andet</td>
-                                <td><span id="entry_20"></span></td>
-                                <td><span id="entry_21"></span></td>
-                                <td><span id="entry_22"></span></td>
-                                <td><span id="entry_23"></span></td>
-                                <td><span id="entry_24"></span></td>
-                            </tr>
-                            <tr style="border-top-style: double;">
-                                <td>Sum</td>
-                                <td><span id="entry_30"></span></td>
-                                <td><span id="entry_31"></span></td>
-                                <td><span id="entry_32"></span></td>
-                                <td><span id="entry_33"></span></td>
-                                <td><span id="entry_34"></span></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="section">
-                    <h2>Gennemsnitlig tilfredshed for denne uge</h2>
-                    <div class="graph_description">Diagrammet viser den procentvise fordeling af tilfredshed i besvarelserne.</div>
-                    <div id="pie" class="graph">
-                        <svg style='height:500px; width: 1000px'> </svg>
-                    </div>
-                </div>
-                <div class="section">
-                    <h2>Udvikling over tid</h2>
-                    <div class="graph_description">Grafen viser udviklingen i den gennemsnitlige tilfredshed pr. dag fra første registrering.</div>
-                    <div id="chart" class="graph">
-                        <svg style='height:500px'> </svg>
-                    </div>
-                </div>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/nv.d3.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>b7 statistik</title>
+  </head>
+  <body>
+  <div class="center">
+    <div id="main" class="main">
+      <div class="header">
+        <div class="header_left"><h1><span class="text_b7">b7</span> Statistik</h1></div>
+        <div class="header_right">
+          <img draggable="false" src="img/logo_aak.png" alt=""/>
+        </div>
+      </div>
+      <div class="section">
+        <div class="summary">
+          Du ser her resultaterne for perioden fra <span class="text_b7" id="date_start"></span> til og med <span class="text_b7" id="date_end"></span><span id="week_text"></span>.<br/>
+          I denne periode har den gennemsnitlige tilfredshed været: <span class="text_b7" id="satis_general">0</span> % <span id="satis_general_past"></span>.<br/>
+          <span class="text_b7" id="number_of_respondents">0</span> har svaret.<br/>
+          <span class="text_b7" id="satis_happy">0</span> % har været meget tilfredse.<br/>
+          <span class="text_b7" id="satis_unhappy">0</span> % har været meget utilfredse.<br/>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Tal for denne uge</h2>
+        <div class="graph_description">Tabellen viser hvordan besvarelserne fordeler sig for den pågældende uge. I parentesen står gennemsnittet af de foregående uger.</div>
+        <div class="graph">
+          <table class="summary_table">
+            <tr>
+              <td></td>
+              <td><img class="table_img" src="img/5.png"/></td>
+              <td><img class="table_img" src="img/4.png"/></td>
+              <td><img class="table_img" src="img/3.png"/></td>
+              <td><img class="table_img" src="img/2.png"/></td>
+              <td><img class="table_img" src="img/1.png"/></td>
+            </tr>
+            <tr>
+              <td>Fysiske rammer</td>
+              <td><span id="entry_00"></span></td>
+              <td><span id="entry_01"></span></td>
+              <td><span id="entry_02"></span></td>
+              <td><span id="entry_03"></span></td>
+              <td><span id="entry_04"></span></td>
+            </tr>
+            <tr>
+              <td>Personlig betjening</td>
+              <td><span id="entry_10"></span></td>
+              <td><span id="entry_11"></span></td>
+              <td><span id="entry_12"></span></td>
+              <td><span id="entry_13"></span></td>
+              <td><span id="entry_14"></span></td>
+            </tr>
+            <tr>
+              <td>Andet</td>
+              <td><span id="entry_20"></span></td>
+              <td><span id="entry_21"></span></td>
+              <td><span id="entry_22"></span></td>
+              <td><span id="entry_23"></span></td>
+              <td><span id="entry_24"></span></td>
+            </tr>
+            <tr style="border-top-style: double;">
+              <td>Sum</td>
+              <td><span id="entry_30"></span></td>
+              <td><span id="entry_31"></span></td>
+              <td><span id="entry_32"></span></td>
+              <td><span id="entry_33"></span></td>
+              <td><span id="entry_34"></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+        <div class="section">
+          <h2>Gennemsnitlig tilfredshed for denne uge</h2>
+          <div class="graph_description">Diagrammet viser den procentvise fordeling af tilfredshed i besvarelserne.</div>
+          <div id="pie" class="graph">
+            <svg style='height:500px; width: 1000px'> </svg>
+          </div>
+        </div>
+        <div class="section">
+            <h2>Udvikling over tid</h2>
+            <div class="graph_description">Grafen viser udviklingen i den gennemsnitlige tilfredshed pr. dag fra første registrering.</div>
+            <div id="chart" class="graph">
+              <svg style='height:500px'> </svg>
             </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Scripts -->
-        <script type="text/javascript" src="../libs/jquery-1.10.2.min.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/d3.v3.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/nv.d3.js" charset="utf-8"></script>
-		<script type="text/javascript" src="../config/config.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/stats.js" charset="utf-8"></script>
-		<script type="text/javascript">
-            app.init();
-        </script>
-    </body>
+    <!-- Scripts -->
+    <script type="text/javascript" src="../libs/jquery-1.10.2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/nv.d3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../config/config.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/stats.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        app.init();
+      });
+    </script>
+  </body>
 </html>
