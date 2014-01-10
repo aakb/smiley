@@ -12,6 +12,7 @@ var app = {
     var pageLoginDiv    = $("#page_login");
     var pageRegisterDiv = $("#page_register");
     var pageMainDiv     = $("#page_main");
+    var pageChoiceDiv   = $("#page_choice");
     var pageThanksDiv   = $("#page_thanks");
 
     // Get the content of containers.
@@ -19,6 +20,7 @@ var app = {
     this.pageLogin = pageLoginDiv.html();
     this.pageRegister = pageRegisterDiv.html();
     this.pageMain = pageMainDiv.html();
+    this.pageChoice = pageChoiceDiv.html();
     this.pageThanks = pageThanksDiv.html();
 
     // Remove the containers.
@@ -26,6 +28,7 @@ var app = {
     pageLoginDiv.remove();
     pageRegisterDiv.remove();
     pageMainDiv.remove();
+    pageChoiceDiv.remove();
     pageThanksDiv.remove();
 
     // Avoid touchmove events (scrolling).
@@ -269,7 +272,7 @@ var app = {
     clearTimeout(app.timer);
 
     // Change the HTML content.
-    $(".main").html(app.pageMain);
+    $(".main").html(app.pageChoice);
 
     // Setup event listeners
     $("#choice1").on("touchstart click", function(e) {
