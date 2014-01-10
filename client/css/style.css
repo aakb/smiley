@@ -16,6 +16,7 @@
 h1 {
   font-size: 250%;
   margin-bottom: 70px;
+  text-align: center;
 }
 
 img {
@@ -108,16 +109,20 @@ img {
 .button_div {
   width: 320px;
   padding: 15px 15px;
-  background:#ff8700;
+  background: #ff8700;
   border:0 none;
   margin-top: 15px;
   margin-bottom: 20px;
-  cursor:pointer;
+  cursor: pointer;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   color: #ffffff;
-  font-size: large;
+  font-size: 150%;
   display: inline-block;
+  -moz-text-shadow: 1px 1px 0 #c26900;
+  -webkit-text-shadow: 1px 1px 0 #c26900;
+  text-shadow: 1px 1px 0 #c26900;
+  text-align: center;
 }
 
 
@@ -175,7 +180,6 @@ fieldset {
   border: 1px solid #e5e5e5;
   padding: 25px 25px 10px;
   color: #888;
-  width: 320px;
 
   -webkit-border-radius: 0.6em;
   -moz-border-radius: 0.6em;
@@ -199,20 +203,39 @@ legend {
   color: #888;
 }
 
-.div-float {
-  float: left;
-}
-
-.input-div-inline {
-  display: inline-block;
-  margin-right: 70px;
-  margin-bottom: 40px;
-}
-
 .fieldset-text {
   text-align: left;
 }
 
 .background_color_grey {
   background: #888;
+  -moz-text-shadow: 1px 1px 0 #555;
+  -webkit-text-shadow: 1px 1px 0 #555;
+  text-shadow: 1px 1px 0 #555;
+}
+
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
+}
+
+.content-left,
+.content-right {
+  margin-bottom: 70px;
+  width: 47%;
+}
+
+.content-left {
+  float: left;
+}
+
+.content-right {
+  float: right;
+}
+
+.content-send-data {
+  clear: both;
+  margin-left: 25%;
+  width: 47%;
 }
