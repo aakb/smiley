@@ -103,12 +103,12 @@ p {
   cursor: pointer;
 }
 
-.button_div {
+.button_div,
+.button-submit {
   border: 0;
   display: inline-block;
-  margin-top: 15px;
   margin-bottom: 20px;
-  padding: 15px 15px;
+  padding: 12px;
   width: 100%;
 
   background: #ff8700;
@@ -130,6 +130,9 @@ p {
   box-sizing: border-box;
 }
 
+.button-submit {
+  margin-top: 22px;
+}
 
 .graph {
   display: inline;
@@ -167,6 +170,7 @@ textarea {
   -ms-border-radius: 0.6em;
   -o-border-radius: 0.6em;
   border-radius: 0.6em;
+
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -202,6 +206,11 @@ legend {
   font-size: 175%;
   color: #888;
 }
+
+.fieldset-text {
+  margin-bottom: 30px;
+}
+
 
 .background_color_grey {
   background: #888;
