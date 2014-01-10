@@ -250,7 +250,11 @@ legend {
 }
 
 .image-header {
-  margin-bottom: 70px;
+  margin-bottom: 120px;
+}
+
+.image-wrapper {
+  margin-right: -60px;
 }
 
 .choice-wrapper {
