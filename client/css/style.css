@@ -64,12 +64,12 @@ p {
 
 .footer_left {
   float: left;
-  max-width: 125px;
+  max-width: 75px;
 }
 
 .footer_right {
   float: right;
-  max-width: 175px;
+  max-width: 110px;
 }
 
 .form_div {
