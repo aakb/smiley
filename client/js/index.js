@@ -108,12 +108,14 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageRegister);
 
+    var footer = $(".footer");
+
     $("input").on("focus", function() {
-      $(".footer").hide();
+      footer.hide();
     });
 
     $("input").on("focusout", function() {
-      $(".footer").show();
+      footer.show();
     });
 
     // Setup custom validation for the email_repeat input.
@@ -182,6 +184,16 @@ var app = {
   showLoginPage: function() {
     // Change HTML content
     $("#main").html(app.pageLogin);
+
+    var footer = $(".footer");
+
+    $("input").on("focus", function() {
+      footer.hide();
+    });
+
+    $("input").on("focusout", function() {
+      footer.show();
+    });
 
     // Setup form register submit button
     $("#form_login").submit(function(event) {
