@@ -15,6 +15,7 @@
 
 h1 {
   font-size: 250%;
+  margin-bottom: 70px;
 }
 
 img {
@@ -172,9 +173,8 @@ label {
 
 fieldset {
   border: 1px solid #e5e5e5;
-  padding: 25px;
+  padding: 25px 25px 10px;
   color: #888;
-  font-size: 80%;
   width: 320px;
 
   -webkit-border-radius: 0.6em;
