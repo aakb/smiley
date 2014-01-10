@@ -308,7 +308,7 @@ var app = {
       "key" : "Tilfredshed" ,
       "bar": false,
       "values" : data
-		}].map(function(series) {
+    }].map(function(series) {
       series.values = series.values.map(function(d) { return {x: d[0], y: d[1] } });
       return series;
     });
