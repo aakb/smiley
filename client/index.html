@@ -45,7 +45,7 @@
             <fieldset>
               <legend>Registrér maskine</legend>
               <div class="fieldset-text">Har du ikke registreret maskinen før, kan du gøre det her.<br/><br/></div>
-              <div class="button_div" id="register_button">Registrér maskine</div>
+              <div class="button_div" id="reg_button">Registrér maskine</div>
             </fieldset>
           </form>
         </div>
@@ -67,7 +67,7 @@
         <h1>Velkommen til <span class="text_b7">B7</span></h1>
       </div>
       <div class="input-div-inline">
-        <form>
+        <form id="form_login">
           <fieldset>
             <legend>Log ind</legend>
             <div class="fieldset-text">
@@ -85,6 +85,39 @@
     </div>
 
     <div id="page_register" class="container">
+      <div>
+        <div>
+          <h1>Velkommen til <span class="text_b7">B7</span></h1>
+        </div>
+        <form id="form_register">
+          <fieldset>
+            <legend>Registrér maskine</legend>
+            <div class="fieldset-text">
+              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
+              <br/>
+              God fornøjelse.<br/>
+              <br/>
+              <label for="macid">Enheds ID</label>
+            </div>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+            <div class="fieldset-text">
+              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
+              <br/>
+              God fornøjelse.<br/>
+              <br/>
+              <label for="macid">Enheds ID</label>
+            </div>
+            <input type="text" id="macid" name="macid" placeholder="Indtast ID på din enhed" required />
+            <input type="submit" class="button_div" value="Bekræft" />
+          </fieldset>
+        </form>
+
+<!--
       <h2>Registrer</h2>
       Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
 
@@ -152,7 +185,7 @@
             </tr>
           </table>
         </form>
-      </div>
+      </div>-->
     </div>
 
     <div id="page_main" class="container">
