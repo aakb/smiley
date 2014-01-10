@@ -245,8 +245,28 @@ legend {
   width: 56%;
 }
 
+.image-wrapper {
+  margin-top: 70px;
+}
+
+.choice-wrapper {
+  text-align: center;
+}
+
 .img_div {
   display: inline-block;
   margin-right: 40px;
   width: 15%;
+}
+
+.table_text {
+  padding-top: 40px;
+}
+
+.thanks-header {
+  margin-bottom: 20px;
+}
+
+.thanks-text {
+  text-align: center;
 }
