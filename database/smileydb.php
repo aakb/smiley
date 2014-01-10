@@ -150,7 +150,7 @@ class SmileyDB {
     $statement = 'SELECT * FROM machine WHERE macid = :macid';
     $query = $this->connection->execute($statement, array('macid' => $macid));
     if ($query->rowCount() != 1) {		// machine does not exist
-      $result = array('result'=>'error', 'msg'=>'error_machine_already_exists');
+      $result = array('result'=>'error', 'msg'=>'error_machine_does_not_exist');
       echo json_encode($result);
       return;
     }
