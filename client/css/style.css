@@ -88,7 +88,7 @@ img {
 }
 
 .img_smiley_hide {
-  display: none;
+  opacity: 0.1;
 }
 
 .img_smiley {
@@ -99,10 +99,6 @@ img {
 .img_choice {
   width: 100%;
   cursor: pointer;
-}
-
-.img_smiley_selected {
-  opacity: 0.5;
 }
 
 .button_div {

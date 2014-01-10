@@ -233,12 +233,6 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageMain);
 
-    // Hide bottom images.
-    $(".img_choice").hide();
-
-    // Set text
-    $("#table_text").html("<h1>Tilfreds med betjeningen?</h1>");
-
     // Setup the event listeners.
     $("#smiley1").on("touchstart click", function(e) {
       e.stopPropagation(); e.preventDefault();
