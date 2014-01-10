@@ -26,25 +26,26 @@
     <!-- Page Content -->
     <div id="page_welcome" class="container">
       <h1>Velkommen til <span class="text_b7">B7</span></h1>
-      <div class="content-left">
-        <form>
-          <fieldset>
-            <legend>Log ind</legend>
-            <div class="fieldset-text">Hvis du allerede har ID på maskinen kan du logge ind her.<br/><br/></div>
-            <div class="button_div" id="login_button">Log ind</div>
-          </fieldset>
-        </form>
+      <div class="content-wrapper">
+        <div class="content-left">
+          <form>
+            <fieldset>
+              <legend>Log ind</legend>
+              <div class="fieldset-text">Hvis du allerede har ID på maskinen kan du logge ind her.<br/><br/></div>
+              <div class="button_div" id="login_button">Log ind</div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="content-right">
+          <form>
+            <fieldset>
+              <legend>Registrér maskine</legend>
+              <div class="fieldset-text">Har du ikke registreret maskinen før, kan du gøre det her.<br/><br/></div>
+              <div class="button_div" id="reg_button">Registrér maskine</div>
+            </fieldset>
+          </form>
+        </div>
       </div>
-      <div class="content-right">
-        <form>
-          <fieldset>
-            <legend>Registrér maskine</legend>
-            <div class="fieldset-text">Har du ikke registreret maskinen før, kan du gøre det her.<br/><br/></div>
-            <div class="button_div" id="reg_button">Registrér maskine</div>
-          </fieldset>
-        </form>
-      </div>
-      <br/>
       <div class="content-send-data">
         <form>
           <fieldset>
@@ -58,15 +59,13 @@
 
     <div id="page_login" class="container">
       <h1>Velkommen til <span class="text_b7">B7</span></h1>
-      <div class="input-div-inline">
+      <div class="content-login">
         <form id="form_login">
           <fieldset>
             <legend>Log ind</legend>
             <div class="fieldset-text">
-              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
-              <br/>
-              God fornøjelse.<br/>
-              <br/>
+              <p>Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.</p>
+              <p>God fornøjelse.</p>
               <label for="macid">Enheds ID</label>
             </div>
             <input type="text" id="macid" name="macid" placeholder="Indtast ID på din enhed" required />
@@ -81,9 +80,7 @@
       <form id="form_register">
       <fieldset>
         <legend>Registrér maskine</legend>
-        <div class="fieldset-text">
-          Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.
-        </div>
+        <p>Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.</p>
         <div class="content-left">
           <label for="contact">Ansvarlig kontaktperson</label>
           <input type="text" id="contact" name="contact" placeholder="F.eks. Jens Jensen" required />
