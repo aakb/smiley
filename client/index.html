@@ -13,7 +13,7 @@
     <!-- Basic Page Setup -->
     <div class="center">
       <div id="main" class="main">
-        <h1><span class="text_b7">b7</span></h1>
+
       </div>
       <div id="footer" class="footer">
         <div class="footer_left">
@@ -27,33 +27,63 @@
 
     <!-- Page Content -->
     <div id="page_welcome" class="container">
-      <h1>Velkommen til <span class="text_b7">b7</span></h1>
-      Hvis du allerede har ID på maskinen kan du logge ind her <div class="button_div" id="login_button">Login</div><br/>
-      Ellers skal du registrere maskinen her <div class="button_div" id="reg_button">Registrer</div><br/>
-      <br/>
-      For at sende ikke afleverede målinger (pga. manglende internet) tryk her <div class="button_div" id="commit_button">Indsend</div><br/>
+      <div>
+        <div>
+          <h1>Velkommen til <span class="text_b7">B7</span></h1>
+        </div>
+        <div class="input-div-inline">
+          <form>
+            <fieldset>
+              <legend>Log ind</legend>
+              <div class="fieldset-text">Hvis du allerede har ID på maskinen kan du logge ind her.<br/><br/></div>
+              <div class="button_div" id="login_button">Log ind</div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="input-div-inline">
+          <form>
+            <fieldset>
+              <legend>Registrér maskine</legend>
+              <div class="fieldset-text">Har du ikke registreret maskinen før, kan du gøre det her.<br/><br/></div>
+              <div class="button_div" id="register_button">Registrér maskine</div>
+            </fieldset>
+          </form>
+        </div>
+        <br/>
+        <div class="input-div-inline">
+          <form>
+            <fieldset>
+              <legend>Indsend målinger</legend>
+              <div class="fieldset-text">For at indsende ikke afleverede målinger tryk her.<br/><br/></div>
+              <div class="button_div background_color_grey" id="commit_button">Indsend</div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
+
     <div id="page_login" class="container">
-      <h2>Login</h2>
-      Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
-      <div class="form_div">
-        <form id="form_login">
-          <table>
-            <tr>
-              <td>ID</td>
-              <td><input type="text" id="macid" name="macid" required /></td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <div class="text_center">
-                  <input type="submit" value="Bekræft" class="input_button" />
-                </div>
-              </td>
-            </tr>
-          </table>
+      <div>
+        <h1>Velkommen til <span class="text_b7">B7</span></h1>
+      </div>
+      <div class="input-div-inline">
+        <form>
+          <fieldset>
+            <legend>Log ind</legend>
+            <div class="fieldset-text">
+              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
+              <br/>
+              God fornøjelse.<br/>
+              <br/>
+              <label for="macid">Enheds ID</label>
+            </div>
+            <input type="text" id="macid" name="macid" placeholder="Indtast ID på din enhed" required />
+            <input type="submit" class="button_div" value="Bekræft" />
+          </fieldset>
         </form>
       </div>
     </div>
+
     <div id="page_register" class="container">
       <h2>Registrer</h2>
       Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
