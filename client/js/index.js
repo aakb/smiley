@@ -108,6 +108,14 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageRegister);
 
+    $("input").on("focus", function() {
+      $(".footer").hide();
+    });
+
+    $("input").on("focusout", function() {
+      $(".footer").show();
+    });
+
     // Setup custom validation for the email_repeat input.
     $("#mail_repeat").on("change", function() {
       if ($(this).val() !== $("#mail").first().val()) {
