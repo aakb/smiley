@@ -131,6 +131,7 @@ p {
 
 .button-submit {
   margin-top: 22px;
+  -webkit-appearance: none;
 }
 
 .graph {
