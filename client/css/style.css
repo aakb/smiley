@@ -239,3 +239,8 @@ legend {
   margin-left: 25%;
   width: 47%;
 }
+
+.img_div {
+  display: inline-block;
+  width: 19%;
+}
