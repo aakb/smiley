@@ -8,14 +8,15 @@
   font-size: 16px;
   height: 100%;
   margin: 0;
-  padding: 0 0 250px;
+  padding: 55px 0 250px;
   width: 100%;
   color: #333;
 }
 
 h1 {
   font-size: 250%;
-  margin-bottom: 70px;
+  margin-top: 0;
+  margin-bottom: 55px;
   text-align: center;
 }
 
@@ -56,15 +57,18 @@ p {
   padding: 0;
 }
 
+.footer_left,
+.footer_right {
+  padding: 30px 70px;
+}
+
 .footer_left {
   float: left;
-  padding: 50px 70px;
   max-width: 125px;
 }
 
 .footer_right {
   float: right;
-  padding: 50px 70px;
   max-width: 175px;
 }
 
@@ -242,11 +246,11 @@ legend {
 .content-login {
   clear: both;
   margin-left: 22%;
-  width: 56%;
+  width: 62%;
 }
 
-.image-wrapper {
-  margin-top: 70px;
+.image-header {
+  margin-bottom: 70px;
 }
 
 .choice-wrapper {
@@ -263,7 +267,8 @@ legend {
   padding-top: 40px;
 }
 
-.thanks-header {
+.thanks-header,
+.table_text h1 {
   margin-bottom: 20px;
 }
 
