@@ -2,8 +2,8 @@
   -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
   -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
   -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-  background-color:#FFFFFF;
-  background-attachment:fixed;
+  background-color: #FFFFFF;
+  background-attachment: fixed;
   font-family: "Arial", sans-serif;
   height:100%;
   margin:0;
@@ -14,6 +14,13 @@
 
 h1 {
   font-size: 250%;
+}
+
+img {
+  display: inline;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
 }
 
 .container {
@@ -35,7 +42,6 @@ h1 {
 .footer {
   background-color: #eee;
   width: 100%;
-  height: 140px;
   position: fixed;
   bottom: 0;
   border: 0;
@@ -45,12 +51,14 @@ h1 {
 
 .footer_left {
   float: left;
-  padding: 20px;
+  padding: 50px 70px;
+  max-width: 125px;
 }
 
 .footer_right {
   float: right;
-  padding: 20px;
+  padding: 50px 70px;
+  max-width: 175px;
 }
 
 .form_div {
