@@ -251,10 +251,11 @@ legend {
 }
 
 .image-header {
-  margin-bottom: 115px;
+  margin-bottom: 135px;
 }
 
 .image-wrapper {
+  margin-top: 30px;
   margin-right: -60px;
 }
 
