@@ -11,27 +11,23 @@
   </head>
   <body>
     <!-- Basic Page Setup -->
-    <div class="center">
-      <div id="main" class="main">
+    <div id="main" class="main">
 
+    </div>
+    <div id="footer" class="footer">
+      <div class="footer_left">
+        <img draggable="false" src="img/logo_b7.png" alt=""/>
       </div>
-      <div id="footer" class="footer">
-        <div class="footer_left">
-          <img draggable="false" src="img/logo_b7.png" alt=""/>
-        </div>
-        <div class="footer_right">
-          <img draggable="false" src="img/logo_aak.png" alt=""/>
-        </div>
+      <div class="footer_right">
+        <img draggable="false" src="img/logo_aak.png" alt=""/>
       </div>
     </div>
 
     <!-- Page Content -->
     <div id="page_welcome" class="container">
-      <div>
-        <div>
-          <h1>Velkommen til <span class="text_b7">B7</span></h1>
-        </div>
-        <div class="input-div-inline">
+      <h1>Velkommen til <span class="text_b7">B7</span></h1>
+      <div class="content-wrapper">
+        <div class="content-left">
           <form>
             <fieldset>
               <legend>Log ind</legend>
@@ -40,7 +36,7 @@
             </fieldset>
           </form>
         </div>
-        <div class="input-div-inline">
+        <div class="content-right">
           <form>
             <fieldset>
               <legend>Registrér maskine</legend>
@@ -49,32 +45,27 @@
             </fieldset>
           </form>
         </div>
-        <br/>
-        <div class="input-div-inline">
-          <form>
-            <fieldset>
-              <legend>Indsend målinger</legend>
-              <div class="fieldset-text">For at indsende ikke afleverede målinger tryk her.<br/><br/></div>
-              <div class="button_div background_color_grey" id="commit_button">Indsend</div>
-            </fieldset>
-          </form>
-        </div>
+      </div>
+      <div class="content-send-data">
+        <form>
+          <fieldset>
+            <legend>Indsend målinger</legend>
+            <div class="fieldset-text">For at indsende ikke afleverede målinger tryk her.<br/><br/></div>
+            <div class="button_div background_color_grey" id="commit_button">Indsend</div>
+          </fieldset>
+        </form>
       </div>
     </div>
 
     <div id="page_login" class="container">
-      <div>
-        <h1>Velkommen til <span class="text_b7">B7</span></h1>
-      </div>
-      <div class="input-div-inline">
+      <h1>Velkommen til <span class="text_b7">B7</span></h1>
+      <div class="content-login">
         <form id="form_login">
           <fieldset>
             <legend>Log ind</legend>
             <div class="fieldset-text">
-              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
-              <br/>
-              God fornøjelse.<br/>
-              <br/>
+              <p>Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.</p>
+              <p>God fornøjelse.</p>
               <label for="macid">Enheds ID</label>
             </div>
             <input type="text" id="macid" name="macid" placeholder="Indtast ID på din enhed" required />
@@ -85,46 +76,38 @@
     </div>
 
     <div id="page_register" class="container">
-      <div>
-        <div>
-          <h1>Velkommen til <span class="text_b7">B7</span></h1>
+      <h1>Velkommen til <span class="text_b7">B7</span></h1>
+      <form id="form_register">
+      <fieldset>
+        <legend>Registrér maskine</legend>
+        <p>Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.</p>
+        <div class="content-left">
+          <label for="contact">Ansvarlig kontaktperson</label>
+          <input type="text" id="contact" name="contact" placeholder="F.eks. Jens Jensen" required />
+          <br/>
+          <label for="mail">Mailadresse</label>
+          <input type="email" id="mail" name="mail" placeholder="F.eks. mail@example.com" required />
+          <br/>
+          <label for="mail_repeat">Gentag mailadresse</label>
+          <input type="email" id="mail_repeat" placeholder="Bekræft e-mail" required />
+          <br/>
+          <label for="magafd">Magistratsafdeling</label>
+          <input type="text" id="magafd" name="magafd" placeholder="F.eks. Kultur og Borgerservice" required />
         </div>
-        <div>
-          <form id="form_register">
-            <fieldset>
-              <legend>Registrér maskine</legend>
-              <div class="fieldset-text">
-                Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/><br/>
-                <div>
-                  <label for="contact">Ansvarlig kontaktperson</label>
-                  <input type="text" id="contact" name="contact" placeholder="F.eks. Jens Jensen" required />
-                  <br/>
-                  <label for="mail">Mailadresse</label>
-                  <input type="email" id="mail" name="mail" placeholder="F.eks. mail@example.com" required />
-                  <br/>
-                  <label for="mail_repeat">Gentag mailadresse</label>
-                  <input type="email" id="mail_repeat" placeholder="Bekræft e-mail" required />
-                  <br/>
-                  <label for="magafd">Magistratsafdeling</label>
-                  <input type="text" id="magafd" name="magafd" placeholder="F.eks. Kultur og Borgerservice" required />
-                </div>
-                <div>
-                  <label for="forvalt">Forvaltning</label>
-                  <input type="text" id="forvalt" name="forvalt" placeholder="F.eks. Kulturforvaltningen" required />
-                  <br/>
-                  <label for="place">Fysisk placering</label>
-                  <input type="text" id="place" name="place" placeholder="F.eks. Byrådet" required />
-                  <br/>
-                  <label for="name">Navn for enhed</label>
-                  <input type="text" id="name" name="name" placeholder="F.eks. Hovedbiblioteket udgang 1" required />
-                  <br/>
-                  <input type="submit" class="button_div" value="Bekræft" />
-                </div>
-              </div>
-            </fieldset>
-          </form>
+        <div class="content-right">
+          <label for="forvalt">Forvaltning</label>
+          <input type="text" id="forvalt" name="forvalt" placeholder="F.eks. Kulturforvaltningen" required />
+          <br/>
+          <label for="place">Fysisk placering</label>
+          <input type="text" id="place" name="place" placeholder="F.eks. Byrådet" required />
+          <br/>
+          <label for="name">Navn for enhed</label>
+          <input type="text" id="name" name="name" placeholder="F.eks. Hovedbiblioteket udgang 1" required />
+          <br/>
+          <input type="submit" class="button_div" value="Bekræft" />
         </div>
-      </div>
+      </fieldset>
+      </form>
     </div>
 
     <div id="page_main" class="container">

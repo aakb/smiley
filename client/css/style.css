@@ -8,7 +8,7 @@
   font-size: 16px;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 0 250px;
   width: 100%;
   color: #333;
 }
@@ -16,6 +16,7 @@
 h1 {
   font-size: 250%;
   margin-bottom: 70px;
+  text-align: center;
 }
 
 img {
@@ -23,6 +24,10 @@ img {
   height: auto;
   max-width: 100%;
   vertical-align: bottom;
+}
+
+p {
+  margin-top: 0;
 }
 
 .container {
@@ -69,9 +74,6 @@ img {
   margin-top: 20px;
 }
 
-.text_center {
-  text-align: center;
-}
 
 .text_b7 {
   color: #ff8700;
@@ -102,18 +104,30 @@ img {
 }
 
 .button_div {
-  width: 320px;
-  padding: 15px 15px;
-  background:#ff8700;
-  border:0 none;
+  border: 0;
+  display: inline-block;
   margin-top: 15px;
   margin-bottom: 20px;
-  cursor:pointer;
+  padding: 15px 15px;
+  width: 100%;
+
+  background: #ff8700;
+  cursor: pointer;
+
+  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   color: #ffffff;
-  font-size: large;
-  display: inline-block;
+  font-size: 150%;
+  text-align: center;
+
+  -moz-text-shadow: 1px 1px 0 #c26900;
+  -webkit-text-shadow: 1px 1px 0 #c26900;
+  text-shadow: 1px 1px 0 #c26900;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 
@@ -142,10 +156,11 @@ textarea {
   min-height: 1.25em;
   width: 100%;
   padding: .75em;
-  height: 44px;
+  height: 55px;
 
-  color: #aaa;
   background-color: #eee;
+  color: #444;
+  font-size: 85%;
 
   -webkit-border-radius: 0.6em;
   -moz-border-radius: 0.6em;
@@ -161,9 +176,6 @@ label {
   display: block;
   margin-bottom: .25em;
 
-  /* Move labels so they align better with fields when using rounded corners */
-  margin-left: .3em;
-
   color: #666;
 }
 
@@ -171,7 +183,6 @@ fieldset {
   border: 1px solid #e5e5e5;
   padding: 25px 25px 10px;
   color: #888;
-  width: 320px;
 
   -webkit-border-radius: 0.6em;
   -moz-border-radius: 0.6em;
@@ -195,22 +206,47 @@ legend {
   color: #888;
 }
 
-.div-float {
+.background_color_grey {
+  background: #888;
+  -moz-text-shadow: 1px 1px 0 #555;
+  -webkit-text-shadow: 1px 1px 0 #555;
+  text-shadow: 1px 1px 0 #555;
+}
+
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
+}
+
+.content-wrapper {
+  margin-bottom: 70px;
+  overflow: hidden;
+}
+
+.content-left,
+.content-right {
+  width: 47%;
+}
+
+.content-left {
   float: left;
 }
 
-.input-div-inline {
+.content-right {
+  float: right;
+}
+
+.content-send-data,
+.content-login {
+  clear: both;
+  margin-left: 22%;
+  width: 56%;
+}
+
+.img_div {
   display: inline-block;
-  margin-right: 70px;
-  margin-bottom: 40px;
-}
-
-.fieldset-text {
-  text-align: left;
-}
-
-.background_color_grey {
-  background: #888;
+  width: 19%;
 }
 
 .img_div {
