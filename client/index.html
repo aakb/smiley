@@ -89,103 +89,42 @@
         <div>
           <h1>Velkommen til <span class="text_b7">B7</span></h1>
         </div>
-        <form id="form_register">
-          <fieldset>
-            <legend>Registrér maskine</legend>
-            <div class="fieldset-text">
-              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
-              <br/>
-              God fornøjelse.<br/>
-              <br/>
-              <label for="macid">Enheds ID</label>
-            </div>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
-            <div class="fieldset-text">
-              Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug.<br/>
-              <br/>
-              God fornøjelse.<br/>
-              <br/>
-              <label for="macid">Enheds ID</label>
-            </div>
-            <input type="text" id="macid" name="macid" placeholder="Indtast ID på din enhed" required />
-            <input type="submit" class="button_div" value="Bekræft" />
-          </fieldset>
-        </form>
-
-<!--
-      <h2>Registrer</h2>
-      Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/>
-
-      <div class="form_div">
-        <form id="form_register">
-          <table>
-            <tr>
-              <td>
-                <table>
-                  <tr>
-                    <td>Ansvarlig kontaktperson<br/>
-                      <input type="text" id="contact" name="contact" required />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mailadresse<br/>
-                      <input type="email" id="mail" name="mail" required />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Gentag mailadresse<br/>
-                      <input type="email" id="mail_repeat" required />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td>
-                <table>
-                  <tr>
-                    <td>Magistratsafdeling<br/>
-                      <input type="text" id="magafd" name="magafd" required />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Forvaltning<br/>
-                      <input type="text" id="forvalt" name="forvalt" required />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Fysisk placering<br/>
-                      <input type="text" id="place" name="place" required />
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>Navn for enhed<br/>
-                <input type="text" id="name" name="name" required />
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <input type="hidden" id="action" name="action" value="register" />
-                <div class="text_center">
-                  <input type="submit" value="Bekræft" class="input_button" />
+        <div>
+          <form id="form_register">
+            <fieldset>
+              <legend>Registrér maskine</legend>
+              <div class="fieldset-text">
+                Når du har trykket "Bekræft", er løsningen klar til at blive taget i brug. God fornøjelse.<br/><br/>
+                <div>
+                  <label for="contact">Ansvarlig kontaktperson</label>
+                  <input type="text" id="contact" name="contact" placeholder="F.eks. Jens Jensen" required />
+                  <br/>
+                  <label for="mail">Mailadresse</label>
+                  <input type="email" id="mail" name="mail" placeholder="F.eks. mail@example.com" required />
+                  <br/>
+                  <label for="mail_repeat">Gentag mailadresse</label>
+                  <input type="email" id="mail_repeat" placeholder="Bekræft e-mail" required />
+                  <br/>
+                  <label for="magafd">Magistratsafdeling</label>
+                  <input type="text" id="magafd" name="magafd" placeholder="F.eks. Kultur og Borgerservice" required />
                 </div>
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>-->
+                <div>
+                  <label for="forvalt">Forvaltning</label>
+                  <input type="text" id="forvalt" name="forvalt" placeholder="F.eks. Kulturforvaltningen" required />
+                  <br/>
+                  <label for="place">Fysisk placering</label>
+                  <input type="text" id="place" name="place" placeholder="F.eks. Byrådet" required />
+                  <br/>
+                  <label for="name">Navn for enhed</label>
+                  <input type="text" id="name" name="name" placeholder="F.eks. Hovedbiblioteket udgang 1" required />
+                  <br/>
+                  <input type="submit" class="button_div" value="Bekræft" />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
 
     <div id="page_main" class="container">

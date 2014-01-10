@@ -181,7 +181,6 @@ label {
 
 fieldset {
   border: 1px solid #e5e5e5;
-  margin: 40px;
   padding: 25px;
   color: #888;
   font-size: 80%;
@@ -215,6 +214,8 @@ legend {
 
 .input-div-inline {
   display: inline-block;
+  margin-right: 70px;
+  margin-bottom: 40px;
 }
 
 .fieldset-text {
