@@ -173,7 +173,8 @@ var app = {
         chart.showLegend(false);
         chart.width(width);
         chart.height(height);
-        chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
+        //chart.color(['#008800', '#00ff00', '#aaaaaa', '#ff0000', '#880000']);
+        chart.color(['#00ab00', '#b0cf00', '#ffff00', '#ff8800', '#ff0000']);
         chart.tooltipContent(function(key, y, e, graph) { return y + " %" });
         chart.margin({top: -50, right: 50, bottom: 50, left: 50});
 
