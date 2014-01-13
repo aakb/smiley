@@ -113,8 +113,8 @@ var app = {
     $("input").on("focus", function() {
       footer.hide();
     });
-
     $("input").on("focusout", function() {
+      window.scrollTo(0,0);
       footer.show();
     });
 
@@ -190,8 +190,8 @@ var app = {
     $("input").on("focus", function() {
       footer.hide();
     });
-
     $("input").on("focusout", function() {
+      window.scrollTo(0,0);
       footer.show();
     });
 
