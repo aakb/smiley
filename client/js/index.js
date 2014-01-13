@@ -112,6 +112,10 @@ var app = {
 
     $(".footer").hide();
 
+    $("input").on("blur", function() {
+      window.scrollX(0);
+    });
+
     // Setup event listeners.
     $("#back_button").on("touchstart click", function(e) {
       e.stopPropagation(); e.preventDefault();
@@ -186,6 +190,10 @@ var app = {
     $("#main").html(app.pageLogin);
 
     $(".footer").hide();
+
+    $("input").on("blur", function() {
+      window.scrollX(0);
+    });
 
     // Setup event listeners.
     $("#back_button").on("touchstart click", function(e) {
