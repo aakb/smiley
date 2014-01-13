@@ -113,7 +113,7 @@ var app = {
     $(".footer").hide();
 
     $("input").on("blur", function() {
-      window.scrollX(0);
+      window.scrollTo(0,0);
     });
 
     // Setup event listeners.
@@ -192,7 +192,7 @@ var app = {
     $(".footer").hide();
 
     $("input").on("blur", function() {
-      window.scrollX(0);
+      window.scrollTo(0,0);
     });
 
     // Setup event listeners.
