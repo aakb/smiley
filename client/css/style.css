@@ -276,6 +276,10 @@ legend {
   margin-right: 0;
 }
 
+.thanks-header {
+  font-size: 300%;
+}
+
 .thanks-header,
 .table_text h1 {
   margin-bottom: 20px;
@@ -283,6 +287,7 @@ legend {
 
 .thanks-text {
   text-align: center;
+  font-size: 150%;
 }
 
 .back_button {
@@ -296,7 +301,7 @@ legend {
   height: 148px;
   background: #eee;
   border: 4px solid #333;
-  font-size: 100%;
+  font-size: 120%;
   font-weight: bold;
   padding: 50px 10px 10px;
   text-align: center;
