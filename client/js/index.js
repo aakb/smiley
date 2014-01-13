@@ -110,7 +110,7 @@ var app = {
 
     // Remove footer when input field in focus, add again when not.
     var footer = $(".footer");
-    $("input").on("focus", function() {
+    $("input").on("focusin", function() {
       footer.hide();
     });
     $("input").on("focusout", function() {
@@ -193,7 +193,7 @@ var app = {
 
     var footer = $(".footer");
 
-    $("input").on("focus", function() {
+    $("input").on("focusin", function() {
       footer.hide();
     });
     $("input").on("focusout", function() {
