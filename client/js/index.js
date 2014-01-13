@@ -322,7 +322,7 @@ var app = {
     if (nSmiley > 3) {
       $("#table_text").html("<h1>Hvad var godt?</h1>");
     } else {
-      $("#table_text").html("<h1>Hvad var dårligt?</h1>");
+      $("#table_text").html("<h1>Hvad kunne være bedre?</h1>");
     }
 
     // Show the selected smiley and hide the others.
