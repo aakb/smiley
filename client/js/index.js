@@ -108,14 +108,20 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageRegister);
 
+    // Remove footer when input field in focus, add again when not.
     var footer = $(".footer");
-
     $("input").on("focus", function() {
       footer.hide();
     });
     $("input").on("focusout", function() {
       window.scrollTo(0,0);
       footer.show();
+    });
+
+    // Setup event listeners.
+    $("#back_button").on("touchstart click", function(e) {
+      e.stopPropagation(); e.preventDefault();
+      app.showWelcomePage();
     });
 
     // Setup custom validation for the email_repeat input.
@@ -193,6 +199,12 @@ var app = {
     $("input").on("focusout", function() {
       window.scrollTo(0,0);
       footer.show();
+    });
+
+    // Setup event listeners.
+    $("#back_button").on("touchstart click", function(e) {
+      e.stopPropagation(); e.preventDefault();
+      app.showWelcomePage();
     });
 
     // Setup form register submit button

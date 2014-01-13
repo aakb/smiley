@@ -281,3 +281,9 @@ legend {
 .thanks-text {
   text-align: center;
 }
+
+.back_button {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+}
