@@ -110,11 +110,13 @@ var app = {
 
     // Remove footer when input field in focus, add again when not.
     var footer = $(".footer");
-    $("input").on("focus", function() {
+    $("input").on("focus", function(e) {
+      e.stopPropagation(); e.preventDefault();
       footer.hide();
     });
-    $("input").on("blur", function() {
-      window.scrollTo(0,0);
+    $("input").on("blur", function(e) {
+      e.stopPropagation(); e.preventDefault();
+      window.scrollTo(0);
       footer.show();
     });
 
@@ -193,10 +195,12 @@ var app = {
 
     var footer = $(".footer");
 
-    $("input").on("focusin", function() {
+    $("input").on("focus", function(e) {
+      e.stopPropagation(); e.preventDefault();
       footer.hide();
     });
-    $("input").on("focusout", function() {
+    $("input").on("blur", function(e) {
+      e.stopPropagation(); e.preventDefault();
       window.scrollTo(0,0);
       footer.show();
     });
