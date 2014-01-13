@@ -256,6 +256,17 @@ var app = {
     app.clearClickHandlers();
     clearTimeout(app.timer);
 
+    // Set check for update timer.
+    app.timer = setTimeout(function(){
+      app.ping(
+        function(){
+          window.location.replace("index.html");
+        },
+        function() {
+          app.showMainPage();
+        });
+    }, 3600000);
+
     // Change the HTML content.
     $("#main").html(app.pageMain);
 
