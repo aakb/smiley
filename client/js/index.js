@@ -109,7 +109,7 @@ var app = {
     $("#main").html(app.pageRegister);
 
     var footer = $(".footer");
-/*
+
     $("input").on("focus", function() {
       footer.hide();
     });
@@ -117,7 +117,7 @@ var app = {
       window.scrollTo(0,0);
       footer.show();
     });
-*/
+
     // Setup custom validation for the email_repeat input.
     $("#mail_repeat").on("change", function() {
       if ($(this).val() !== $("#mail").first().val()) {
@@ -186,7 +186,7 @@ var app = {
     $("#main").html(app.pageLogin);
 
     var footer = $(".footer");
-/*
+
     $("input").on("focus", function() {
       footer.hide();
     });
@@ -194,7 +194,7 @@ var app = {
       window.scrollTo(0,0);
       footer.show();
     });
-*/
+
     // Setup form register submit button
     $("#form_login").submit(function(event) {
       event.preventDefault();
