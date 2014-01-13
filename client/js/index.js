@@ -110,10 +110,10 @@ var app = {
 
     // Remove footer when input field in focus, add again when not.
     var footer = $(".footer");
-    $("input").on("focusin", function() {
+    $("input").on("focus", function() {
       footer.hide();
     });
-    $("input").on("focusout", function() {
+    $("input").on("blur", function() {
       window.scrollTo(0,0);
       footer.show();
     });
