@@ -60,6 +60,8 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageWelcome);
 
+    $(".footer").show();
+
     // Find the commit_button.
     var commitButton = $("#commit_button");
 
@@ -108,17 +110,7 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageRegister);
 
-    // Remove footer when input field in focus, add again when not.
-    var footer = $(".footer");
-    $("input").on("focus", function(e) {
-      e.stopPropagation(); e.preventDefault();
-      footer.hide();
-    });
-    $("input").on("blur", function(e) {
-      e.stopPropagation(); e.preventDefault();
-      window.scrollTo(0);
-      footer.show();
-    });
+    $(".footer").hide();
 
     // Setup event listeners.
     $("#back_button").on("touchstart click", function(e) {
@@ -193,17 +185,7 @@ var app = {
     // Change HTML content
     $("#main").html(app.pageLogin);
 
-    var footer = $(".footer");
-
-    $("input").on("focus", function(e) {
-      e.stopPropagation(); e.preventDefault();
-      footer.hide();
-    });
-    $("input").on("blur", function(e) {
-      e.stopPropagation(); e.preventDefault();
-      window.scrollTo(0,0);
-      footer.show();
-    });
+    $(".footer").hide();
 
     // Setup event listeners.
     $("#back_button").on("touchstart click", function(e) {
@@ -269,6 +251,8 @@ var app = {
     // Change the HTML content.
     $("#main").html(app.pageMain);
 
+    $(".footer").show();
+
     // Setup the event listeners.
     $("#smiley1").on("touchstart click", function(e) {
       e.stopPropagation(); e.preventDefault();
@@ -303,6 +287,8 @@ var app = {
 
     // Change the HTML content.
     $(".main").html(app.pageChoice);
+
+    $(".footer").show();
 
     // Setup event listeners
     $("#choice1").on("touchstart click", function(e) {
@@ -353,6 +339,8 @@ var app = {
 
     // Set the HTML content.
     $("#main").html(app.pageThanks);
+
+    $(".footer").show();
 
     var datetime = (new Date()).getTime();
 
