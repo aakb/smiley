@@ -3,6 +3,8 @@
  * @type {{init: init, showWelcomePage: showWelcomePage, showRegisterPage: showRegisterPage, showLoginPage: showLoginPage, showMainPage: showMainPage, showWhatPage: showWhatPage, showResultPage: showResultPage, sendResultToServer: sendResultToServer, commitListRecurse: commitListRecurse, commitEntriesFromLocalStorage: commitEntriesFromLocalStorage, saveEntryToLocalStorage: saveEntryToLocalStorage, ping: ping, logout: logout, saveMacidToLocalStorage: saveMacidToLocalStorage, clearClickHandlers: clearClickHandlers}}
  */
 var app = {
+  version: 1,
+
   /**
    * Initialization of the app.
    */
@@ -258,14 +260,15 @@ var app = {
 
     // Set check for update timer.
     app.timer = setTimeout(function(){
-      app.ping(
+      app.testVersion(app.version,
         function(){
+          alert("new version");
           window.location.replace("index.html");
         },
         function() {
           app.showMainPage();
         });
-    }, 3600000);
+    }, 360000);
 
     // Change the HTML content.
     $("#main").html(app.pageMain);
@@ -493,7 +496,7 @@ var app = {
    */
   ping: function(success, failure) {
     $.ajax({
-      url: config.serverlocation + "/ping",
+      url: config.serverlocation + "/ping.php",
       type: "GET"
     })
     .done(function (response, textStatus, jqXHR) {
@@ -502,6 +505,30 @@ var app = {
     .fail(function (jqXHR, textStatus, errorThrown) {
       failure();
     });
+  },
+
+  /**
+   * Test if there is a new version on the server.
+   * @param currentVersion the current version of the app.
+   * @param update the function to call if there is a new version on the server.
+   * @param noUpdate the function to call if there is not a new version on the server.
+   */
+  testVersion: function(currentVersion, update, noUpdate) {
+    $.ajax({
+      url: config.serverlocation + "/version.php",
+      type: "GET"
+    })
+      .done(function (response, textStatus, jqXHR) {
+        if (0 + response > currentVersion) {
+          update();
+        }
+        else {
+          noUpdate();
+        }
+      })
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        noUpdate();
+      });
   },
 
   /**
