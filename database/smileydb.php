@@ -115,7 +115,7 @@ class SmileyDB {
     </head>
     <body>
       <h2>Følgende maskine er blevet oprettet:</h2>
-      <em>Login (macid)</em>: '.$macid.'<br/>
+      <em>Login (enheds ID)</em>: '.$macid.'<br/>
       <em>Magistratsafdeling</em>: '.$magafd.'<br/>
       <em>Forvaltning</em>: '.$forvalt.'<br/>
       <em>Fysisk placering</em>: '.$place.'<br/>
