@@ -108,6 +108,40 @@ class SmileyDB {
     $to  = $mail;
     $subject = 'b7 oprettelse';
     $message = '
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="http://smiley.aakb.dk/mail/css/style.css" />
+        <title>B7 oprettelse</title>
+      </head>
+      <body>
+      <div class="center">
+        <div id="main" class="main">
+          <div id="header" class="header">
+            <div class="header_left">
+              <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_b7.png" alt=""/>
+            </div>
+            <div class="header_right">
+              <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_aak.png" alt=""/>
+            </div>
+          </div>
+          <h2>Følgende maskine er blevet oprettet:</h2>
+          <em>Login (macid)</em>: '.$macid.'<br/>
+          <em>Magistratsafdeling</em>: '.$magafd.'<br/>
+          <em>Forvaltning</em>: '.$forvalt.'<br/>
+          <em>Fysisk placering</em>: '.$place.'<br/>
+          <em>Navn på enhed</em>: '.$name.'<br/>
+          <h2>Statistik</h2>
+          Statistikken for den pågældende maskine er tilgængelig fra følgende link:<br/>
+          <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a><br/>
+          <br/>
+          Der vil fremover blive sent en ugentlig mail (hver mandag) med et link til den foregående uges statistik.
+        </div>
+      </div>
+      </body>
+      </html>';
+/*    $message = '
     <html>
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -127,7 +161,7 @@ class SmileyDB {
       Der vil fremover blive sent en ugentlig mail (hver mandag) med et link til den foregående uges statistik.
     </body>
     </html>
-    ';
+    ';*/
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
     $headers .= 'From: b7' . "\r\n";
@@ -279,6 +313,32 @@ class SmileyDB {
       </body>
       </html>
       ';
+
+/*      $message = '
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="http://smiley.aakb.dk/mail/css/style.css" />
+        <title>B7 ugentlig statistik</title>
+      </head>
+      <body>
+      <div class="center">
+        <div id="main" class="main">
+          <div id="header" class="header">
+            <div class="header_left">
+              <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_b7.png" alt=""/>
+            </div>
+            <div class="header_right">
+              <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_aak.png" alt=""/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      </body>
+      </html>';*/
       $headers  = 'MIME-Version: 1.0' . "\r\n";
       $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
       $headers .= 'From: b7' . "\r\n";
