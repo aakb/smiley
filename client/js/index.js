@@ -61,7 +61,6 @@ var app = {
   showWelcomePage: function() {
     // Change the HTML content.
     $("#main").html(app.pageWelcome);
-
     $(".footer").show();
 
     // Find the commit_button.
@@ -111,9 +110,9 @@ var app = {
   showRegisterPage: function() {
     // Change the HTML content.
     $("#main").html(app.pageRegister);
-
     $(".footer").hide();
 
+    // Scroll to top when not focusing an input field.
     $("input").on("blur", function() {
       window.scrollTo(0,0);
     });
@@ -188,11 +187,11 @@ var app = {
    * Shows the login page and sets event listeners.
    */
   showLoginPage: function() {
-    // Change HTML content
+    // Change HTML content.
     $("#main").html(app.pageLogin);
-
     $(".footer").hide();
 
+    // Scroll to top when not focusing an input field.
     $("input").on("blur", function() {
       window.scrollTo(0,0);
     });
@@ -272,7 +271,6 @@ var app = {
 
     // Change the HTML content.
     $("#main").html(app.pageMain);
-
     $(".footer").show();
 
     // Setup the event listeners.
