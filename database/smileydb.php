@@ -107,7 +107,40 @@ class SmileyDB {
     // Send email to the contact.
     $to  = $mail;
     $subject = 'b7 oprettelse';
-    $message = '
+    $message = '<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>B7 registrering</title>
+</head>
+<body style="background-color:#FFFFFF; font-family: "Arial", sans-serif; margin:0; padding:0; color: #000000;">
+<div id="main" style="margin-left: 30px; margin-right: 30px; margin-top: 160px;">
+  <div id="header" style="background-color: #eee; width: 100%; position: absolute; top: 0; left: 0; border: 0; margin: 0; padding: 0;">
+    <div style="float: left; max-width: 75px; padding: 30px 70px;">
+      <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_b7.png" style="display: inline; height: auto; max-width: 100%; vertical-align: top;" alt=""/>
+    </div>
+    <div style="float: right; max-width: 110px; padding: 30px 70px;">
+      <img draggable="false" src="http://smiley.aakb.dk/mail/img/logo_aak.png" style="display: inline; height: auto; max-width: 100%; vertical-align: top;" alt=""/>
+    </div>
+  </div>
+  <h2>Følgende maskine er blevet oprettet:</h2>
+  <em>Login (macid)</em>: '.$macid.'<br/>
+  <em>Magistratsafdeling</em>: '.$magafd.'<br/>
+  <em>Forvaltning</em>: '.$forvalt.'<br/>
+  <em>Fysisk placering</em>: '.$place.'<br/>
+  <em>Navn på enhed</em>: '.$name.'<br/>
+  <h2>Statistik</h2>
+  Statistikken for den pågældende maskine er tilgængelig fra følgende link:<br/>
+  <a href="http://smiley.aakb.dk/stats/?macid='.$macid.'">http://smiley.aakb.dk/stats/?macid='.$macid.'</a><br/>
+  <br/>
+  Der vil fremover blive sent en ugentlig mail (hver mandag) med et link til den foregående uges statistik.
+</div>
+
+</body>
+</html>
+';
+
+/*    $message = '
     <html>
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -127,7 +160,7 @@ class SmileyDB {
       Der vil fremover blive sent en ugentlig mail (hver mandag) med et link til den foregående uges statistik.
     </body>
     </html>
-    ';
+    ';*/
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
     $headers .= 'From: b7' . "\r\n";
