@@ -17,7 +17,7 @@ The machine needs to be online for registration and login.
 The client will auto-login (go to the smiley page) after registration.
 
 To logout:
-http://path_to_server/client/logout
+> http://path_to_server/client/logout
 
 If there are connection issues when the client is running, the gathered information will be saved on the device.
 The client will try to deliver this information when new information is gathered.
@@ -30,9 +30,9 @@ To send weekly mails from the cli, call the index.php script with the parameter 
 > index.php weeklyMails
 
 Statistics can be accessed through a link for a specified macid (which is delivered to the contact at registration):
-http://path_to_server/stats/?macid=XXXXX&week=W&year=YYYY  (will show statistics for the specified week and year)
+> http://path_to_server/stats/?macid=XXXXX&week=W&year=YYYY  (will show statistics for the specified week and year)
 or
-http://path_to_server/stats/?macid=XXXXX    (will show statistics for the last week from now)
+> http://path_to_server/stats/?macid=XXXXX    (will show statistics for the last week from now)
 
 To get all data from the database in XML format:
 http://path_to_server/xmldata.php
