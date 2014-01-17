@@ -1,9 +1,7 @@
-Smiley
------------
+#Smiley
 This project consists of a client to gather information and a statistics page to view statistics for each machine.
 
-Setup
------------
+##Setup
 Create your own "config/settings.php" file (from "config/default.settings.php") with database settings
 Create your own "config/config.js" file (from "config/default.config.js") with serverlocation
 
@@ -12,8 +10,7 @@ The statistics page is located in stats/
 
 The SQL to setup the DB is here: "database/init_database.sql"
 
-Client
------------
+##Client
 First off, register the machine. When a machine is registered, a mail is sent to the contact with the registered information and the macid (which is used to identify the machine afterwards).
 The machine needs to be online for registration and login.
 
@@ -27,8 +24,7 @@ The client will try to deliver this information when new information is gathered
 It is possible to manually deliver this locally stored information by going to the home screen (logout) and press the "Indsend(X)" button. Make sure the device has internet access.
 The X denotes the amount of information that has not been delivered.
 
-Statistics
------------
+##Statistics
 A cron job should be set up to send weekly statistics mails.
 To send weekly mails from the cli, call the index.php script with the parameter weeklyMails:
 > index.php weeklyMails
