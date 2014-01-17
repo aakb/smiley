@@ -31,6 +31,7 @@ To send weekly mails from the cli, call the index.php script with the parameter 
 
 Statistics can be accessed through a link for a specified macid (which is delivered to the contact at registration):
 > http://path_to_server/stats/?macid=XXXXX&week=W&year=YYYY  (will show statistics for the specified week and year)
+
 or
 > http://path_to_server/stats/?macid=XXXXX    (will show statistics for the last week from now)
 
