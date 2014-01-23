@@ -59,16 +59,20 @@ var app = {
     this.week = getUrlVar("week");
     this.year = getUrlVar("year");
     if (app.week != "" && app.year != "") {
-      if (app.week < 1 || app.week > 52) {
+      if (isNaN(app.week) || isNaN(app.year) || app.week < 1 || app.week > 52) {
         $("body").html("");
         return;
       }
       this.oneWeekAgo = firstDayOfWeek(app.year, app.week);
       this.now = new Date(app.oneWeekAgo.getTime() + 7 * app.aDay);
       $("#week_text").html(" (uge " + app.week + ", " + app.year + ")");
+      $("#date_start").html(getDanishDate(app.oneWeekAgo));
+      $("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
     } else {
       this.now = new Date();
       this.oneWeekAgo = new Date(app.now.getTime() - 7 * app.aDay);
+      $("#date_start").html(getDanishDate(new Date(app.oneWeekAgo.getTime() + app.aDay)));
+      $("#date_end").html(getDanishDate((new Date(app.now.getTime()))));
     }
 
     // Sets information in summary, table and pie chart
@@ -95,8 +99,8 @@ var app = {
 
       // Fill the summary and table.
       $("#number_of_respondents").html(number_of_respondents);
-      $("#date_start").html(getDanishDate(app.oneWeekAgo));
-      $("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
+//      $("#date_start").html(getDanishDate(app.oneWeekAgo));
+//      $("#date_end").html(getDanishDate((new Date(app.now.getTime() - app.aDay))));
 
       if (number_of_respondents > 0) {
         // Find general satisfaction
