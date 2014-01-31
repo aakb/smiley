@@ -77,6 +77,8 @@ var app = {
 
     // Sets information in summary, table and pie chart
     app.getDataWhat(function() {
+      console.log(app.data);
+
       // Values for summary
       var number_of_respondents = 0;
       var cumulative_satisfaction = 0;
@@ -86,7 +88,7 @@ var app = {
 
       // Gather values for table
       for (var i = 0; i < 5; i++) {
-        for (var j = 0; j < 3; j++) {
+        for (var j = 0; j <= 3; j++) {
           number_of_respondents += app.data[j][i];
           cumulative_satisfaction += app.data[j][i] * (5 - i);
           if (i == 0) {
@@ -123,7 +125,7 @@ var app = {
           for (var i = 0; i < 5; i++) {
             var r_column = 0;
             var r_column_past = 0;
-            for (var j = 0; j < 3; j++) {
+            for (var j = 0; j <= 3; j++) {
               $("#entry_"+j+i).html("" + ((app.data[j][i] / number_of_respondents) * 100.0).toFixed(2) + " %");
               number_of_respondents_past += app.datapast[j][i];
               cumulative_satisfaction_past += app.datapast[j][i] * (5 - i);
@@ -131,7 +133,7 @@ var app = {
               r_column_past += app.datapast[j][i];
             }
             column_percentages[i] = ((r_column / number_of_respondents) * 100.0).toFixed(2);
-            $("#entry_3"+i).html("" + column_percentages[i] + " %");
+            $("#entry_4"+i).html("" + column_percentages[i] + " %");
 
             respondents_past_columns[i] = r_column_past;
           }
@@ -140,13 +142,13 @@ var app = {
           if (number_of_respondents_past > 0) {
             // For each entry add past results
             for (var i = 0; i < 5; i++) {
-              for (var j = 0; j < 3; j++) {
+              for (var j = 0; j <= 3; j++) {
                 var entry_percentage_past = (100.0 * (app.datapast[j][i] / number_of_respondents_past)).toFixed(2);
                 $("#entry_"+j+i).append("<br/><span class=\"color_grey\">(" + entry_percentage_past  + " %)</span>");
               }
 
               var column_percentage_past = (100.0 * (respondents_past_columns[i] / number_of_respondents_past)).toFixed(2);
-              $("#entry_3"+i).append("<br/><span class=\"color_grey\">("+ column_percentage_past + " %)</span>");
+              $("#entry_4"+i).append("<br/><span class=\"color_grey\">("+ column_percentage_past + " %)</span>");
             }
 
             // Find general satisfaction from the past

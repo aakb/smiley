@@ -3,7 +3,7 @@
  * @type {{init: init, showWelcomePage: showWelcomePage, showRegisterPage: showRegisterPage, showLoginPage: showLoginPage, showMainPage: showMainPage, showWhatPage: showWhatPage, showResultPage: showResultPage, sendResultToServer: sendResultToServer, commitListRecurse: commitListRecurse, commitEntriesFromLocalStorage: commitEntriesFromLocalStorage, saveEntryToLocalStorage: saveEntryToLocalStorage, ping: ping, logout: logout, saveMacidToLocalStorage: saveMacidToLocalStorage, clearClickHandlers: clearClickHandlers}}
  */
 var app = {
-  version: 1,
+  version: 2,
 
   /**
    * Initialization of the app.
@@ -261,7 +261,6 @@ var app = {
     app.timer = setTimeout(function(){
       app.testVersion(app.version,
         function(){
-          alert("new version");
           window.location.replace("index.html");
         },
         function() {
@@ -341,10 +340,28 @@ var app = {
       }
     });
 
-    // Set timeout for page. If user has not selected a reason for the smiley before the timeout, then load main page again.
+    // Set timeout for page. If user has not selected a reason for the smiley before the timeout, commit answer with
+    // what set to 0.
     app.timer = setTimeout(function(){
-      app.showMainPage();
-    }, 10000);
+      var datetime = (new Date()).getTime();
+
+      // Post data to server
+      app.sendResultToServer(app.macid, nSmiley, 0, datetime, function() {
+        // Test if the connection to the server is up
+        app.ping(
+          // If the connection is up, commit from local storage.
+          function() {
+            app.commitEntriesFromLocalStorage(function() {
+              app.showMainPage();
+            });
+          },
+          // If the connections is not up, go to main page.
+          function() {
+            app.showMainPage();
+          }
+        );
+      });
+    }, 20000);
   },
 
   /**

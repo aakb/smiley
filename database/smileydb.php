@@ -190,7 +190,7 @@ class SmileyDB {
   private function getWhat($macid, $start, $end) {
     $arr = array();
 
-    for ($k = 1; $k <= 3; $k++) {
+    for ($k = 0; $k <= 3; $k++) {
       $insidearr = array();
       // Reverse order to get happy smiley first
       for ($i = 5; $i >= 1; $i--) {
