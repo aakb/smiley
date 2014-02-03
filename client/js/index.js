@@ -3,7 +3,7 @@
  * @type {{init: init, showWelcomePage: showWelcomePage, showRegisterPage: showRegisterPage, showLoginPage: showLoginPage, showMainPage: showMainPage, showWhatPage: showWhatPage, showResultPage: showResultPage, sendResultToServer: sendResultToServer, commitListRecurse: commitListRecurse, commitEntriesFromLocalStorage: commitEntriesFromLocalStorage, saveEntryToLocalStorage: saveEntryToLocalStorage, ping: ping, logout: logout, saveMacidToLocalStorage: saveMacidToLocalStorage, clearClickHandlers: clearClickHandlers}}
  */
 var app = {
-  version: 2,
+  version: 3,
 
   /**
    * Initialization of the app.
@@ -266,7 +266,7 @@ var app = {
         function() {
           app.showMainPage();
         });
-    }, 360000);
+    }, 3600000);
 
     // Change the HTML content.
     $("#main").html(app.pageMain);
