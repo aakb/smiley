@@ -77,8 +77,6 @@ var app = {
 
     // Sets information in summary, table and pie chart
     app.getDataWhat(function() {
-      console.log(app.data);
-
       // Values for summary
       var number_of_respondents = 0;
       var cumulative_satisfaction = 0;
