@@ -251,8 +251,8 @@ class SmileyDB {
       $year = $year - 1;
     }
 
-    // Get all the machines from the database.
-    $statement = 'SELECT * FROM machine';
+    // Get all the machines from the database that are live.
+    $statement = 'SELECT * FROM machine WHERE test = 0';
     $query = $this->connection->execute($statement);
     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -282,6 +282,7 @@ class SmileyDB {
       $headers  = 'MIME-Version: 1.0' . "\r\n";
       $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
       $headers .= 'From: b7' . "\r\n";
+
       mail($to, $subject, $message, $headers);
     }
   }
