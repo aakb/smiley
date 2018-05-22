@@ -324,7 +324,11 @@ var app = {
     });
 
     // Change the text according to the selected smiley.
-    $("#table_text").html("<h1>Kunne du finde på at deltage i et lignende arrangement en anden gang?</h1>");
+    if (nSmiley > 3) {
+      $("#table_text").html("<h1>Hvorfor?</h1>");
+    } else {
+      $("#table_text").html("<h1>Hvorfor ikke?</h1>");
+    }
 
     // Show the selected smiley and hide the others.
     $(".img_smiley").each(function(index) {
