@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="../favicon.ico" rel="icon" type="image/x-icon" />
+    <title>b7</title>
+  </head>
+  <body>
+    <div class="center">
+      <div id="header" class="header">
+        <h1>Logout</h1>
+      </div>
+      <div id="main" class="main">
+        <h2>Du er nu logget ud...</h2>
+      </div>
+      <div id="footer" class="footer">
+        <div class="footer_left">
+          <div id="b7_button"><img src="img/logo_b7.png"/></div>
+        </div>
+        <div class="footer_right">
+          <img src="img/logo_aak.png"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="../libs/jquery-1.10.2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/index.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        app.logout();
+        setTimeout(function() {
+          window.location.replace("index.html");
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>
